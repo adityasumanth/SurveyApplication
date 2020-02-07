@@ -5,6 +5,7 @@ import { SurveyForm } from '../models/SurveyForm';
 import { NgForm } from '@angular/forms';
 import { SurveyData } from '../models/SurveyData';
 import { SurveyAnswer } from '../models/SurveyAnswer';
+import { parse } from 'url';
 
 @Component({
     selector: 'app-new-survey',
@@ -43,15 +44,17 @@ export class NewSurveyComponent implements OnInit {
 
         for (let q of this.survey.questions) {
             let answer: SurveyAnswer = new SurveyAnswer();
-            answer.question = q.id;
-            answer.answer = form.value["option-" + q.id];
+            answer.surveyQuestionId = q.id;
+            answer.surveyOptionId = parseInt(form.value["option-" + q.id]);
             this.answers.push(answer);
         }
         this.pollData = new SurveyData();
         this.pollData.email = form.value.email;
         this.pollData.surveyFormID = this.id;
-        this.pollData.surveyAnswers = this.answers;
-        this.http.post<SurveyData>(this.url + 'api/Home/poll', this.pollData).subscribe(result =>
-            console.log(result));
+        this.pollData.Answers = this.answers;
+        this.http.post<SurveyData>(this.url + 'api/Home/poll', this.pollData).subscribe(result => {
+            console.log(result);
+        }, error => console.error(error));
     }
 }
+

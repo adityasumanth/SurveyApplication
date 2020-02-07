@@ -63,6 +63,21 @@ namespace Survey.Web.Controllers
                 return form;
             }
         }
-        
+
+
+        [HttpPost]
+        [Route("poll")]
+        public SurveyData PostPollData([FromBody]SurveyData pollData)
+        {
+            this._dbContext.SurveyData.Add(pollData);
+            this._dbContext.SaveChanges();
+            //for (int i = 0; i < pollData.Answers.Count(); i++)
+            //{
+            //    pollData.Answers[i].SurveyDataId =pollData.Id;
+            //    this._dbContext.SurveyAnswers.Add(pollData.Answers[i]);
+            //}
+            //this._dbContext.SaveChanges();
+            return pollData;
+        }
     }
 }
