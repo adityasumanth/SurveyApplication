@@ -29,10 +29,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\admin-home\admin-home.component.ts" />
+    <None Remove="ClientApp\src\app\create-survey\create-survey.component.ts" />
+    <None Remove="ClientApp\src\app\models\surveydata.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Survey.api\Survey.api.csproj" />
     <ProjectReference Include="..\Survey.Concerns\Survey.Concerns.csproj" />
     <ProjectReference Include="..\Survey.Contracts\Survey.Contracts.csproj" />
     <ProjectReference Include="..\Survey.Providers\Survey.Providers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\create-survey\create-survey.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\admin-home\admin-home.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\surveydata.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
