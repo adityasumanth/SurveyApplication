@@ -1,10 +1,33 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+<h5>New Survey</h5>
+<button [disabled]="loading">Add Question</button>
+<br />
+<br />
+<div *ngIf="newForm">
+  <form [formGroup]="surveyNameForm" (ngSubmit)="onNameSubmit()">
+    <div class="form-group">
+      <label for="title"> Survey Title </label> <br />
+      <input type="text" formControlName="title" />
+    </div>
+    <button type="submit">Generate Form</button>
+  </form>
+</div>
 
-</body>
-</html>
+<div *ngIf="newForm">
+  <h5>Form Name : {{surveyName}}</h5>
+    <form [formGroup]="surveyForm" (ngSubmit)="CreateForm()">
+      <div class="questions">
+        <div class="question">
+          <div class="form-group">
+            <label class="col-1" for="question"> Question </label>
+            <input class="col-6 offset-1" type="text" formControlName="question" />
+            <button class="offset-2" onclick="AddOption()">Add Option</button>
+          </div>
+          <div class="form-group">
+            <label class="col-2" for="option"> Option </label>
+            <input class="col-4" type="text" formControlName="option" />
+          </div>
+        </div>
+      </div>
+      <button type="submit">Create Form</button>
+    </form>
+</div>
