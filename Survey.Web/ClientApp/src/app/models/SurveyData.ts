@@ -7,12 +7,12 @@ export class SurveyData implements Deserializable {
     id: number;
     email: string;
     surveyFormID: number;
-    surveyAnswers: SurveyAnswer[];
+    Answers: SurveyAnswer[];
 
     deserialize(input: any) {
         (<any>Object).assign(this, input);
         input.Answers.forEach(answer =>
-            this.surveyAnswers.push(new SurveyAnswer().deserialize(answer))
+            this.Answers.push(new SurveyAnswer().deserialize(answer))
         );
         return this;
     }

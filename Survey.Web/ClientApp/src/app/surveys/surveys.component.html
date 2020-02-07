@@ -1,10 +1,12 @@
-<div>Surveys Component</div>
-<div>
-  <!--<p *ngIf="!surveys"><em>Loading...</em></p>-->
-  <button class="btn" [routerLinkActive]="['link-active']" [routerLink]="['/new-survey',0]">Test</button>
-  <ul>
-    <li *ngFor="let survey of surveys">
-      <button class="btn" [routerLinkActive]="['link-active']" [routerLink]="['/new-survey',survey.surveyFormId]">{{survey.title}}</button>
-    </li>
-  </ul>
-</div>
+  <p *ngIf="!surveys"><em>Loading...</em></p>
+  <div class="card col-sm-12 mb-2">
+    <div class="container d-flex flex-wrap">
+      <div *ngFor="let survey of surveys" class="card col-3 m-3" [routerLink]="['/new-survey',survey.surveyFormId]">
+        <div class="card-body text-center">
+          {{survey.title}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
