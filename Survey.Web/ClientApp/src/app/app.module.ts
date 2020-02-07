@@ -11,6 +11,7 @@ import { SurveysComponent } from './surveys/surveys.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { CreateSurveyComponent } from './create-survey/create-survey.component';
+import { SurveyCrudService } from './services/survey-crud.service';
 
 @NgModule({
     declarations: [
@@ -34,8 +35,8 @@ import { CreateSurveyComponent } from './create-survey/create-survey.component';
           { path: 'fetch-data', component: FetchDataComponent },
           { path: 'admin', component: AdminHomeComponent },
         ])
-    ],
-    providers: [],
+  ],
+  providers: [SurveyCrudService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
