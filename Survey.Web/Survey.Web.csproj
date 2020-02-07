@@ -19,6 +19,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,10 +31,31 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Survey.api\Survey.api.csproj" />
+    <None Remove="ClientApp\src\app\interfaces\deserializable.interface.ts" />
+    <None Remove="ClientApp\src\app\models\SurveyAnswer.ts" />
+    <None Remove="ClientApp\src\app\models\SurveyData.ts" />
+    <None Remove="ClientApp\src\app\models\SurveyForm.ts" />
+    <None Remove="ClientApp\src\app\models\SurveyOption.ts" />
+    <None Remove="ClientApp\src\app\models\SurveyQuestion.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Survey.Concerns\Survey.Concerns.csproj" />
     <ProjectReference Include="..\Survey.Contracts\Survey.Contracts.csproj" />
     <ProjectReference Include="..\Survey.Providers\Survey.Providers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\deserializable.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SurveyAnswer.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SurveyData.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SurveyForm.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SurveyOption.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SurveyQuestion.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\services\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
