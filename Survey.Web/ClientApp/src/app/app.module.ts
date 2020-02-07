@@ -9,6 +9,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SurveysComponent } from './surveys/surveys.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { CreateSurveyComponent } from './create-survey/create-survey.component';
 
 @NgModule({
     declarations: [
@@ -16,16 +18,20 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
         NavMenuComponent,
         HomeComponent,
         SurveysComponent,
-        FetchDataComponent
+        FetchDataComponent,
+        AdminHomeComponent,
+        CreateSurveyComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: '', component: HomeComponent, pathMatch: 'full' },
-            { path: 'surveys', component: SurveysComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
+          { path: '', component: HomeComponent, pathMatch: 'full' },
+          { path: 'surveys', component: SurveysComponent },
+          { path: 'addsurvey', component: CreateSurveyComponent },
+          { path: 'fetch-data', component: FetchDataComponent },
+          { path: 'admin', component: AdminHomeComponent },
         ])
     ],
     providers: [],
