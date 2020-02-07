@@ -2,18 +2,16 @@ import { SurveyQuestion } from './SurveyQuestion';
 import { Deserializable } from '../interfaces/deserializable.interface';
 
 export class SurveyForm implements Deserializable {
-  surveyFormId: number;
-  title: string;
-  surveyQuestions: SurveyQuestion[]=new Array();
+    title: string;
+    id: number;
+    questions: SurveyQuestion[];
 
-  deserialize(input: any) {
-    (<any>Object).assign(this, input);
-    console.log(input);
-    console.log(input.questions);
-    for (var question of input["questions"]) {
-      this.surveyQuestions.push(new SurveyQuestion().deserialize(question));
+    deserialize(input: any) {
+        (<any>Object).assign(this, input);
+        input.surveyQuestions.forEach(question =>
+            this.questions.push(new SurveyQuestion().deserialize(question))
+            );
+        return this;
     }
-    return this;
-  }
 
 }

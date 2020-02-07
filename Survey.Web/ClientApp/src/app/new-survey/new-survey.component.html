@@ -1,0 +1,16 @@
+<div>new-survey Component</div>
+<form class="col-lg-4" #form="ngForm" (ngSubmit)="SubmitForm(form)">
+  <div class="form-group">
+    <label>Email</label>
+    <input type="text" id="email" name="email" class="form-control" ngModel value=""
+           required />
+  </div>
+  <div *ngFor="let question of survey.questions,let i = index" class="form-group">
+    <label>{{question.id}}</label>
+    <select class="form-control" id="option-{{question.id}}" name="option-{{question.id}}" required ngModel>
+      <option *ngFor="let option of survey.questions[i].options" [value]="option.optionValue">{{option.optionValue}}</option>
+    </select>
+  </div>
+  <button type="submit" class="add-btn btn-success">ADD</button>
+  <input class="close-btn btn-secondary"  [routerLink]="['/']" value="CLOSE" />
+</form>

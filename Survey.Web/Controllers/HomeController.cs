@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Survey.Concerns;
 using Survey.Contracts;
+using Survey.Providers;
 
 namespace Survey.Web.Controllers
 {
@@ -13,49 +14,55 @@ namespace Survey.Web.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
+        private readonly SurveyDbContext _dbContext;
         public ISurveyCRUDContract SurveyCRUDProvider { get; set; }
-        public HomeController(ISurveyCRUDContract surveyCRUD)
+        public HomeController(ISurveyCRUDContract surveyCRUD, SurveyDbContext dbContext)
         {
             this.SurveyCRUDProvider = surveyCRUD;
+            this._dbContext = dbContext;
         }
-       [HttpGet]
+        [HttpGet]
+        [Route("surveys")]
         public List<SurveyForm> GetSurveyForms()
         {
-            List<SurveyForm> f = new List<SurveyForm>();
-            f.Add(new SurveyForm
-            {
-                SurveyFormId = 1,
-                Title = "First Survey",
-                Questions = new List<SurveyQuestion>()
-            });
-            f[0].Questions.Add(new SurveyQuestion
-            {
-                Id = 2,
-                Question="Fav Color?",
-                Options = new List<SurveyOption>()
+            /*return _context.SurveyForms.ToList();*/
 
-            }) ;
-            f[0].Questions[0].Options.Add(new SurveyOption
+
+            List<SurveyForm> forms = this._dbContext.SurveyForms.ToList();
+            forms.ForEach(form =>
             {
-                Id=3,
-                OptionValue="Red"
+                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
+                form.Questions.ForEach(ques =>
+                {
+                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
+                }
+                );
             });
-            f[0].Questions[0].Options.Add(new SurveyOption
-            {
-                Id = 4,
-                OptionValue = "Blue"
-            });
-            f[0].Questions[0].Options.Add(new SurveyOption
-            {
-                Id = 5,
-                OptionValue = "Green"
-            });
-            f.Add(new SurveyForm());
-            f[1].Questions = new List<SurveyQuestion>();
-            f[1].Questions.Add(new SurveyQuestion());
-            f[1].Questions[0].Options = new List<SurveyOption>();
-            f[1].Questions[0].Options.Add(new SurveyOption());
-            return f;
+
+            return forms;
         }
+
+
+        [HttpGet]
+        [Route("survey/{id}")]
+        public SurveyForm GetSurveyFormById(int id)
+        {
+            SurveyForm form = _dbContext.SurveyForms.Find(id);
+            if (form == null)
+            {
+                return null;
+            }
+            else
+            {
+                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
+                form.Questions.ForEach(ques =>
+                {
+                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
+                }
+                );
+                return form;
+            }
+        }
+        
     }
 }

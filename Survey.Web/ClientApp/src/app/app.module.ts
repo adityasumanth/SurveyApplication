@@ -9,6 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SurveysComponent } from './surveys/surveys.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { NewSurveyComponent } from './new-survey/new-survey.component';
 import { SurveyCrudService } from './services/survey-crud.service';
 import { SurveyResultsComponent } from './survey-results/survey-results.component';
 
