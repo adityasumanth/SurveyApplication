@@ -4,6 +4,7 @@ import { Deserializable } from '../interfaces/deserializable.interface';
 
 
 export class SurveyAnswer implements Deserializable {
+    id: number;
     question: number;
     answer: number;
     deserialize(input: any) {

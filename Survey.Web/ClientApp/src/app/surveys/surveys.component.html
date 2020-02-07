@@ -1,2 +1,10 @@
 <div>Surveys Component</div>
-<div></div>
+<div>
+  <!--<p *ngIf="!surveys"><em>Loading...</em></p>-->
+  <button class="btn" [routerLinkActive]="['link-active']" [routerLink]="['/new-survey',0]">Test</button>
+  <ul>
+    <li *ngFor="let survey of surveys">
+      <button class="btn" [routerLinkActive]="['link-active']" [routerLink]="['/new-survey',survey.surveyFormId]">{{survey.title}}</button>
+    </li>
+  </ul>
+</div>

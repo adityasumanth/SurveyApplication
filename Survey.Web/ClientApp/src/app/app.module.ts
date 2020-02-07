@@ -9,6 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SurveysComponent } from './surveys/surveys.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { NewSurveyComponent } from './new-survey/new-survey.component';
 import { SurveyCrudService } from './services/survey-crud.service';
 
 @NgModule({
@@ -17,6 +18,7 @@ import { SurveyCrudService } from './services/survey-crud.service';
         NavMenuComponent,
         HomeComponent,
         SurveysComponent,
+        NewSurveyComponent,
         FetchDataComponent
     ],
     imports: [
@@ -26,6 +28,7 @@ import { SurveyCrudService } from './services/survey-crud.service';
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'surveys', component: SurveysComponent },
+            { path: 'new-survey/:id', component: NewSurveyComponent },
             { path: 'fetch-data', component: FetchDataComponent },
         ])
   ],

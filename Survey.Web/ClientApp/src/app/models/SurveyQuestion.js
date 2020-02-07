@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var SurveyOption_1 = require("./SurveyOption");
 var SurveyQuestion = /** @class */ (function () {
     function SurveyQuestion() {
-        this.options = new Array();
     }
     SurveyQuestion.prototype.deserialize = function (input) {
         Object.assign(this, input);
