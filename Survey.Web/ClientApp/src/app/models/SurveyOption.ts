@@ -2,10 +2,11 @@ import { Deserializable } from '../interfaces/deserializable.interface';
 
 
 export class SurveyOption implements Deserializable {
-    optionValue: string;
+  optionValue: string;
 
-    deserialize(input: any) {
-        (<any>Object).assign(this, input);
-        return this;
-    }
+  deserialize(input: any) {
+    debugger;
+    (<any>Object).assign(this, input);
+    return this;
+  }
 }

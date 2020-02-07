@@ -12,7 +12,7 @@ namespace Survey.Concerns
         public int Id { get; set; }
         [Required]
         [ForeignKey("SurveyQuestion")]
-        public int QuestionId { get; set; }
+        public int SurveyQuestionId { get; set; }
         [Required]
         public string OptionValue { get; set; }
     }

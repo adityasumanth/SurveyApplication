@@ -9,6 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SurveysComponent } from './surveys/surveys.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { SurveyCrudService } from './services/survey-crud.service';
 
 @NgModule({
     declarations: [
@@ -27,8 +28,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
             { path: 'surveys', component: SurveysComponent },
             { path: 'fetch-data', component: FetchDataComponent },
         ])
-    ],
-    providers: [],
+  ],
+  providers: [SurveyCrudService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
