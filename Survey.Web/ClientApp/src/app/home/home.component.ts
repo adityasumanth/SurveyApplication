@@ -13,7 +13,7 @@ export class HomeComponent{
   loadData(forms) {
     this.surveyForms = forms;
   }
-  some() {
-    console.log(this.surveyForms);
+  getForm(id: number) {
+    return this.surveyForms.find(form => form.id == id);
   }
 }

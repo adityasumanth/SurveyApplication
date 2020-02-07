@@ -1,6 +1,6 @@
 
 <div class="container d-flex flex-wrap">
-  <div *ngFor="let form of surveyForms" class="card col-3 m-3">
+  <div *ngFor="let form of surveyForms" class="card col-3 m-3" [routerLink]="['/results',form.surveyFormId]">
     <div class="card-body text-center">
       {{form.title}}
     </div>
