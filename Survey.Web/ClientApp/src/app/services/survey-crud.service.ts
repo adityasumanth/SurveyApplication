@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SurveyForm } from '../models/SurveyForm';
 import { HttpClient } from '@angular/common/http';
+import { SurveyData } from '../models/SurveyData';
 @Injectable()
 export class SurveyCrudService {
     baseUrl: string;
@@ -10,7 +11,13 @@ export class SurveyCrudService {
   }
   getSurveyForms(): Observable<SurveyForm[]> {
    
-    return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home');
+    return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/surveys');
+  }
+  getSurveyFormById(id: Number) : Observable<SurveyForm>{
+    return this.http.get<SurveyForm>(this.baseUrl + 'api/Home/survey/' + id);
+  }
+  getPollDataByFormId(id: Number): Observable<SurveyData[]> {
+    return this.http.get<SurveyData[]>(this.baseUrl + 'api/Home/pollData/' + id);
   }
   handleError(error: any) {
     let errorMsg = error.message || `Yikes! There was a problem with our hyperdrive device and we couldn't retrieve your data!`

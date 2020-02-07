@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -62,6 +63,17 @@ namespace Survey.Web.Controllers
                 );
                 return form;
             }
+        }
+        [HttpGet]
+        [Route("polldata/{id}")]
+        public List<SurveyData> GetSurveyData(int id)
+        {
+            List<SurveyData> data = _dbContext.SurveyData.Where(d => d.SurveyFormId == id).ToList();
+            data.ForEach(entry =>
+            {
+                entry.Answers = _dbContext.SurveyAnswers.Where(answer => answer.SurveyDataId == entry.Id).ToList();
+            });
+            return data;
         }
         
     }

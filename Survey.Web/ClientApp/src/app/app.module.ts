@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -30,7 +31,7 @@ import { SurveyResultsComponent } from './survey-results/survey-results.componen
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'surveys', component: SurveysComponent },
       { path: 'new-survey/:id', component: NewSurveyComponent },
-      { path: 'results', component: SurveyResultsComponent }
+      { path: 'results/:id', component: SurveyResultsComponent }
     ])
   ],
   providers: [SurveyCrudService],
