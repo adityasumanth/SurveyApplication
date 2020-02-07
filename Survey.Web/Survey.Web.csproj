@@ -19,6 +19,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,9 +31,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\interfaces\deserializable.interface.ts" />
+    <None Remove="ClientApp\src\app\models\SurveyAnswer.ts" />
+    <None Remove="ClientApp\src\app\models\SurveyData.ts" />
+    <None Remove="ClientApp\src\app\models\SurveyForm.ts" />
+    <None Remove="ClientApp\src\app\models\SurveyOption.ts" />
+    <None Remove="ClientApp\src\app\models\SurveyQuestion.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\src\app\admin-home\admin-home.component.ts" />
     <None Remove="ClientApp\src\app\create-survey\create-survey.component.ts" />
-    <None Remove="ClientApp\src\app\models\surveydata.ts" />
+
   </ItemGroup>
 
   <ItemGroup>
@@ -42,11 +53,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\deserializable.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SurveyAnswer.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SurveyData.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SurveyForm.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SurveyOption.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\SurveyQuestion.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\services\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\create-survey\create-survey.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\admin-home\admin-home.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\models\surveydata.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

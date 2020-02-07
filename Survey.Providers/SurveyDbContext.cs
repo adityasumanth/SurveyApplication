@@ -12,10 +12,5 @@ namespace Survey.Providers
         public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
         public DbSet<SurveyOption> SurveyOptions { get; set; }
         public SurveyDbContext(DbContextOptions<SurveyDbContext> options) : base(options){   }
-        //public override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer();
-        //    base.OnConfiguring(optionsBuilder);
-        //}
     }
 }
