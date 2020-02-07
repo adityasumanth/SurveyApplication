@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\interfaces\deserializable.interface.ts" />
     <None Remove="ClientApp\src\app\models\SurveyAnswer.ts" />
     <None Remove="ClientApp\src\app\models\SurveyData.ts" />
     <None Remove="ClientApp\src\app\models\SurveyForm.ts" />
@@ -45,11 +46,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\deserializable.interface.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\SurveyAnswer.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\SurveyData.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\SurveyForm.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\SurveyOption.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\SurveyQuestion.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\services\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

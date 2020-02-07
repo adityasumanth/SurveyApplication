@@ -3,6 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var SurveyOption = /** @class */ (function () {
     function SurveyOption() {
     }
+    SurveyOption.prototype.deserialize = function (input) {
+        Object.assign(this, input);
+        return this;
+    };
     return SurveyOption;
 }());
 exports.SurveyOption = SurveyOption;
