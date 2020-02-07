@@ -1,17 +1,1 @@
-
-<h2>
-  {{surveyForm.title}}
-</h2>
-
-<div class="container">
-  <div *ngFor="let question of surveyForm.questions">
-    <h4>{{question.question}}</h4>
-
-    <canvas baseChart
-            [data]="getPieChartData(question.id)"
-            [labels]="question.options"
-            [chartType]="pieChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
-  </div>
-</div>
+﻿<div style="border: 1px solid red">SurveyResults Component</div>
