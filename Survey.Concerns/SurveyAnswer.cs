@@ -11,9 +11,6 @@ namespace Survey.Concerns
         [Required]
         public int Id { get; set; }
         [Required]
-        [ForeignKey("SurveyForm")]
-        public int SurveyFormId { get; set; }
-        [Required]
         [ForeignKey("SurveyQuestion")]
         public int SurveyQuestionId { get; set; }
         [Required]

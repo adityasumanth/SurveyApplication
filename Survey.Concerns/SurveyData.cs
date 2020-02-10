@@ -14,7 +14,7 @@ namespace Survey.Concerns
         public string Email { get; set; }
         [Required]
         [ForeignKey("SurveyForm")]
-        public int SurveyFromId { get; set; }
+        public int SurveyFormId { get; set; }
         public List<SurveyAnswer> Answers { get; set; }
     }
 }
