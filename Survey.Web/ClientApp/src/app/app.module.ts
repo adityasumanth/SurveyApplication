@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SurveysComponent } from './surveys/surveys.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { NewSurveyComponent } from './new-survey/new-survey.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { CreateSurveyComponent } from './create-survey/create-survey.component';
