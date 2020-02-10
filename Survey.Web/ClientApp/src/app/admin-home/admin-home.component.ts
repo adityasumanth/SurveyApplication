@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { SurveyForm } from '../models/SurveyForm';
+import { SurveyService } from '../services/survey.service';
 
 @Component({
     selector: 'app-admin-home',
@@ -8,13 +9,13 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class AdminHomeComponent {
-    surveys: SurveyNameId[];
+  surveys: SurveyForm[] = new Array();
 
-    constructor(private http: HttpClient) {
-        this.surveys = [{ id: 1, name: 'food Survey' }];
-    }
-}
-class SurveyNameId {
-    id: number;
-    name: string;
+  constructor(private surveyService: SurveyService) {
+    this.surveyService.getSurveyForms().subscribe(forms => this.loadData(forms));
+  }
+
+  loadData(forms) {
+    this.surveys = forms;
+  }
 }

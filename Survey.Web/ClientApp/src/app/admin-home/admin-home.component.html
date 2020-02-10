@@ -11,7 +11,7 @@
 <div>
   <ul>
     <li *ngFor="let survey of surveys">
-      <h5><a [title]="survey.name" [routerLink]="['/survey', survey.id]">{{ survey.name }}</a></h5>
+      <h5><a [title]="survey.title" [routerLink]="['/results', survey.surveyFormId]">{{ survey.title }}</a></h5>
     </li>
   </ul>
 </div>
