@@ -15,27 +15,24 @@ namespace Survey.Web.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly SurveyDbContext _dbContext;
+        private readonly SurveyDbContext dbContext;
         public ISurveyCRUDContract SurveyCRUDProvider { get; set; }
         public HomeController(ISurveyCRUDContract surveyCRUD, SurveyDbContext dbContext)
         {
             this.SurveyCRUDProvider = surveyCRUD;
-            this._dbContext = dbContext;
+            this.dbContext = dbContext;
         }
         [HttpGet]
         [Route("surveys")]
         public List<SurveyForm> GetSurveyForms()
         {
-            /*return _context.SurveyForms.ToList();*/
-
-
-            List<SurveyForm> forms = this._dbContext.SurveyForms.ToList();
+            List<SurveyForm> forms = this.dbContext.SurveyForms.ToList();
             forms.ForEach(form =>
             {
-                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
+                form.Questions = this.dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
                 form.Questions.ForEach(ques =>
                 {
-                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
+                    ques.Options = this.dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
                 }
                 );
             });
@@ -48,17 +45,17 @@ namespace Survey.Web.Controllers
         [Route("survey/{id}")]
         public SurveyForm GetSurveyFormById(int id)
         {
-            SurveyForm form = _dbContext.SurveyForms.Find(id);
+            SurveyForm form = dbContext.SurveyForms.Find(id);
             if (form == null)
             {
                 return null;
             }
             else
             {
-                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
+                form.Questions = this.dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
                 form.Questions.ForEach(ques =>
                 {
-                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
+                    ques.Options = this.dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
                 }
                 );
                 return form;
@@ -69,8 +66,8 @@ namespace Survey.Web.Controllers
         [Route("addForm")]
         public SurveyForm PostNewSurveyForm ([FromBody]SurveyForm surveyForm)
         {
-            this._dbContext.SurveyForms.Add(surveyForm);
-            this._dbContext.SaveChanges();
+            this.dbContext.SurveyForms.Add(surveyForm);
+            this.dbContext.SaveChanges();
 
             return surveyForm;
         }
@@ -80,8 +77,8 @@ namespace Survey.Web.Controllers
         [Route("poll")]
         public SurveyData PostPollData([FromBody]SurveyData pollData)
         {
-            this._dbContext.SurveyData.Add(pollData);
-            this._dbContext.SaveChanges();
+            this.dbContext.SurveyData.Add(pollData);
+            this.dbContext.SaveChanges();
             
             return pollData;
         }
@@ -89,10 +86,10 @@ namespace Survey.Web.Controllers
         [Route("polldata/{id}")]
         public List<SurveyData> GetSurveyData(int id)
         {
-            List<SurveyData> data = _dbContext.SurveyData.Where(d => d.SurveyFormId == id).ToList();
+            List<SurveyData> data = dbContext.SurveyData.Where(d => d.SurveyFormId == id).ToList();
             data.ForEach(entry =>
             {
-                entry.Answers = _dbContext.SurveyAnswers.Where(answer => answer.SurveyDataId == entry.Id).ToList();
+                entry.Answers = dbContext.SurveyAnswers.Where(answer => answer.SurveyDataId == entry.Id).ToList();
             });
             return data;
         }

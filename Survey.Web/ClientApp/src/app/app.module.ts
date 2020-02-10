@@ -18,32 +18,33 @@ import { SurveyResultsComponent } from './survey-results/survey-results.componen
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    SurveysComponent,
-    NewSurveyComponent,
+    declarations: [
+        AppComponent,
+        NavMenuComponent,
+        HomeComponent,
+        SurveysComponent,
+        NewSurveyComponent,
         SurveyResultsComponent,
         AdminHomeComponent,
         CreateSurveyComponent,
         PieChartComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'surveys', component: SurveysComponent },
-      { path: 'new-survey/:id', component: NewSurveyComponent },
-        { path: 'results/:id', component: SurveyResultsComponent },
-        { path: 'admin', component: AdminHomeComponent },
-        { path: 'addsurvey', component: CreateSurveyComponent }
-    ])
-  ],
-  providers: [SurveyCrudService],
-  bootstrap: [AppComponent]
+    ],
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        HttpClientModule,
+        ChartsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot([
+            { path: '', component: HomeComponent, pathMatch: 'full' },
+            { path: 'surveys', component: SurveysComponent },
+            { path: 'new-survey/:id', component: NewSurveyComponent },
+            { path: 'results/:id', component: SurveyResultsComponent },
+            { path: 'admin', component: AdminHomeComponent },
+            { path: 'addsurvey', component: CreateSurveyComponent }
+        ])
+    ],
+    providers: [SurveyCrudService],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

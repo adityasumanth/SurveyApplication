@@ -9,23 +9,24 @@ namespace Survey.Providers
 {
     public class SurveyCRUDProvider : ISurveyCRUDContract
     {
-        private SurveyDbContext _dbContext { get; set; }
+        private SurveyDbContext dbContext { get; set; }
         public SurveyCRUDProvider(SurveyDbContext context)
         {
+            this.dbContext = context;
 
         }
         public List<SurveyForm> GetSurveyForms()
         {
-            List<SurveyForm> forms = this._dbContext.SurveyForms.ToList();
+            List<SurveyForm> forms = this.dbContext.SurveyForms.ToList();
             forms.ForEach(form =>
             {
                 form.Questions = new List<SurveyQuestion>();
-                this._dbContext.SurveyQuestions.ToList().ForEach(ques =>
+                this.dbContext.SurveyQuestions.ToList().ForEach(ques =>
                 {
                     if (ques.SurveyFormId == form.SurveyFormId)
                     {
                         ques.Options = new List<SurveyOption>();
-                        this._dbContext.SurveyOptions.ToList().ForEach(optn => { 
+                        this.dbContext.SurveyOptions.ToList().ForEach(optn => { 
                            if(optn.SurveyQuestionId == ques.Id)
                             {
                                 ques.Options.Add(optn);
