@@ -1,6 +1,4 @@
 <h5>New Survey</h5>
-<button [disabled]="loading" (click)="AddQuestion()">Add Question</button>
-<br />
 <br />
 <div *ngIf="newForm">
   <form [formGroup]="surveyNameForm" (ngSubmit)="onNameSubmit()">
@@ -13,32 +11,34 @@
 </div>
 
 <div *ngIf="!newForm">
-  <h5>Form Name : {{surveyName}}</h5>
+  <div class="container">
+    <h5>Form Name1 : {{ surveyName }}</h5>
+    
+  </div>
   <div class="questions">
-    <div class="question" *ngFor="let question of questions">
-      <label>Question : {{'  ' + question.question}} </label>
+    <div class="question" *ngFor="let question of questions; index as qno">
+      <label>Question {{qno + 1}}{{' : ' + question.question}} </label>
       <div class="options">
-        <label *ngFor="let option of question.options">Option : {{'  ' + option.optionValue}}</label>
+        <label class="option" *ngFor="let option of question.options; index as optno">Option {{optno + 1}}{{' : ' + option.optionValue}}</label>
       </div>
     </div>
-    <form [formGroup]="QuestionForm" (ngSubmit)="CreateForm()">
+    <form [formGroup]="questionForm" >
       <div class="form-group">
         <label class="col-1" for="question"> Question </label>
         <input class="col-4 offset-1" type="text" formControlName="question" />
-        <label class="col-1 offset-1" for="type"> Type </label>
-        <input class="col-1" type="number" formControlName="type" />
-        <button class="offset-1" (click)="AddOption()">Add Option</button>
+        <button class="offset-4" [disabled]="loading" (click)="AddQuestion()">Add Question</button>
       </div>
       <div>
-        <label *ngFor="let option of options">Option : {{'  ' + option.optionValue}}</label>
+        <label class="option" *ngFor="let option of options; index as optsno">Option {{ optsno + 1}}{{' : ' + option.optionValue}}</label>
       </div>
-      <form [formGroup]="optionForm" (ngSubmit)="addOption()">
+      <form [formGroup]="optionForm">
         <div class="form-group">
           <label class="col-2" for="option"> Option </label>
           <input class="col-4" type="text" formControlName="optionValue" />
+          <button class="offset-4" (click)="AddOption()">Add Option</button>
         </div>
       </form>
-      <button type="submit">Create Form</button>
+      <button type="submit" (click)="CreateForm()">Create Form</button>
     </form>
   </div>
 </div>

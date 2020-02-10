@@ -65,6 +65,16 @@ namespace Survey.Web.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("addForm")]
+        public SurveyForm PostNewSurveyForm ([FromBody]SurveyForm surveyForm)
+        {
+            this._dbContext.SurveyForms.Add(surveyForm);
+            this._dbContext.SaveChanges();
+
+            return surveyForm;
+        }
+
 
         [HttpPost]
         [Route("poll")]
