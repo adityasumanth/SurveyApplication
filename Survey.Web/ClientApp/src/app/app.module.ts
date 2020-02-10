@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, ActivatedRoute } from '@angular/router';
@@ -23,14 +23,15 @@ import { SurveyResultsComponent } from './survey-results/survey-results.componen
     HomeComponent,
     SurveysComponent,
     NewSurveyComponent,
-        SurveyResultsComponent,
-        AdminHomeComponent,
-        CreateSurveyComponent
+    SurveyResultsComponent,
+    AdminHomeComponent,
+    CreateSurveyComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'surveys', component: SurveysComponent },
