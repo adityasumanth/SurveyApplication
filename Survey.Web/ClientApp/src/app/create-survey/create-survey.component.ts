@@ -1,8 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SurveyForm } from '../models/SurveyForm';
-import { SurveyOption } from '../models/SurveyOption';
-import { SurveyQuestion } from '../models/SurveyQuestion';
+import { SurveyForm, SurveyOption, SurveyQuestion } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../services/survey.service';
@@ -20,15 +18,13 @@ export class CreateSurveyComponent implements OnInit {
     public questionForm: FormGroup;
     public options: SurveyOption[];
     public http: HttpClient;
-    public url: string;
     public optionForm: FormGroup;
     public newForm = true;
     public loading = true;
     public surveyName: string = '';
 
-    constructor(private route: ActivatedRoute, http: HttpClient, @Inject('BASE_URL') baseUrl: string, private formBuilder: FormBuilder, private surveyService: SurveyService) {
+  constructor(private route: ActivatedRoute, http: HttpClient, private formBuilder: FormBuilder, private surveyService: SurveyService) {
         this.http = http;
-        this.url = baseUrl;
         this.survey = new SurveyForm();
         this.newForm = true;
     }

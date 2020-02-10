@@ -36,6 +36,9 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\interfaces\deserializable.interface.ts" />
+    <None Remove="ClientApp\src\app\login\index.ts" />
+    <None Remove="ClientApp\src\app\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\models\index.ts" />
     <None Remove="ClientApp\src\app\models\PieChartData.ts" />
     <None Remove="ClientApp\src\app\models\SurveyAnswer.ts" />
     <None Remove="ClientApp\src\app\models\SurveyData.ts" />
@@ -47,6 +50,8 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\admin-home\admin-home.component.ts" />
     <None Remove="ClientApp\src\app\create-survey\create-survey.component.ts" />
+    <None Remove="ClientApp\src\app\models\user.ts" />
+    <None Remove="ClientApp\src\app\services\authentication.service.ts" />
 
   </ItemGroup>
 
@@ -58,6 +63,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\deserializable.interface.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\index.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\index.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\PieChartData.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\SurveyAnswer.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\SurveyData.ts" />
@@ -67,14 +75,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\create-survey\create-survey.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\admin-home\admin-home.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\User.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\authentication.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

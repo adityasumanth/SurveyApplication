@@ -12,7 +12,7 @@
 
 <div *ngIf="!newForm">
   <div class="container">
-    <h5>Form Name1 : {{ surveyName }}</h5>
+    <h5>Form Name : {{ surveyName }}</h5>
 
   </div>
   <div class="questions">
@@ -39,6 +39,7 @@
         </div>
       </form>
       <button type="submit" (click)="CreateForm()">Create Form</button>
+      <button type="button" [routerLink]="['/admin']"></button>
     </form>
   </div>
 </div>

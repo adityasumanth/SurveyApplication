@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SurveyForm } from '../models/SurveyForm';
+import { SurveyForm } from '../models';
 import { SurveyService } from '../services/survey.service';
 
 @Component({
