@@ -25,17 +25,19 @@ export class SurveyResultsComponent implements OnInit {
         this.pollResults = new Map();
     }
     ngOnInit() {
-        var ques = new SurveyQuestion();
-        ques.options = new Array();
         this.route.paramMap.subscribe(params => {
             this.id = Number(params.get('id'));
+            this.surveyService.getSurveyFormById(this.id).subscribe(result => {
+                this.surveyForm = result;
+                this.loadData()
+            }, error => console.log(error));
         });
-        this.surveyService.getSurveyFormById(this.id).subscribe(result => { this.surveyForm = result; }, error => console.log(error));
-        this.surveyService.getPollDataByFormId(this.id).subscribe(result => { this.loadData(result) }, error => console.log(error));
     }
-    loadData(result: SurveyData[]) {
-        this.pollData = result;
-        this.setPollResults();
+    loadData() {
+        this.surveyService.getPollDataByFormId(this.id).subscribe(result => {
+            this.pollData = result;
+            this.setPollResults();
+        }, error => console.log(error));
     }
     setPollResults() {
         this.surveyForm.questions.forEach(question => {
