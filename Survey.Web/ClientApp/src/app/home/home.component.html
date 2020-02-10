@@ -1,9 +1,9 @@
-
-
-  <div class="container d-flex flex-wrap">
-    <div *ngFor="let survey of surveyForms" class="card col-3 m-3" [routerLink]="['/results',survey.surveyFormId]">
-      <div class="card-body text-center">
-        {{survey.title}}
-      </div>
+<h3 class="text-center">Dashboard</h3>
+<div class="container d-flex flex-wrap">
+  <p *ngIf="!surveyForms">Loading</p>
+  <div *ngFor="let survey of surveyForms" class="card col-3 m-3" [routerLink]="['/results',survey.surveyFormId]">
+    <div class="card-body text-center">
+      {{survey.title}}
     </div>
   </div>
+</div>
