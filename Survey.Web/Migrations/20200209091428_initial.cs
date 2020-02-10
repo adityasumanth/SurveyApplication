@@ -2,7 +2,7 @@
 
 namespace Survey.Web.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace Survey.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(nullable: false),
-                    SurveyFromId = table.Column<int>(nullable: false)
+                    SurveyFormId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,7 +39,6 @@ namespace Survey.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SurveyFormId = table.Column<int>(nullable: false),
                     SurveyQuestionId = table.Column<int>(nullable: false),
                     SurveyOptionId = table.Column<int>(nullable: false),
                     SurveyDataId = table.Column<int>(nullable: false)
@@ -82,9 +81,8 @@ namespace Survey.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    QuestionId = table.Column<int>(nullable: false),
-                    OptionValue = table.Column<string>(nullable: false),
-                    SurveyQuestionId = table.Column<int>(nullable: true)
+                    SurveyQuestionId = table.Column<int>(nullable: false),
+                    OptionValue = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +92,7 @@ namespace Survey.Web.Migrations
                         column: x => x.SurveyQuestionId,
                         principalTable: "SurveyQuestions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

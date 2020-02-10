@@ -15,6 +15,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { CreateSurveyComponent } from './create-survey/create-survey.component';
 import { SurveyCrudService } from './services/survey-crud.service';
 import { SurveyResultsComponent } from './survey-results/survey-results.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SurveyResultsComponent } from './survey-results/survey-results.componen
     NewSurveyComponent,
         SurveyResultsComponent,
         AdminHomeComponent,
-        CreateSurveyComponent
+        CreateSurveyComponent,
+        PieChartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

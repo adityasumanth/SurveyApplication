@@ -9,8 +9,8 @@ using Survey.Providers;
 namespace Survey.Web.Migrations
 {
     [DbContext(typeof(SurveyDbContext))]
-    [Migration("20200207112410_update-concerns")]
-    partial class updateconcerns
+    [Migration("20200209091428_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router'; 
 import { HttpClient } from '@angular/common/http';
 import { SurveyForm } from '../models/SurveyForm';
 import { NgForm } from '@angular/forms';
@@ -51,7 +51,7 @@ export class NewSurveyComponent implements OnInit {
         this.pollData = new SurveyData();
         this.pollData.email = form.value.email;
         this.pollData.surveyFormID = this.id;
-        this.pollData.Answers = this.answers;
+        this.pollData.answers = this.answers;
         this.http.post<SurveyData>(this.url + 'api/Home/poll', this.pollData).subscribe(result => {
             console.log(result);
         }, error => console.error(error));
