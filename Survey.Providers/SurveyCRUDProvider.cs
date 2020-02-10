@@ -9,34 +9,68 @@ namespace Survey.Providers
 {
     public class SurveyCRUDProvider : ISurveyCRUDContract
     {
-        private SurveyDbContext dbContext { get; set; }
+        private SurveyDbContext _dbContext { get; set; }
         public SurveyCRUDProvider(SurveyDbContext context)
         {
-            this.dbContext = context;
-
+            this._dbContext = context;
         }
         public List<SurveyForm> GetSurveyForms()
         {
-            List<SurveyForm> forms = this.dbContext.SurveyForms.ToList();
+            List<SurveyForm> forms = this._dbContext.SurveyForms.ToList();
             forms.ForEach(form =>
             {
-                form.Questions = new List<SurveyQuestion>();
-                this.dbContext.SurveyQuestions.ToList().ForEach(ques =>
+                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
+                form.Questions.ForEach(ques =>
                 {
-                    if (ques.SurveyFormId == form.SurveyFormId)
-                    {
-                        ques.Options = new List<SurveyOption>();
-                        this.dbContext.SurveyOptions.ToList().ForEach(optn => { 
-                           if(optn.SurveyQuestionId == ques.Id)
-                            {
-                                ques.Options.Add(optn);
-                            }
-                        });
-                        form.Questions.Add(ques);
-                    }
-                });
+                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
+                }
+                );
             });
+
             return forms;
+        }
+
+        public SurveyForm GetSurveyFormById(int id)
+        {
+            SurveyForm form = _dbContext.SurveyForms.Find(id);
+            if (form == null)
+            {
+                return null;
+            }
+            else
+            {
+                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
+                form.Questions.ForEach(ques =>
+                {
+                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
+                }
+                );
+                return form;
+            }
+        }
+
+        public List<SurveyData> GetSurveyData(int id)
+        {
+            List<SurveyData> data = _dbContext.SurveyData.Where(d => d.SurveyFormId == id).ToList();
+            if (data.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                data.ForEach(entry =>
+                {
+                    entry.Answers = _dbContext.SurveyAnswers.Where(answer => answer.SurveyDataId == entry.Id).ToList();
+                });
+                return data;
+            }
+        }
+
+        public SurveyData PostPollData(SurveyData pollData)
+        {
+            this._dbContext.SurveyData.Add(pollData);
+            this._dbContext.SaveChanges();
+            return pollData;
         }
     }
 }

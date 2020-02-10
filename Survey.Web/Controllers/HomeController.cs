@@ -22,77 +22,37 @@ namespace Survey.Web.Controllers
             this.SurveyCRUDProvider = surveyCRUD;
             this.dbContext = dbContext;
         }
+
         [HttpGet]
         [Route("surveys")]
         public List<SurveyForm> GetSurveyForms()
         {
-            List<SurveyForm> forms = this.dbContext.SurveyForms.ToList();
-            forms.ForEach(form =>
-            {
-                form.Questions = this.dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
-                form.Questions.ForEach(ques =>
-                {
-                    ques.Options = this.dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
-                }
-                );
-            });
-
-            return forms;
+            return this.SurveyCRUDProvider.GetSurveyForms();
+            
         }
-
 
         [HttpGet]
         [Route("survey/{id}")]
         public SurveyForm GetSurveyFormById(int id)
         {
-            SurveyForm form = dbContext.SurveyForms.Find(id);
-            if (form == null)
-            {
-                return null;
-            }
-            else
-            {
-                form.Questions = this.dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
-                form.Questions.ForEach(ques =>
-                {
-                    ques.Options = this.dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
-                }
-                );
-                return form;
-            }
-        }
-
-        [HttpPost]
-        [Route("addForm")]
-        public SurveyForm PostNewSurveyForm ([FromBody]SurveyForm surveyForm)
-        {
-            this.dbContext.SurveyForms.Add(surveyForm);
-            this.dbContext.SaveChanges();
-
-            return surveyForm;
-        }
-
-
-        [HttpPost]
-        [Route("poll")]
-        public SurveyData PostPollData([FromBody]SurveyData pollData)
-        {
-            this.dbContext.SurveyData.Add(pollData);
-            this.dbContext.SaveChanges();
+            return this.SurveyCRUDProvider.GetSurveyFormById(id);
             
-            return pollData;
         }
+
         [HttpGet]
         [Route("polldata/{id}")]
         public List<SurveyData> GetSurveyData(int id)
         {
-            List<SurveyData> data = dbContext.SurveyData.Where(d => d.SurveyFormId == id).ToList();
-            data.ForEach(entry =>
-            {
-                entry.Answers = dbContext.SurveyAnswers.Where(answer => answer.SurveyDataId == entry.Id).ToList();
-            });
-            return data;
+            return this.SurveyCRUDProvider.GetSurveyData(id);
+            
         }
        
+        [HttpPost]
+        [Route("poll")]
+        public SurveyData PostPollData([FromBody]SurveyData pollData)
+        {
+            return this.SurveyCRUDProvider.PostPollData(pollData);
+            
+        }
     }
 }

@@ -14,21 +14,22 @@ import { PieChartContents } from '../models/PieChartData';
 /** SurveyResults component*/
 export class SurveyResultsComponent implements OnInit {
     /** SurveyResults ctor */
-    surveyForm: SurveyForm = new SurveyForm();
+    surveyForm: SurveyForm;
     id: number;
-    pollData: SurveyData[] = [];
-    pollResults: Map<SurveyQuestion, PieChartContents> = new Map();
+    pollData: SurveyData[];
+    pollResults: Map<SurveyQuestion, PieChartContents>;
     dataInitialised: boolean = false;
     constructor(private route: ActivatedRoute, private surveyCrudService: SurveyCrudService) {
-        var ques = new SurveyQuestion();
-        ques.options = new Array();
-        this.pollResults.set(ques, new PieChartContents());
-        this.route.paramMap.subscribe(params => {
-            console.log(params.get('id'));
-            this.id = Number(params.get('id'));
-        });
+        this.surveyForm= new SurveyForm();
+        this.pollData = [];
+        this.pollResults= new Map();
     }
     ngOnInit() {
+        var ques = new SurveyQuestion();
+        ques.options = new Array();
+        this.route.paramMap.subscribe(params => {
+            this.id = Number(params.get('id'));
+        });
         this.surveyCrudService.getSurveyFormById(this.id).subscribe(result => { this.surveyForm = result; }, error => console.log(error));
         this.surveyCrudService.getPollDataByFormId(this.id).subscribe(result => { this.loadData(result) }, error => console.log(error));
     }

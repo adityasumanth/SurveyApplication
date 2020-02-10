@@ -1,11 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; 
-import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { SurveyForm } from '../models/SurveyForm';
 import { NgForm } from '@angular/forms';
 import { SurveyData } from '../models/SurveyData';
 import { SurveyAnswer } from '../models/SurveyAnswer';
-import { parse } from 'url';
+import { SurveyCrudService } from '../services/survey-crud.service';
 
 @Component({
     selector: 'app-new-survey',
@@ -15,16 +14,12 @@ import { parse } from 'url';
 /** new-survey component*/
 export class NewSurveyComponent implements OnInit {
     public id: number;
-    public http: HttpClient;
-    public url: string;
     public survey: SurveyForm;
     public pollData: SurveyData;
     public answers: SurveyAnswer[];
     public email: string;
     /** new-survey ctor */
-    constructor(private route: ActivatedRoute, http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        this.http = http;
-        this.url = baseUrl;
+    constructor(private route: ActivatedRoute, private surveyCrudService: SurveyCrudService) {
         this.survey = new SurveyForm();
         this.pollData = new SurveyData();
         this.answers = new Array<SurveyAnswer>();
@@ -32,11 +27,8 @@ export class NewSurveyComponent implements OnInit {
 
     ngOnInit() {
         this.route.paramMap.subscribe(params => {
-            console.log(params.get('id'))
             this.id = Number(params.get('id'));
-            this.http.get<SurveyForm>(this.url + 'api/Home/survey/' + this.id).subscribe(result => {
-                this.survey = result;
-            }, error => console.error(error));
+            this.surveyCrudService.getSurveyFormById(this.id).subscribe(result => { this.survey = result; }, error => console.log(error));
         });
     }
 
@@ -52,9 +44,11 @@ export class NewSurveyComponent implements OnInit {
         this.pollData.email = form.value.email;
         this.pollData.surveyFormID = this.id;
         this.pollData.answers = this.answers;
-        this.http.post<SurveyData>(this.url + 'api/Home/poll', this.pollData).subscribe(result => {
-            console.log(result);
-        }, error => console.error(error));
+        this.surveyCrudService.postPollData(this.pollData).subscribe(result => {
+            window.location.href = "/surveys";
+        }, error => {
+            console.error(error); this.pollData = new SurveyData(); this.answers = new Array<SurveyAnswer>()
+        });
     }
 }
 
