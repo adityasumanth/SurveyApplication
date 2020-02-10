@@ -15,87 +15,44 @@ namespace Survey.Web.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly SurveyDbContext _dbContext;
+        private readonly SurveyDbContext dbContext;
         public ISurveyCRUDContract SurveyCRUDProvider { get; set; }
         public HomeController(ISurveyCRUDContract surveyCRUD, SurveyDbContext dbContext)
         {
             this.SurveyCRUDProvider = surveyCRUD;
-            this._dbContext = dbContext;
+            this.dbContext = dbContext;
         }
+
         [HttpGet]
         [Route("surveys")]
         public List<SurveyForm> GetSurveyForms()
         {
-            /*return _context.SurveyForms.ToList();*/
-
-
-            List<SurveyForm> forms = this._dbContext.SurveyForms.ToList();
-            forms.ForEach(form =>
-            {
-                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
-                form.Questions.ForEach(ques =>
-                {
-                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
-                }
-                );
-            });
-
-            return forms;
+            return this.SurveyCRUDProvider.GetSurveyForms();
+            
         }
-
 
         [HttpGet]
         [Route("survey/{id}")]
         public SurveyForm GetSurveyFormById(int id)
         {
-            SurveyForm form = _dbContext.SurveyForms.Find(id);
-            if (form == null)
-            {
-                return null;
-            }
-            else
-            {
-                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
-                form.Questions.ForEach(ques =>
-                {
-                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
-                }
-                );
-                return form;
-            }
-        }
-
-        [HttpPost]
-        [Route("addForm")]
-        public SurveyForm PostNewSurveyForm ([FromBody]SurveyForm surveyForm)
-        {
-            this._dbContext.SurveyForms.Add(surveyForm);
-            this._dbContext.SaveChanges();
-
-            return surveyForm;
-        }
-
-
-        [HttpPost]
-        [Route("poll")]
-        public SurveyData PostPollData([FromBody]SurveyData pollData)
-        {
-            this._dbContext.SurveyData.Add(pollData);
-            this._dbContext.SaveChanges();
+            return this.SurveyCRUDProvider.GetSurveyFormById(id);
             
-            return pollData;
         }
+
         [HttpGet]
         [Route("polldata/{id}")]
         public List<SurveyData> GetSurveyData(int id)
         {
-            List<SurveyData> data = _dbContext.SurveyData.Where(d => d.SurveyFormId == id).ToList();
-            data.ForEach(entry =>
-            {
-                entry.Answers = _dbContext.SurveyAnswers.Where(answer => answer.SurveyDataId == entry.Id).ToList();
-            });
-            return data;
+            return this.SurveyCRUDProvider.GetSurveyData(id);
+            
         }
-        
+       
+        [HttpPost]
+        [Route("poll")]
+        public SurveyData PostPollData([FromBody]SurveyData pollData)
+        {
+            return this.SurveyCRUDProvider.PostPollData(pollData);
+            
+        }
     }
 }

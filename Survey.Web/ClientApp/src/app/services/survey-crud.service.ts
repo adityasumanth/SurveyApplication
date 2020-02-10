@@ -18,7 +18,11 @@ export class SurveyCrudService {
   }
   getPollDataByFormId(id: Number): Observable<SurveyData[]> {
     return this.http.get<SurveyData[]>(this.baseUrl + 'api/Home/pollData/' + id);
-  }
+    }
+    postPollData(pollData: SurveyData): Observable<SurveyData> {
+     return this.http.post<SurveyData>(this.baseUrl + 'api/Home/poll', pollData);
+    }
+
   handleError(error: any) {
     let errorMsg = error.message || `Yikes! There was a problem with our hyperdrive device and we couldn't retrieve your data!`
     console.error(errorMsg);
