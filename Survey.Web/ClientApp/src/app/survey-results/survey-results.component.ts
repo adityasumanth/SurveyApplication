@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SurveyForm } from '../models/SurveyForm';
 import { ActivatedRoute } from '@angular/router';
-import { SurveyCrudService } from '../services/survey-crud.service';
+import { SurveyService } from '../services/survey.service';
 import { SurveyData } from '../models/SurveyData';
 import { SurveyQuestion } from '../models/SurveyQuestion';
 import { PieChartContents } from '../models/PieChartData';
@@ -19,10 +19,10 @@ export class SurveyResultsComponent implements OnInit {
     pollData: SurveyData[];
     pollResults: Map<SurveyQuestion, PieChartContents>;
     dataInitialised: boolean = false;
-    constructor(private route: ActivatedRoute, private surveyCrudService: SurveyCrudService) {
-        this.surveyForm= new SurveyForm();
+    constructor(private route: ActivatedRoute, private surveyService: SurveyService) {
+        this.surveyForm = new SurveyForm();
         this.pollData = [];
-        this.pollResults= new Map();
+        this.pollResults = new Map();
     }
     ngOnInit() {
         var ques = new SurveyQuestion();
@@ -30,8 +30,8 @@ export class SurveyResultsComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             this.id = Number(params.get('id'));
         });
-        this.surveyCrudService.getSurveyFormById(this.id).subscribe(result => { this.surveyForm = result; }, error => console.log(error));
-        this.surveyCrudService.getPollDataByFormId(this.id).subscribe(result => { this.loadData(result) }, error => console.log(error));
+        this.surveyService.getSurveyFormById(this.id).subscribe(result => { this.surveyForm = result; }, error => console.log(error));
+        this.surveyService.getPollDataByFormId(this.id).subscribe(result => { this.loadData(result) }, error => console.log(error));
     }
     loadData(result: SurveyData[]) {
         this.pollData = result;

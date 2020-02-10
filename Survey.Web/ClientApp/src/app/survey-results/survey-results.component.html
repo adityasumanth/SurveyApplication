@@ -1,8 +1,8 @@
 <h1>
   {{surveyForm.title}}
 </h1>
-<div class="container" *ngIf="dataInitialised">
-  <div *ngFor="let result of pollResults | keyvalue">
+<div class="container d-flex flex-wrap" *ngIf="dataInitialised">
+  <div *ngFor="let result of pollResults | keyvalue" class="col-lg-6">
     <h1 *ngIf="!dataInitialised">Loading</h1>
     <h3>{{result.key.question}}</h3>
     <app-pie-chart [pieChartContents]="result.value"></app-pie-chart>

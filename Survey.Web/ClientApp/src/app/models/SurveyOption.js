@@ -4,7 +4,6 @@ var SurveyOption = /** @class */ (function () {
     function SurveyOption() {
     }
     SurveyOption.prototype.deserialize = function (input) {
-        debugger;
         Object.assign(this, input);
         return this;
     };

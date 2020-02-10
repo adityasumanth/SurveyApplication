@@ -13,7 +13,7 @@
 <div *ngIf="!newForm">
   <div class="container">
     <h5>Form Name1 : {{ surveyName }}</h5>
-    
+
   </div>
   <div class="questions">
     <div class="question" *ngFor="let question of questions; index as qno">
@@ -22,7 +22,7 @@
         <label class="option" *ngFor="let option of question.options; index as optno">Option {{optno + 1}}{{' : ' + option.optionValue}}</label>
       </div>
     </div>
-    <form [formGroup]="questionForm" >
+    <form [formGroup]="questionForm">
       <div class="form-group">
         <label class="col-1" for="question"> Question </label>
         <input class="col-4 offset-1" type="text" formControlName="question" />

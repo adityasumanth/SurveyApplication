@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Survey.Contracts
 {
-    public interface ISurveyCRUDContract
+    public interface ISurveyContract
     {
         List<SurveyForm> GetSurveyForms();
         public SurveyForm GetSurveyFormById(int id);
         public List<SurveyData> GetSurveyData(int id);
         public SurveyData PostPollData(SurveyData pollData);
-
+        public SurveyForm PostNewSurveyForm(SurveyForm surveyForm);
     }
 }

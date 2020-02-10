@@ -9,10 +9,10 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SurveysComponent } from './surveys/surveys.component';
-import { NewSurveyComponent } from './new-survey/new-survey.component';
+import { SubmitSurveyComponent } from './submit-survey/submit-survey.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { CreateSurveyComponent } from './create-survey/create-survey.component';
-import { SurveyCrudService } from './services/survey-crud.service';
+import { SurveyService } from './services/survey.service';
 import { SurveyResultsComponent } from './survey-results/survey-results.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 
@@ -22,7 +22,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
         NavMenuComponent,
         HomeComponent,
         SurveysComponent,
-        NewSurveyComponent,
+        SubmitSurveyComponent,
         SurveyResultsComponent,
         AdminHomeComponent,
         CreateSurveyComponent,
@@ -37,13 +37,13 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'surveys', component: SurveysComponent },
-            { path: 'new-survey/:id', component: NewSurveyComponent },
+            { path: 'new-survey/:id', component: SubmitSurveyComponent },
             { path: 'results/:id', component: SurveyResultsComponent },
             { path: 'admin', component: AdminHomeComponent },
             { path: 'addsurvey', component: CreateSurveyComponent }
         ])
     ],
-    providers: [SurveyCrudService],
+    providers: [SurveyService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

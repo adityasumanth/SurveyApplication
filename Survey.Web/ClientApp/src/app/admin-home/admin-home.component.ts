@@ -3,9 +3,9 @@ import { SurveyForm } from '../models/SurveyForm';
 import { SurveyCrudService } from '../services/survey-crud.service';
 
 @Component({
-  selector: 'app-admin-home',
-  templateUrl: './admin-home.component.html',
-  styleUrls: ['./admin-home.component.css']
+    selector: 'app-admin-home',
+    templateUrl: './admin-home.component.html',
+    styleUrls: ['./admin-home.component.css']
 })
 
 export class AdminHomeComponent {

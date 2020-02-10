@@ -1,17 +1,17 @@
 .questions {
-    min-height: 250px;
-    max-height:1000px;
-    min-width:800px;
-    margin:20px 10px;
+  min-height: 250px;
+  max-height: 1000px;
+  min-width: 800px;
+  margin: 20px 10px;
 }
 
 .question {
-    margin: 20px 10px;
-    padding: 10px;
-    min-height: 120px;
-    max-height: 300px;
+  margin: 20px 10px;
+  padding: 10px;
+  min-height: 120px;
+  max-height: 300px;
 }
 
-.option{
-    margin-right: 25px;
+.option {
+  margin-right: 25px;
 }
