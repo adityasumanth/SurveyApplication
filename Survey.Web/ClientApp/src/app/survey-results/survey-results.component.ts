@@ -20,9 +20,9 @@ export class SurveyResultsComponent implements OnInit {
     pollResults: Map<SurveyQuestion, PieChartContents>;
     dataInitialised: boolean = false;
     constructor(private route: ActivatedRoute, private surveyService: SurveyService) {
-        this.surveyForm= new SurveyForm();
+        this.surveyForm = new SurveyForm();
         this.pollData = [];
-        this.pollResults= new Map();
+        this.pollResults = new Map();
     }
     ngOnInit() {
         var ques = new SurveyQuestion();

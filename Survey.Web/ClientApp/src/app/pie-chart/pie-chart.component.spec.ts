@@ -1,4 +1,4 @@
-﻿/// <reference path="../../../../node_modules/@types/jasmine/index.d.ts" />
+/// <reference path="../../../../node_modules/@types/jasmine/index.d.ts" />
 import { TestBed, async, ComponentFixture, ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { BrowserModule, By } from "@angular/platform-browser";
 import { PieChartComponent } from './pie-chart.component';
@@ -9,8 +9,8 @@ let fixture: ComponentFixture<PieChartComponent>;
 describe('PieChart component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ PieChartComponent ],
-            imports: [ BrowserModule ],
+            declarations: [PieChartComponent],
+            imports: [BrowserModule],
             providers: [
                 { provide: ComponentFixtureAutoDetect, useValue: true }
             ]

@@ -11,9 +11,6 @@ namespace Survey.Contracts
         public SurveyForm GetSurveyFormById(int id);
         public List<SurveyData> GetSurveyData(int id);
         public SurveyData PostPollData(SurveyData pollData);
-
         public SurveyForm PostNewSurveyForm(SurveyForm surveyForm);
-
-
     }
 }

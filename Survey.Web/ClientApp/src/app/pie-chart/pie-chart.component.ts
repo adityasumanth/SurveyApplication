@@ -8,7 +8,7 @@ import { PieChartContents } from '../models/PieChartData';
 })
 /** PieChart component*/
 export class PieChartComponent {
-    
+
     /** PieChart ctor */
     @Input() pieChartContents: PieChartContents;
     public pieChartType: string = 'pie';

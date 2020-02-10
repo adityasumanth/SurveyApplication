@@ -1,21 +1,21 @@
-﻿/// <reference path="../../../../node_modules/@types/jasmine/index.d.ts" />
+/// <reference path="../../../../node_modules/@types/jasmine/index.d.ts" />
 import { TestBed, async, ComponentFixture, ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { BrowserModule, By } from "@angular/platform-browser";
-import { NewSurveyComponent } from './new-survey.component';
+import { SubmitSurveyComponent } from './submit-survey.component';
 
-let component: NewSurveyComponent;
-let fixture: ComponentFixture<NewSurveyComponent>;
+let component: SubmitSurveyComponent;
+let fixture: ComponentFixture<SubmitSurveyComponent>;
 
 describe('new-survey component', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ NewSurveyComponent ],
-            imports: [ BrowserModule ],
+            declarations: [SubmitSurveyComponent],
+            imports: [BrowserModule],
             providers: [
                 { provide: ComponentFixtureAutoDetect, useValue: true }
             ]
         });
-        fixture = TestBed.createComponent(NewSurveyComponent);
+        fixture = TestBed.createComponent(SubmitSurveyComponent);
         component = fixture.componentInstance;
     }));
 
