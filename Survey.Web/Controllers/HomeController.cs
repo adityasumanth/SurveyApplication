@@ -86,16 +86,6 @@ namespace Survey.Web.Controllers
             });
             return data;
         }
-        
-
-
-        [HttpPost]
-        [Route("poll")]
-        public SurveyData PostPollData([FromBody]SurveyData pollData)
-        {
-            this._dbContext.SurveyData.Add(pollData);
-            this._dbContext.SaveChanges();
-            return pollData;
-        }
+       
     }
 }
