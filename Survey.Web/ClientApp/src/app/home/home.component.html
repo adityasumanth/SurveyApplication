@@ -1,8 +1,9 @@
-<button class="btn btn-primary" (click)="some()">Check</button>
-<div class="container d-flex flex-wrap">
-  <div *ngFor="let form of surveyForms" class="card col-3 m-3" [routerLink]="['/results']" [queryParams]="getForm({{form.surveyFormId}})">
-    <div class="card-body text-center">
-      {{form.title}}
+
+
+  <div class="container d-flex flex-wrap">
+    <div *ngFor="let survey of surveyForms" class="card col-3 m-3" [routerLink]="['/results',survey.surveyFormId]">
+      <div class="card-body text-center">
+        {{survey.title}}
+      </div>
     </div>
   </div>
-</div>

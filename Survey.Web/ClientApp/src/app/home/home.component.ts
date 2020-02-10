@@ -13,7 +13,4 @@ export class HomeComponent{
   loadData(forms) {
     this.surveyForms = forms;
   }
-  getForm(id: number) {
-    return this.surveyForms.find(form => form.surveyFormId == id);
-  }
 }
