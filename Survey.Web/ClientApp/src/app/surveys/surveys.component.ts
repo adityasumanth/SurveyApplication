@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SurveyForm } from '../models/SurveyForm';
 import { error } from '@angular/compiler/src/util';
-import { SurveyCrudService } from '../services/survey-crud.service';
+import { SurveyService } from '../services/survey.service';
 
 
 @Component({
@@ -16,9 +16,9 @@ export class SurveysComponent {
     public url: string;
     public surveys: SurveyForm[];
     /** Surveys ctor */
-    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private surveyCrudService: SurveyCrudService) {
+    constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private surveyService: SurveyService) {
         this.http = http;
         this.url = baseUrl;
-        this.surveyCrudService.getSurveyForms().subscribe(result => { this.surveys = result; }, error => console.log(error));
+        this.surveyService.getSurveyForms().subscribe(result => { this.surveys = result; }, error => console.log(error));
     }
 }

@@ -7,10 +7,10 @@ using System.Text;
 
 namespace Survey.Providers
 {
-    public class SurveyCRUDProvider : ISurveyCRUDContract
+    public class SurveyProvider : ISurveyContract
     {
-        private SurveyDbContext _dbContext { get; set; }
-        public SurveyCRUDProvider(SurveyDbContext context)
+        private readonly SurveyDbContext _dbContext;
+        public SurveyProvider(SurveyDbContext context)
         {
             this._dbContext = context;
         }
@@ -71,6 +71,14 @@ namespace Survey.Providers
             this._dbContext.SurveyData.Add(pollData);
             this._dbContext.SaveChanges();
             return pollData;
+        }
+
+        public SurveyForm PostNewSurveyForm(SurveyForm surveyForm)
+        {
+            this._dbContext.SurveyForms.Add(surveyForm);
+            this._dbContext.SaveChanges();
+
+            return surveyForm;
         }
     }
 }

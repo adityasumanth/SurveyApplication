@@ -1,13 +1,8 @@
 ﻿
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Survey.Concerns;
 using Survey.Contracts;
-using Survey.Providers;
 
 namespace Survey.Web.Controllers
 {
@@ -15,19 +10,17 @@ namespace Survey.Web.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly SurveyDbContext dbContext;
-        public ISurveyCRUDContract SurveyCRUDProvider { get; set; }
-        public HomeController(ISurveyCRUDContract surveyCRUD, SurveyDbContext dbContext)
+        public ISurveyContract SurveyProvider { get; set; }
+        public HomeController(ISurveyContract surveyCRUD)
         {
-            this.SurveyCRUDProvider = surveyCRUD;
-            this.dbContext = dbContext;
+            this.SurveyProvider = surveyCRUD;
         }
 
         [HttpGet]
         [Route("surveys")]
         public List<SurveyForm> GetSurveyForms()
         {
-            return this.SurveyCRUDProvider.GetSurveyForms();
+            return this.SurveyProvider.GetSurveyForms();
             
         }
 
@@ -35,7 +28,7 @@ namespace Survey.Web.Controllers
         [Route("survey/{id}")]
         public SurveyForm GetSurveyFormById(int id)
         {
-            return this.SurveyCRUDProvider.GetSurveyFormById(id);
+            return this.SurveyProvider.GetSurveyFormById(id);
             
         }
 
@@ -43,15 +36,20 @@ namespace Survey.Web.Controllers
         [Route("polldata/{id}")]
         public List<SurveyData> GetSurveyData(int id)
         {
-            return this.SurveyCRUDProvider.GetSurveyData(id);
+            return this.SurveyProvider.GetSurveyData(id);
             
         }
-       
+        [HttpPost]
+        [Route("addForm")]
+        public SurveyForm PostNewSurveyForm([FromBody]SurveyForm surveyForm)
+        {
+            return this.SurveyProvider.PostNewSurveyForm(surveyForm);
+        }
         [HttpPost]
         [Route("poll")]
         public SurveyData PostPollData([FromBody]SurveyData pollData)
         {
-            return this.SurveyCRUDProvider.PostPollData(pollData);
+            return this.SurveyProvider.PostPollData(pollData);
             
         }
     }

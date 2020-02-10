@@ -4,7 +4,7 @@ import { SurveyForm } from '../models/SurveyForm';
 import { HttpClient } from '@angular/common/http';
 import { SurveyData } from '../models/SurveyData';
 @Injectable()
-export class SurveyCrudService {
+export class SurveyService {
     baseUrl: string;
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
