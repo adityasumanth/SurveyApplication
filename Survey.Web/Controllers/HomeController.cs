@@ -52,5 +52,11 @@ namespace Survey.Web.Controllers
             return this.SurveyProvider.PostPollData(pollData);
             
         }
+        [HttpPost]
+        [Route("authenticate")]
+        public User AuthenticateUser([FromBody] UserData userData)
+        {
+            return this.SurveyProvider.AuthenticateUser(userData);
+        }
     }
 }

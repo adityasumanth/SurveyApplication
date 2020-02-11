@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { SurveyService } from '../services/survey.service';
+import { Router } from '@angular/router';
+import { User } from '../models';
 
 @Component({
     selector: 'app-nav-menu',
@@ -6,6 +9,17 @@ import { Component } from '@angular/core';
     styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
+  currentUser: User;
+
+  constructor(
+    private router: Router,
+    private surveyService: SurveyService
+  ) {
+    this.surveyService.currentUser.subscribe(x => this.currentUser = x);
+    console.log(this.surveyService.isLoggedIn);
+    console.log(this.surveyService.currentUserValue());
+  }
+  
     isExpanded = false;
 
     collapse() {
@@ -14,5 +28,9 @@ export class NavMenuComponent {
 
     toggle() {
         this.isExpanded = !this.isExpanded;
-    }
+  }
+  logout() {
+    this.surveyService.logout();
+    this.router.navigate(['/login']);
+  }
 }

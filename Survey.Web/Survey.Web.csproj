@@ -35,8 +35,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200210134343_surveyV1.cs" />
+    <Compile Remove="Migrations\20200210134343_surveyV1.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\src\app\interfaces\deserializable.interface.ts" />
-    <None Remove="ClientApp\src\app\login\index.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
     <None Remove="ClientApp\src\app\models\index.ts" />
     <None Remove="ClientApp\src\app\models\PieChartData.ts" />
@@ -63,7 +67,6 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\deserializable.interface.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\login\index.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\index.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\PieChartData.ts" />

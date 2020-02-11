@@ -80,5 +80,23 @@ namespace Survey.Providers
 
             return surveyForm;
         }
+
+        public User AuthenticateUser(UserData userData)
+        {
+            User user = _dbContext.Users.Where(user => user.UserName == userData.username).FirstOrDefault();
+            if (user != null && user.UserName == userData.username)
+            {
+                if(user.Password == userData.password)
+                {
+                    return user;
+                }
+                user = new User();
+                user.FirstName = "Password is Wrong.";
+                return user;
+            }
+            user = new User();
+            user.FirstName = "UserName doesn't Exist";
+            return user;
+        }
     }
 }

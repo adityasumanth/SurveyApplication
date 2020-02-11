@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SurveysComponent } from './surveys/surveys.component';
@@ -21,6 +22,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
         AppComponent,
         NavMenuComponent,
         HomeComponent,
+        LoginComponent,
         SurveysComponent,
         SubmitSurveyComponent,
         SurveyResultsComponent,
@@ -40,6 +42,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
             { path: 'new-survey/:id', component: SubmitSurveyComponent },
             { path: 'results/:id', component: SurveyResultsComponent },
             { path: 'admin', component: AdminHomeComponent },
+            { path: 'login', component: LoginComponent },
             { path: 'addsurvey', component: CreateSurveyComponent }
         ])
     ],
