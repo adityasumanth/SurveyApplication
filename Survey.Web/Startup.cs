@@ -32,11 +32,11 @@ namespace Survey.Web
             services.AddDbContext<SurveyDbContext>(options =>
             options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Survey.Web"))
             ) ;
-            services.AddTransient<ISurveyCRUDContract, SurveyCRUDProvider>();
+            services.AddTransient<ISurveyContract, SurveyProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

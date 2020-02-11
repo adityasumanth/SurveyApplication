@@ -1,20 +1,25 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { SurveyForm } from '../models';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SurveyService } from '../services/survey.service';
 
 @Component({
-  selector: 'app-admin-home',
-  templateUrl: './admin-home.component.html',
-  styleUrls: ['./admin-home.component.css']
+    selector: 'app-admin-home',
+    templateUrl: './admin-home.component.html',
+    styleUrls: ['./admin-home.component.css']
 })
 
 export class AdminHomeComponent {
-  surveys: SurveyNameId[];
+  surveys: SurveyForm[] = new Array();
 
-  constructor(private http: HttpClient) {
-    this.surveys = [{ id: 1, name: 'food Survey' }];
+  constructor(private surveyService: SurveyService, private router: Router) {
+    if (this.surveyService.isLoggedIn == false) {
+      this.router.navigate(['/login']);
+    }
+    this.surveyService.getSurveyForms().subscribe(forms => this.loadData(forms));
   }
-}
-class SurveyNameId {
-  id: number;
-  name: string;
+
+  loadData(forms) {
+    this.surveys = forms;
+  }
 }

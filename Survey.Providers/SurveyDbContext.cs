@@ -5,8 +5,8 @@ namespace Survey.Providers
 {
     public class SurveyDbContext : DbContext
     {
-        public DbSet<SurveyForm> SurveyForms { get; set; } 
-
+        public DbSet<SurveyForm> SurveyForms { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<SurveyData> SurveyData { get; set; }
         public DbSet<SurveyAnswer> SurveyAnswers { get; set; }
         public DbSet<SurveyQuestion> SurveyQuestions { get; set; }

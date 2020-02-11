@@ -8,7 +8,7 @@ var SurveyData = /** @class */ (function () {
         var _this = this;
         Object.assign(this, input);
         input.Answers.forEach(function (answer) {
-            return _this.Answers.push(new SurveyAnswer_1.SurveyAnswer().deserialize(answer));
+            return _this.answers.push(new SurveyAnswer_1.SurveyAnswer().deserialize(answer));
         });
         return this;
     };
