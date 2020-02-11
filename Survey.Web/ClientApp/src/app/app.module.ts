@@ -11,8 +11,9 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SurveysListComponent } from './surveys/surveys-list/surveys-list.component';
 import { AddSurveyComponent } from './surveys/add-survey/add-survey.component';
-import { AdminHomeComponent } from './admin-home/admin-home.component';
-import { CreateSurveyComponent } from './create-survey/create-survey.component';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { AdminSurveyDetailsComponent } from './admin/admin-survey-details/admin-survey-details.component';
+import { CreateSurveyComponent } from './admin/create-survey/create-survey.component';
 import { SurveyService } from './services/survey.service';
 import { SurveyDetailsComponent } from './surveys/survey-details/survey-details.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
@@ -27,6 +28,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
         SurveyDetailsComponent,
         LoginComponent,
         AdminHomeComponent,
+        AdminSurveyDetailsComponent,
         CreateSurveyComponent,
         PieChartComponent
     ],
@@ -44,7 +46,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
           {
             path: 'admin', component: AdminHomeComponent, children: [
                   { path: 'addsurvey', component: CreateSurveyComponent },
-                  { path: 'results/:id', component: SurveyDetailsComponent }
+                  { path: 'details/:id', component: AdminSurveyDetailsComponent }
             ]
           },
             { path: 'login', component: LoginComponent }

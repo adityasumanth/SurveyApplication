@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { SurveyForm } from '../models';
+import { SurveyForm } from '../../models';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SurveyService } from '../services/survey.service';
+import { SurveyService } from '../../services/survey.service';
 
 @Component({
     selector: 'app-admin-home',

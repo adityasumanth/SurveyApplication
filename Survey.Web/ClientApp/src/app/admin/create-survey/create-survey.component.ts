@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SurveyForm, SurveyOption, SurveyQuestion } from '../models';
+import { SurveyForm, SurveyOption, SurveyQuestion } from '../../models';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { SurveyService } from '../services/survey.service';
+import { SurveyService } from '../../services/survey.service';
 
 @Component({
     selector: 'app-create-survey',
