@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -29,19 +29,22 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\admin-home\**" />
+    <Compile Remove="ClientApp\src\app\create-survey\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\admin-home\**" />
+    <Content Remove="ClientApp\src\app\create-survey\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\admin-home\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\create-survey\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\admin-home\**" />
+    <None Remove="ClientApp\src\app\create-survey\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200210134343_surveyV1.cs" />
-    <Compile Remove="Migrations\20200210134343_surveyV1.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="ClientApp\src\app\interfaces\deserializable.interface.ts" />
-    <None Remove="ClientApp\src\app\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\admin\login\login.component.ts" />
     <None Remove="ClientApp\src\app\models\index.ts" />
     <None Remove="ClientApp\src\app\models\PieChartData.ts" />
     <None Remove="ClientApp\src\app\models\SurveyAnswer.ts" />
@@ -52,8 +55,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\admin-home\admin-home.component.ts" />
-    <None Remove="ClientApp\src\app\create-survey\create-survey.component.ts" />
     <None Remove="ClientApp\src\app\models\user.ts" />
     <None Remove="ClientApp\src\app\services\authentication.service.ts" />
 
@@ -67,7 +68,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\deserializable.interface.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\admin\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\index.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\PieChartData.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\SurveyAnswer.ts" />
@@ -78,10 +79,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\create-survey\create-survey.component.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="ClientApp\src\app\admin-home\admin-home.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\User.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\authentication.service.ts" />
   </ItemGroup>

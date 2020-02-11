@@ -6,7 +6,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './admin/login/login.component';
+import { UpdateSurveyComponent } from './admin/update-survey/update-survey.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { SurveysListComponent } from './surveys/surveys-list/surveys-list.component';
@@ -28,6 +29,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
         SurveyDetailsComponent,
         LoginComponent,
         AdminHomeComponent,
+        UpdateSurveyComponent,
         AdminSurveyDetailsComponent,
         CreateSurveyComponent,
         PieChartComponent
@@ -42,13 +44,12 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'surveys', component: SurveysListComponent },
             { path: 'survey/:id', component: AddSurveyComponent },
-          { path: 'results/:id', component: SurveyDetailsComponent },
-          {
-            path: 'admin', component: AdminHomeComponent, children: [
-                  { path: 'addsurvey', component: CreateSurveyComponent },
-                  { path: 'details/:id', component: AdminSurveyDetailsComponent }
-            ]
-          },
+            { path: 'results/:id', component: SurveyDetailsComponent },
+            { path: 'admin', component: AdminHomeComponent, children: [
+                { path: 'addsurvey', component: CreateSurveyComponent },
+                { path: 'details/:id', component: AdminSurveyDetailsComponent },
+                { path: 'update/:id', component: UpdateSurveyComponent } ]
+            },
             { path: 'login', component: LoginComponent }
         ])
     ],
