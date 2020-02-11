@@ -1,5 +1,5 @@
 <h3 class="text-center">Dashboard</h3>
-<div class="container d-flex flex-wrap">
+<div class="container d-flex flex-wrap justify-content-center">
   <p *ngIf="!surveyForms">Loading</p>
   <div *ngFor="let survey of surveyForms" class="card col-3 m-3" [routerLink]="['/results',survey.surveyFormId]">
     <div class="card-body text-center">

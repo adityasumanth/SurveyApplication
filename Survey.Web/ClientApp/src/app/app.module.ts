@@ -8,12 +8,12 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { SurveysComponent } from './surveys/surveys.component';
-import { SubmitSurveyComponent } from './submit-survey/submit-survey.component';
+import { SurveysListComponent } from './surveys/surveys-list/surveys-list.component';
+import { AddSurveyComponent } from './surveys/add-survey/add-survey.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { CreateSurveyComponent } from './create-survey/create-survey.component';
 import { SurveyService } from './services/survey.service';
-import { SurveyResultsComponent } from './survey-results/survey-results.component';
+import { SurveyDetailsComponent } from './surveys/survey-details/survey-details.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 @NgModule({
@@ -21,9 +21,9 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
         AppComponent,
         NavMenuComponent,
         HomeComponent,
-        SurveysComponent,
-        SubmitSurveyComponent,
-        SurveyResultsComponent,
+        SurveysListComponent,
+        AddSurveyComponent,
+        SurveyDetailsComponent,
         AdminHomeComponent,
         CreateSurveyComponent,
         PieChartComponent
@@ -36,9 +36,9 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
         ReactiveFormsModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
-            { path: 'surveys', component: SurveysComponent },
-            { path: 'new-survey/:id', component: SubmitSurveyComponent },
-            { path: 'results/:id', component: SurveyResultsComponent },
+            { path: 'surveys', component: SurveysListComponent },
+            { path: 'survey/:id', component: AddSurveyComponent },
+            { path: 'results/:id', component: SurveyDetailsComponent  },
             { path: 'admin', component: AdminHomeComponent },
             { path: 'addsurvey', component: CreateSurveyComponent }
         ])

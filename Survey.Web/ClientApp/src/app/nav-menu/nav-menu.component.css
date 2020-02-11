@@ -17,3 +17,23 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+header {
+  opacity: 0.8;
+  font-size:20px;
+}
+nav {
+  background-color: rgba(51,51,51,0.9) !important;
+  color: white
+}
+.navbar-brand {
+  font-size:20px;
+  color: #cccccc !important;
+}
+.nav-link {
+  color: #cccccc !important;
+}
+  .nav-link:hover {
+    color: white !important;
+    background-color: rgba(51,51,51,1) !important;
+  }

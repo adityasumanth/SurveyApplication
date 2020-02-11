@@ -1,0 +1,27 @@
+<div class="card col-sm-12 mb-2">
+  <h4 class="text-center m-3">{{survey.title}}</h4>
+  <form class="col-sm-8" #form="ngForm" name="form" (ngSubmit)="SubmitForm(form)" novalidate="">
+    <div class="form-group">
+      <div class="d-flex">
+        <label>Email *</label>
+        <div *ngIf="emailFormControl.invalid && (emailFormControl.dirty || emailFormControl.touched)" class="ml-3 text-danger">
+          <p *ngIf="emailFormControl.errors.required" class="mb-0">
+            Email is required.
+          </p>
+          <p *ngIf="emailFormControl.errors.email" class="mb-0">
+            Please enter a valid email.
+          </p>
+        </div>
+      </div>
+      <input type="email" [formControl]="emailFormControl" class="form-control w-50" name="email" id="email" ngModel required>
+    </div>
+    <div *ngFor="let question of survey.questions,let i = index" class="form-group">
+      <label>{{question.question}}</label>
+      <select class="form-control col-sm-5" id="option-{{question.id}}" name="option-{{question.id}}" required ngModel>
+        <option *ngFor="let option of survey.questions[i].options" [value]="option.id">{{option.optionValue}}</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success m-3">ADD</button>
+    <button type="button" class="btn btn-secondary m-3" [routerLink]="['/surveys']">Back</button>
+  </form>
+</div>
