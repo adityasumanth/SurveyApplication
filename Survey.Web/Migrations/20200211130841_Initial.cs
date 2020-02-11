@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Survey.Web.Migrations
 {
-    public partial class surveyV1 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +28,7 @@ namespace Survey.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    isActive = table.Column<bool>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
