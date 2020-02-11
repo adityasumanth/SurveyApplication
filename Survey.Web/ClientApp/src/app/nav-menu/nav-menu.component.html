@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
     <div class="container">
       <a class="navbar-brand" [routerLink]="['/']">Surveys@Technovert</a>
       <button class="navbar-toggler"
@@ -17,19 +17,19 @@
           <li class="nav-item"
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            <a class="nav-link text-secoundry" [routerLink]="['/']">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/surveys']">Surveys</a>
+            <a class="nav-link text-secoundry" [routerLink]="['/surveys']">Surveys</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="!surveyService.isLoggedIn">
-            <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
+            <a class="nav-link text-secoundry" [routerLink]="['/login']">Login</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="surveyService.isLoggedIn">
-            <a class="nav-link text-dark" [routerLink]="['/admin']">Admin</a>
+            <a class="nav-link text-secoundry" [routerLink]="['/admin']">Admin</a>
           </li>
           <li class="nav-item cursor-pointer" [routerLinkActive]="['link-active']" *ngIf="surveyService.isLoggedIn">
-            <a class="nav-link text-dark" (click)="logout()">Logout</a>
+            <a class="nav-link text-secoundry" (click)="logout()">Logout</a>
           </li>
         </ul>
       </div>

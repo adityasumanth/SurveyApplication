@@ -1,0 +1,15 @@
+.survey-list {
+  
+}
+.headings {
+  color: white;
+}
+
+
+.survey-list > div {
+  background-color: rgba(51,51,51,0.85);
+}
+
+  .survey-list > div:hover {
+    background-color: rgba(51,51,51,1);
+  }

@@ -13,4 +13,10 @@ export class HomeComponent {
     loadData(forms) {
         this.surveyForms = forms;
     }
+    getBtnClass() {
+        var classList = '';
+        var rand = Math.floor(Math.random() * 5) + 1;
+        classList = 'btn-' + rand;
+        return classList;
+    }
 }
