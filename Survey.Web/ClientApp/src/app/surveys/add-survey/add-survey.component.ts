@@ -25,7 +25,7 @@ export class AddSurveyComponent implements OnInit {
         this.survey = new SurveyForm();
         this.pollData = new SurveyData();
         this.answers = new Array<SurveyAnswer>();
-        
+
     }
 
     ngOnInit() {
@@ -38,12 +38,15 @@ export class AddSurveyComponent implements OnInit {
             Validators.email
         ]);
     }
-    
+
     SubmitForm(form: NgForm) {
         for (let q of this.survey.questions) {
             let answer: SurveyAnswer = new SurveyAnswer();
             answer.surveyQuestionId = q.id;
-            answer.surveyOptionId = parseInt(form.value["option-" + q.id]);
+            if (form.value["option-" + q.id] == "")
+                answer.surveyOptionId = 0;
+            else
+                answer.surveyOptionId = parseInt(form.value["option-" + q.id]);
             this.answers.push(answer);
         }
         this.pollData = new SurveyData();
@@ -57,6 +60,6 @@ export class AddSurveyComponent implements OnInit {
             console.error(error); this.pollData = new SurveyData(); this.answers = new Array<SurveyAnswer>()
         });
     }
-    
+
 }
 

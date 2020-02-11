@@ -21,4 +21,11 @@ export class SurveysListComponent {
         this.url = baseUrl;
         this.surveyService.getSurveyForms().subscribe(result => { this.surveys = result; }, error => console.log(error));
     }
+
+    getBtnClass() {
+        var classList = '';
+        var rand = Math.floor(Math.random() * 5) + 1;
+        classList = 'btn-'+rand;
+        return classList;
+    }
 }
