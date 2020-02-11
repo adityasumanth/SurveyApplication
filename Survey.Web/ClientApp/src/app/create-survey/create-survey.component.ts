@@ -55,7 +55,7 @@ export class CreateSurveyComponent implements OnInit {
   CreateForm() {
     this.loading = false;
     this.survey = new SurveyForm();
-    this.survey.surveyQuestions = this.questions;
+    this.survey.questions = this.questions;
     this.survey.title = this.surveyName;
 
   }
