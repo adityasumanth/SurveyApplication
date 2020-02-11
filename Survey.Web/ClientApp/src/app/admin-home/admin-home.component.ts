@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SurveyForm } from '../models';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../services/survey.service';
 
 @Component({
@@ -11,7 +12,10 @@ import { SurveyService } from '../services/survey.service';
 export class AdminHomeComponent {
   surveys: SurveyForm[] = new Array();
 
-  constructor(private surveyService: SurveyService) {
+  constructor(private surveyService: SurveyService, private router: Router) {
+    if (this.surveyService.isLoggedIn == false) {
+      this.router.navigate(['/login']);
+    }
     this.surveyService.getSurveyForms().subscribe(forms => this.loadData(forms));
   }
 

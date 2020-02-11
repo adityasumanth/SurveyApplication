@@ -40,10 +40,13 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
             { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'surveys', component: SurveysComponent },
             { path: 'new-survey/:id', component: SubmitSurveyComponent },
-            { path: 'results/:id', component: SurveyResultsComponent },
-            { path: 'admin', component: AdminHomeComponent },
-            { path: 'login', component: LoginComponent },
-            { path: 'addsurvey', component: CreateSurveyComponent }
+          { path: 'results/:id', component: SurveyResultsComponent },
+          {
+            path: 'admin', component: AdminHomeComponent, children: [
+              { path: 'addsurvey', component: CreateSurveyComponent }
+            ]
+          },
+            { path: 'login', component: LoginComponent }
         ])
     ],
     providers: [SurveyService],
