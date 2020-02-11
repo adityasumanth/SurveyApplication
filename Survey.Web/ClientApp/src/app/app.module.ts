@@ -43,7 +43,8 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
           { path: 'results/:id', component: SurveyDetailsComponent },
           {
             path: 'admin', component: AdminHomeComponent, children: [
-              { path: 'addsurvey', component: CreateSurveyComponent }
+                  { path: 'addsurvey', component: CreateSurveyComponent },
+                  { path: 'results/:id', component: SurveyDetailsComponent }
             ]
           },
             { path: 'login', component: LoginComponent }

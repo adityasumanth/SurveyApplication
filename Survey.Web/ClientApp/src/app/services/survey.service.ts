@@ -23,6 +23,10 @@ export class SurveyService {
         return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/surveys');
     }
 
+    getSurveyFormsAsAdmin(): Observable<SurveyForm[]> {
+        return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/admin/surveys');
+    }
+
     getSurveyFormById(id: Number): Observable<SurveyForm> {
         return this.http.get<SurveyForm>(this.baseUrl + 'api/Home/survey/' + id);
     }

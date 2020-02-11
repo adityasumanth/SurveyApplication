@@ -15,9 +15,7 @@ namespace Survey.Concerns
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime CreatedOn { get; set; }
+        public bool isActive { get; set; }
         [Required]
         [ForeignKey("User")]
         public int CreatedBy { get; set; }

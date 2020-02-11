@@ -8,10 +8,11 @@ namespace Survey.Contracts
     public interface ISurveyContract
     {
         List<SurveyForm> GetSurveyForms();
-        public SurveyForm GetSurveyFormById(int id);
-        public List<SurveyData> GetSurveyData(int id);
-        public SurveyData PostPollData(SurveyData pollData);
-        public SurveyForm PostNewSurveyForm(SurveyForm surveyForm);
-        public User AuthenticateUser(UserData userData);
+        List<SurveyForm> GetSurveyFormsAsAdmin();
+        SurveyForm GetSurveyFormById(int id);
+        List<SurveyData> GetSurveyData(int id);
+        SurveyData PostPollData(SurveyData pollData);
+        SurveyForm PostNewSurveyForm(SurveyForm surveyForm);
+        User AuthenticateUser(UserData userData);
     }
 }

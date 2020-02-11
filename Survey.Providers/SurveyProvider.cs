@@ -16,7 +16,7 @@ namespace Survey.Providers
         }
         public List<SurveyForm> GetSurveyForms()
         {
-            List<SurveyForm> forms = this._dbContext.SurveyForms.ToList();
+            List<SurveyForm> forms = this._dbContext.SurveyForms.Where(form=>form.isActive==true).ToList();
             forms.ForEach(form =>
             {
                 form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
@@ -30,6 +30,21 @@ namespace Survey.Providers
             return forms;
         }
 
+        public List<SurveyForm> GetSurveyFormsAsAdmin()
+        {
+            List<SurveyForm> forms = this._dbContext.SurveyForms.ToList();
+            forms.ForEach(form =>
+            {
+                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
+                form.Questions.ForEach(ques =>
+                {
+                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
+                }
+                );
+            });
+
+            return forms;
+        }
         public SurveyForm GetSurveyFormById(int id)
         {
             SurveyForm form = _dbContext.SurveyForms.Find(id);

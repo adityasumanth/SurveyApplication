@@ -1,45 +1,55 @@
-<h5>New Survey</h5>
-<br />
-<div *ngIf="newForm">
-  <form [formGroup]="surveyNameForm" (ngSubmit)="onNameSubmit()">
-    <div class="form-group">
-      <label for="title"> Survey Title </label> <br />
-      <input type="text" formControlName="title" />
-    </div>
-    <button type="submit">Generate Form</button>
-  </form>
-</div>
-
-<div *ngIf="!newForm">
-  <div class="container">
-    <h5>Form Name : {{ surveyName }}</h5>
-
-  </div>
-  <div class="questions">
-    <div class="question" *ngFor="let question of questions; index as qno">
-      <label>Question {{qno + 1}}{{' : ' + question.question}} </label>
-      <div class="options">
-        <label class="option" *ngFor="let option of question.options; index as optno">Option {{optno + 1}}{{' : ' + option.optionValue}}</label>
-      </div>
-    </div>
-    <form [formGroup]="questionForm">
-      <div class="form-group">
-        <label class="col-1" for="question"> Question </label>
-        <input class="col-4 offset-1" type="text" formControlName="question" />
-        <button class="offset-4" [disabled]="loading" (click)="AddQuestion()">Add Question</button>
-      </div>
-      <div>
-        <label class="option" *ngFor="let option of options; index as optsno">Option {{ optsno + 1}}{{' : ' + option.optionValue}}</label>
-      </div>
-      <form [formGroup]="optionForm">
+<div class="container opacity-box">
+  <div class="m-2">
+    <br/>
+    <h5>New Survey</h5>
+    <br />
+    <div *ngIf="newForm">
+      <form [formGroup]="surveyNameForm" (ngSubmit)="onNameSubmit()">
         <div class="form-group">
-          <label class="col-2" for="option"> Option </label>
-          <input class="col-4" type="text" formControlName="optionValue" />
-          <button class="offset-4" (click)="AddOption()">Add Option</button>
+          <label for="title"> Survey Title </label> <br />
+          <input type="text" formControlName="title" />
         </div>
+        <div class="form-group">
+          <label for="description"> Description </label> <br />
+          <input type="text" formControlName="description" />
+        </div>
+        <button type="submit" class="btn btn-secondary">Generate Empty Survey</button>
       </form>
-      <button type="submit" class="btn btn-success m-3" (click)="CreateForm()">Create Form</button>
-      <button type="button" class="btn btn-secondary m-3" [routerLink]="['/admin']">Back</button>
-    </form>
+      <br />
+    </div>
+  </div>
+
+  <div *ngIf="!newForm">
+    <div class="container">
+      <h5>Form Name : {{ surveyName }}</h5>
+
+    </div>
+    <div class="questions">
+      <div class="question" *ngFor="let question of questions; index as qno">
+        <label>Question {{qno + 1}}{{' : ' + question.question}} </label>
+        <div class="options">
+          <label class="option" *ngFor="let option of question.options; index as optno">Option {{optno + 1}}{{' : ' + option.optionValue}}</label>
+        </div>
+      </div>
+      <form [formGroup]="questionForm">
+        <div class="form-group">
+          <label class="col-1" for="question"> Question </label>
+          <input class="col-4 offset-1" type="text" formControlName="question" />
+          <button class="offset-4" [disabled]="loading" (click)="AddQuestion()">Add Question</button>
+        </div>
+        <div>
+          <label class="option" *ngFor="let option of options; index as optsno">Option {{ optsno + 1}}{{' : ' + option.optionValue}}</label>
+        </div>
+        <form [formGroup]="optionForm">
+          <div class="form-group">
+            <label class="col-2" for="option"> Option </label>
+            <input class="col-4" type="text" formControlName="optionValue" />
+            <button class="offset-4" (click)="AddOption()">Add Option</button>
+          </div>
+        </form>
+        <button type="submit" class="btn btn-success m-3" (click)="CreateForm()">Create Form</button>
+        <button type="button" class="btn btn-secondary m-3" [routerLink]="['/admin']">Back</button>
+      </form>
+    </div>
   </div>
 </div>

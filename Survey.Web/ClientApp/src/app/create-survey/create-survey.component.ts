@@ -18,20 +18,24 @@ export class CreateSurveyComponent implements OnInit {
     public questionForm: FormGroup;
     public options: SurveyOption[];
     public http: HttpClient;
+    public url: string;
     public optionForm: FormGroup;
     public newForm = true;
     public loading = true;
     public surveyName: string = '';
+    public Description: string = "";
 
-  constructor(private route: ActivatedRoute, http: HttpClient, private formBuilder: FormBuilder, private surveyService: SurveyService) {
+    constructor(private route: ActivatedRoute, http: HttpClient, @Inject('BASE_URL') baseUrl: string, private formBuilder: FormBuilder, private surveyService: SurveyService) {
         this.http = http;
+        this.url = baseUrl;
         this.survey = new SurveyForm();
         this.newForm = true;
     }
 
     ngOnInit() {
         this.surveyNameForm = this.formBuilder.group({
-            title: ['']
+            title: [''],
+            description:['']
         });
         this.questionForm = this.formBuilder.group({
             question: [''],
@@ -51,6 +55,7 @@ export class CreateSurveyComponent implements OnInit {
     onNameSubmit() {
         this.newForm = false;
         this.surveyName = this.f.title.value;
+        this.Description = this.f.description.value;
         this.loading = false;
         this.questions = [];
         this.options = [];
@@ -61,6 +66,9 @@ export class CreateSurveyComponent implements OnInit {
         this.survey = new SurveyForm();
         this.survey.questions = this.questions;
         this.survey.title = this.surveyName;
+        this.survey.description = this.Description;
+        this.survey.createdBy = 1;
+        this.survey.isActive = true;
 
         this.surveyService.postNewSurvey(this.survey).subscribe(result => {
             window.location.href = "/admin";

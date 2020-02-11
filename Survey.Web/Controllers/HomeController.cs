@@ -23,6 +23,13 @@ namespace Survey.Web.Controllers
             return this.SurveyProvider.GetSurveyForms();
             
         }
+        [HttpGet]
+        [Route("admin/surveys")]
+        public List<SurveyForm> GetSurveyFormsAsAdmin()
+        {
+            return this.SurveyProvider.GetSurveyFormsAsAdmin();
+
+        }
 
         [HttpGet]
         [Route("survey/{id}")]

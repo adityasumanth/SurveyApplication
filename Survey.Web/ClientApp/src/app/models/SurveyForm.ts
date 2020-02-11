@@ -5,7 +5,9 @@ export class SurveyForm implements Deserializable {
     title: string;
     id: number;
     questions: SurveyQuestion[];
-
+    description: string;
+    createdBy: number;
+    isActive: boolean;
     deserialize(input: any) {
         (<any>Object).assign(this, input);
         input.surveyQuestions.forEach(question =>
