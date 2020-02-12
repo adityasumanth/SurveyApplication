@@ -1,55 +1,60 @@
+<div class="text-center"><button class="btn btn-primary m-2" [routerLink]="['../']">Admin Page</button></div>
 <div class="container opacity-box">
   <div class="m-2">
-    <br/>
+    <br />
     <h5>New Survey</h5>
     <br />
     <div *ngIf="newForm">
-      <form [formGroup]="surveyNameForm" (ngSubmit)="onNameSubmit()">
-        <div class="form-group">
-          <label for="title"> Survey Title </label> <br />
-          <input type="text" formControlName="title" />
+      <form class="form-group" (ngSubmit)="generateNewForm()">
+        <div>
+          <label> Survey Title </label> <br />
+          <input type="text" name="title" [(ngModel)]="title" required />
         </div>
-        <div class="form-group">
+        <div>
           <label for="description"> Description </label> <br />
-          <input type="text" formControlName="description" />
+          <input type="text" name="description" [(ngModel)]="description" required />
+        </div>
+        <div class="is-invalid">
+          <span> {{formError}}</span>
         </div>
         <button type="submit" class="btn btn-secondary">Generate Empty Survey</button>
+        <br />
       </form>
-      <br />
     </div>
   </div>
 
   <div *ngIf="!newForm">
     <div class="container">
-      <h5>Form Name : {{ surveyName }}</h5>
-
+      <h3 class="text-center">Form Name : {{currentForm.title}}</h3>
+      <h5 class="text-center">Form Description : {{currentForm.description}}</h5>
     </div>
-    <div class="questions">
-      <div class="question" *ngFor="let question of questions; index as qno">
-        <label>Question {{qno + 1}}{{' : ' + question.question}} </label>
-        <div class="options">
-          <label class="option" *ngFor="let option of question.options; index as optno">Option {{optno + 1}}{{' : ' + option.optionValue}}</label>
+    <div class="container margin-bottom-50 padding-bottom-50">
+      <div class="questions">
+        <div class="form-group question" *ngFor="let question of currentForm.questions, let qid = index">
+          <label class="font-weight-bold col-2"> Question {{' ' + (qid+1) + ' : '}} </label>
+          <input class="col-8" type="text" placeholder="Enter A Question" name="question.question" [(ngModel)]="question.question" required />
+          <div class="options">
+            <div class="form-group" *ngFor="let option of currentForm.questions[qid].options, let oid = index">
+              <label class="font-weight-bold col-2 offset-2"> Option {{' ' + (oid+1) + ' : '}} </label>
+              <input class="col-5" name="optionValue" placeholder="Enter An Option" type="text" [(ngModel)]="option.optionValue" />
+              <button type="button" (click)="deleteOption(qid,oid)">Delete</button>
+            </div>
+            <div class="row">
+              <div class="offset-4 action-buttons">
+                <button type="button" (click)="addOption(qid)">+ Add Option</button>
+                <button type="button" (click)="deleteQuestion(qid)">Delete Question</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <form [formGroup]="questionForm">
-        <div class="form-group">
-          <label class="col-1" for="question"> Question </label>
-          <input class="col-4 offset-1" type="text" formControlName="question" />
-          <button class="offset-4" [disabled]="loading" (click)="AddQuestion()">Add Question</button>
+      <div class="row">
+        <div class="margin-left-43 col-3">
+          <button type="button" (click)="addQuestion()">+ Add Question</button>
+          <button type="button" (click)="createForm()">Create Form</button>
         </div>
-        <div>
-          <label class="option" *ngFor="let option of options; index as optsno">Option {{ optsno + 1}}{{' : ' + option.optionValue}}</label>
-        </div>
-        <form [formGroup]="optionForm">
-          <div class="form-group">
-            <label class="col-2" for="option"> Option </label>
-            <input class="col-4" type="text" formControlName="optionValue" />
-            <button class="offset-4" (click)="AddOption()">Add Option</button>
-          </div>
-        </form>
-        <button type="submit" class="btn btn-success m-3" (click)="CreateForm()">Create Form</button>
-        <button type="button" class="btn btn-secondary m-3" [routerLink]="['/admin']">Back</button>
-      </form>
+
+      </div>
     </div>
   </div>
 </div>

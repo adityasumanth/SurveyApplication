@@ -1,107 +1,80 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { SurveyForm, SurveyOption, SurveyQuestion } from '../../models';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
 import { SurveyService } from '../../services/survey.service';
+import { FormService } from '../../services/form.service';
+import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-create-survey',
-    templateUrl: './create-survey.component.html',
-    styleUrls: ['./create-survey.component.css']
+  selector: 'app-create-survey',
+  templateUrl: './create-survey.component.html',
+  styleUrls: ['./create-survey.component.css']
 })
 
 export class CreateSurveyComponent implements OnInit {
-    public surveyNameForm: FormGroup;
-    public survey: SurveyForm;
-    public questions: SurveyQuestion[];
-    public questionForm: FormGroup;
-    public options: SurveyOption[];
-    public http: HttpClient;
-    public url: string;
-    public optionForm: FormGroup;
-    public newForm = true;
-    public loading = true;
-    public surveyName: string = '';
-    public Description: string = "";
+  public currentForm: SurveyForm;
+  public currentFormValue: Observable<SurveyForm>;
+  public newForm: boolean = true;
+  public title: string = '';
+  public description: string = '';
+  public formError: string = '';
+  public addQuestionDisable: boolean = true;
+  public addOptionDisable: boolean[];
 
-    constructor(private route: ActivatedRoute, http: HttpClient, @Inject('BASE_URL') baseUrl: string, private formBuilder: FormBuilder, private surveyService: SurveyService) {
-        this.http = http;
-        this.url = baseUrl;
-        this.survey = new SurveyForm();
-        this.newForm = true;
+  constructor(private formService: FormService, private surveyService: SurveyService) {
+  }
+
+  ngOnInit() {
+
+  }
+
+  generateNewForm(): any {
+    //console.log(this.title + ' form ' + this.description);
+    if (this.title == '' || this.description == '') {
+      this.formError = 'Enter valid form name';
     }
-
-    ngOnInit() {
-        this.surveyNameForm = this.formBuilder.group({
-            title: [''],
-            description:['']
-        });
-        this.questionForm = this.formBuilder.group({
-            question: [''],
-            type: []
-        });
-        this.optionForm = this.formBuilder.group({
-            optionValue: ['']
-        });
+    else {
+      this.currentForm = this.formService.GenerateForm(this.title, this.description);
+      //console.log(this.currentForm);
+      this.newForm = false;
+      this.addOptionDisable = [];
+      this.addOptionDisable.push(false);
+      return this.currentForm;
     }
+  }
 
-    get f() { return this.surveyNameForm.controls; }
+  addQuestion() {
+    this.currentForm = this.formService.AddQuestion();
+  }
 
-    get q() { return this.questionForm.controls; }
-
-    get o() { return this.optionForm.controls; }
-
-    onNameSubmit() {
-        this.newForm = false;
-        this.surveyName = this.f.title.value;
-        this.Description = this.f.description.value;
-        this.loading = false;
-        this.questions = [];
-        this.options = [];
+  deleteQuestion(qid: number) {
+    if (qid < this.currentForm.questions.length) {
+        this.formService.deleteQuestion(qid);
     }
+  }
 
-    CreateForm() {
-        this.loading = false;
-        this.survey = new SurveyForm();
-        this.survey.questions = this.questions;
-        this.survey.title = this.surveyName;
-        this.survey.description = this.Description;
-        this.survey.createdBy = 1;
-        this.survey.isActive = true;
+  addOption(i: number) {
+    if (i < this.currentForm.questions.length) {
+      var length = this.currentForm.questions[i].options.length;
+      if (this.currentForm.questions[i].options[length - 1].optionValue == '') {
 
-        this.surveyService.postNewSurvey(this.survey).subscribe(result => {
-            window.location.href = "/admin";
-        }, error => console.error(error));
+      }
+      this.currentForm = this.formService.AddOption(i);
     }
+  }
 
-    question: SurveyQuestion;
-    AddQuestion() {
-        console.log(this.q.question.value + '  ' + this.q.type.value);
-        this.question = new SurveyQuestion();
-        this.question.question = this.q.question.value;
-        this.question.type = 2;
-        this.question.options = this.options;
-        this.questions.push(this.question);
-        this.options = [];
-        this.questionForm = this.formBuilder.group({
-            question: [''],
-            type: []
-        });
-        this.optionForm = this.formBuilder.group({
-            optionValue: ['']
-        });
-        console.log("Add Question");
-    }
+  createForm() {
+    console.log(this.currentForm);
+    this.currentFormValue = this.surveyService.postNewSurvey(this.currentForm);
+    console.log('Return form');
+    console.log(this.currentFormValue);
+  }
 
-    option: SurveyOption;
-    AddOption() {
-        console.log(this.o.optionValue.value);
-        this.option = new SurveyOption();
-        this.option.optionValue = this.o.optionValue.value;
-        this.options.push(this.option);
-        this.optionForm = this.formBuilder.group({
-            optionValue: ['']
-        })
+  deleteOption(qid: number, oid: number) {
+    if (qid < this.currentForm.questions.length) {
+      if (oid < this.currentForm.questions[qid].options.length) {
+        this.formService.deleteOption(qid, oid);
+      }
     }
+  }
 }
