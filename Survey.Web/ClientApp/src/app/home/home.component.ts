@@ -6,7 +6,8 @@ import { SurveyService } from '../services/survey.service';
     templateUrl: './home.component.html',
 })
 export class HomeComponent {
-    surveyForms: SurveyForm[] = new Array();
+  surveyForms: SurveyForm[] = new Array();
+  classList: string[] = ['shake'];
     constructor(private surveyService: SurveyService) {
         this.surveyService.getSurveyForms().subscribe(forms => this.loadData(forms));
     }
@@ -14,9 +15,6 @@ export class HomeComponent {
         this.surveyForms = forms;
     }
     getBtnClass() {
-        var classList = '';
-        var rand = Math.floor(Math.random() * 5) + 1;
-        classList = 'btn-' + rand;
-        return classList;
+        return this.classList;
     }
 }
