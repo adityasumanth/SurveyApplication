@@ -32,7 +32,7 @@ export class FormService {
       this.currentForm.questions.push(new SurveyQuestion());
       this.currentForm.questions[0].type = 2;
     this.currentForm.questions[0].options = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
       this.currentForm.questions[0].options.push(new SurveyOption());
     }
     this.questionsLength++;
@@ -40,6 +40,9 @@ export class FormService {
   }
 
   AddQuestion(): SurveyForm {
+    if (this.currentForm.questions.length == 0) {
+      this.currentForm.questions = [];
+    }
     this.currentForm.questions.push(new SurveyQuestion());
     this.currentForm.questions[this.questionsLength].options = [];
     for (let i = 0; i < 2; i++) {
@@ -52,16 +55,23 @@ export class FormService {
 
   deleteQuestion(qid: number): SurveyForm {
     this.currentForm.questions.splice(qid, 1);
+    this.questionsLength--;
     return this.currentForm;
   }
 
   AddOption(qid: number): SurveyForm {
+    if (this.currentForm.questions[qid].options.length == 0) {
+      this.currentForm.questions[qid].options = [];
+    }
     this.currentForm.questions[qid].options.push(new SurveyOption());
     var length = this.currentForm.questions[qid].options.length;
     return this.currentForm;
   }
 
   deleteOption(qid: number, oid: number): SurveyForm {
+    if (this.currentForm.questions.length == 0) {
+      this.currentForm.questions = [];
+    }
     this.currentForm.questions[qid].options.splice(oid, 1);
     return this.currentForm;
   }

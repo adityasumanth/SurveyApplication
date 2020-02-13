@@ -96,6 +96,30 @@ namespace Survey.Providers
             return surveyForm;
         }
 
+        public SurveyForm PutSurveyForm(SurveyForm surveyForm)
+        {
+            /*int surveyId = surveyForm.SurveyFormId;
+            foreach (SurveyQuestion question in surveyForm.Questions)
+            {
+                if(question.Id == null)
+                {
+                    question.SurveyFormId = surveyId;
+                    this._dbContext.SurveyQuestions.Add(question);
+                }
+                else
+                {
+                    foreach(SurveyOption option in question.Options)
+                    {
+                        if(option.Id==null)
+                    }
+                }
+            }*/
+            this._dbContext.Entry(surveyForm);
+            this._dbContext.SaveChanges();
+
+            return surveyForm;
+        }
+
         public User AuthenticateUser(UserData userData)
         {
             User user = _dbContext.Users.Where(user => user.UserName == userData.username).FirstOrDefault();

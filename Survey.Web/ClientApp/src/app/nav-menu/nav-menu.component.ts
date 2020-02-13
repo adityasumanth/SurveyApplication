@@ -13,7 +13,7 @@ export class NavMenuComponent {
 
   constructor(
     private router: Router,
-    private surveyService: SurveyService
+    public surveyService: SurveyService
   ) {
     this.surveyService.currentUser.subscribe(x => this.currentUser = x);
     console.log(this.surveyService.isLoggedIn);

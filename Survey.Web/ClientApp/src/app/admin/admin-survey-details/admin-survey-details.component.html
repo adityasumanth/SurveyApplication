@@ -3,7 +3,7 @@
     {{survey.title}}
   </h1>
   <p class="m-3">Description: {{survey.description}}</p>
-  <form class="col-sm-10" #form="ngForm" name="form" (ngSubmit)="SubmitForm(form)" novalidate="">
+  <form class="col-sm-10" #form="ngForm" name="form" novalidate="">
     <div *ngFor="let question of survey.questions,let i = index" class="form-group">
       <label>{{question.question}}</label>
       <div class="d-flex">

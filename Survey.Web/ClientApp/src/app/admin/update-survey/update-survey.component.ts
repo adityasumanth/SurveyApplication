@@ -74,6 +74,10 @@ export class UpdateSurveyComponent implements OnInit {
 
   UpdateForm() {
     console.log(this.currentForm);
-
+    this.surveyService.putNewSurvey(this.currentForm).subscribe(result => {
+      this.router.navigate(['../../']);
+    }, error => {
+      console.error(error);
+    });
   }
 }
