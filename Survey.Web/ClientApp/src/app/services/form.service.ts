@@ -29,7 +29,8 @@ export class FormService {
     this.currentForm.isActive = true;
     this.currentForm.createdBy = this.currentUser.userId;
     this.currentForm.questions = [];
-    this.currentForm.questions.push(new SurveyQuestion());
+      this.currentForm.questions.push(new SurveyQuestion());
+      this.currentForm.questions[0].type = 2;
     this.currentForm.questions[0].options = [];
     for (let i = 0; i < 3; i++) {
       this.currentForm.questions[0].options.push(new SurveyOption());
@@ -43,7 +44,9 @@ export class FormService {
     this.currentForm.questions[this.questionsLength].options = [];
     for (let i = 0; i < 3; i++) {
       this.currentForm.questions[this.questionsLength].options.push(new SurveyOption());
-    }
+      }
+      this.currentForm.questions[this.questionsLength].type = 2;
+
     this.questionsLength++;
     return this.currentForm;
   }
