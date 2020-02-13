@@ -23,7 +23,8 @@ export class CreateSurveyComponent implements OnInit {
     public formError: string = '';
     public addQuestionDisable: boolean = true;
     public addOptionDisable: boolean[];
-    public error: boolean=false;
+    public error: boolean = false;
+    public errorMsg: string = '';
     
     constructor(private formService: FormService, private surveyService: SurveyService, private router: Router) {
     }
@@ -52,16 +53,22 @@ export class CreateSurveyComponent implements OnInit {
     }
 
     addQuestion() {
+        this.error = false;
         this.currentForm = this.formService.AddQuestion();
     }
 
     deleteQuestion(qid: number) {
-        if (qid < this.currentForm.questions.length) {
+        if (this.currentForm.questions.length == 1) {
+            this.errorMsg = 'A minimum of 1 Question is required';
+            this.error = true;
+        }
+        else if (qid < this.currentForm.questions.length) {
             this.formService.deleteQuestion(qid);
         }
     }
 
     addOption(i: number) {
+        this.error = false;
         if (i < this.currentForm.questions.length) {
             var length = this.currentForm.questions[i].options.length;
             if (this.currentForm.questions[i].options[length - 1].optionValue == '') {
@@ -81,9 +88,16 @@ export class CreateSurveyComponent implements OnInit {
 
     deleteOption(qid: number, oid: number) {
         if (qid < this.currentForm.questions.length) {
-            if (oid < this.currentForm.questions[qid].options.length) {
+            if (this.currentForm.questions[qid].options.length == 2) {
+                this.errorMsg = 'A minimum of 2 Options are required';
+                this.error = true;
+            }
+            else if (oid < this.currentForm.questions[qid].options.length) {
                 this.formService.deleteOption(qid, oid);
             }
         }
+    }
+    closeAlert() {
+        this.error = false;
     }
 }

@@ -16,13 +16,10 @@
           </div>
 
           <div *ngIf="error" class="alert alert-danger border border-danger is-invalid ml-0 m-3 col-3">{{formError}}</div>
-          <!--<div class="is-invalid">
-            <span> {{formError}}</span>
-          </div>-->
           <br />
           <button type="submit" class="btn btn-primary">Generate Empty Survey</button>
         </form>
-        <br/>
+        <br />
       </div>
     </div>
 
@@ -30,6 +27,11 @@
       <div class="container">
         <h3 class="text-center">Form Name : {{currentForm.title}}</h3>
         <h5 class="text-center">Form Description : {{currentForm.description}}</h5>
+      </div>
+      <div *ngIf="error" class="alert alert-danger alert-dismissible fade show border border-danger is-invalid ml-0 m-3 col-6">
+        {{errorMsg}}<button type="button" class="close" (click)="closeAlert()" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="container margin-bottom-50 padding-bottom-50">
         <div class="questions overflow-hidden">
