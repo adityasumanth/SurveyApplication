@@ -1,11 +1,13 @@
-<h3 class="headings text-center">Surveys</h3>
-<p *ngIf="!surveys"><em>Loading...</em></p>
-<div class="container d-flex flex-wrap survey-list justify-content-center opacity-box">
-  <div *ngFor="let survey of surveys" class="card col-3 m-3 h-50  btn-d " [routerLink]="['/survey',survey.surveyFormId]" [ngClass]=getBtnClass()>
-    <div class="card-body text-center">
-      {{survey.title}}
+<div class="above-skew">
+  <h3 class="headings text-center">Surveys</h3>
+  <p *ngIf="!surveys"><em>Loading...</em></p>
+  <div class="container d-flex flex-wrap  justify-content-center opacity-box">
+    <div *ngFor="let survey of surveys" class="card col-3 m-3 h-50  btn-d " [routerLink]="['/survey',survey.surveyFormId]">
+      <div class="card-header text-center">{{survey.title}}</div>
+      <div class="card-body text-center">
+        {{survey.description}}
+      </div>
+      <button class="btn btn-primary">Click to Poll !!!</button>
     </div>
   </div>
 </div>
-
-

@@ -23,6 +23,7 @@ export class CreateSurveyComponent implements OnInit {
     public formError: string = '';
     public addQuestionDisable: boolean = true;
     public addOptionDisable: boolean[];
+    public error: boolean=false;
     
     constructor(private formService: FormService, private surveyService: SurveyService, private router: Router) {
     }
@@ -32,13 +33,17 @@ export class CreateSurveyComponent implements OnInit {
     }
 
     generateNewForm(): any {
-        //console.log(this.title + ' form ' + this.description);
-        if (this.title == '' || this.description == '') {
+        if (this.title == '' ) {
             this.formError = 'Enter valid form name';
+            this.error = true;
+        }
+        else if (this.description == '') {
+            this.formError = 'Description is mandatory';
+            this.error = true;
         }
         else {
+            this.error = false;
             this.currentForm = this.formService.GenerateForm(this.title, this.description);
-            //console.log(this.currentForm);
             this.newForm = false;
             this.addOptionDisable = [];
             this.addOptionDisable.push(false);

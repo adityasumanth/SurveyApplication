@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SurveyForm } from '@app/models/SurveyForm';
 import { error } from '@angular/compiler/src/util';
@@ -22,10 +22,5 @@ export class SurveysListComponent {
         this.surveyService.getSurveyForms().subscribe(result => { this.surveys = result; }, error => console.log(error));
     }
 
-    getBtnClass() {
-        var classList = '';
-        var rand = Math.floor(Math.random() * 5) + 1;
-        classList = 'btn-'+rand;
-        return classList;
-    }
+    
 }

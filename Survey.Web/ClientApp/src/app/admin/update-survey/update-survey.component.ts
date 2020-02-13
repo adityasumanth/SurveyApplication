@@ -36,7 +36,6 @@ export class UpdateSurveyComponent implements OnInit {
         this.id = Number(params.get('id'));
         this.surveyService.getSurveyFormById(this.id).subscribe(result => {
           this.survey = result;
-          console.log(this.survey.title + this.survey.description);
         }, error => console.log(error));
       });
       this.questions = this.survey.questions;
@@ -85,7 +84,6 @@ export class UpdateSurveyComponent implements OnInit {
 
     question: SurveyQuestion;
     AddQuestion() {
-        console.log(this.q.question.value + '  ' + this.q.type.value);
         this.question = new SurveyQuestion();
         this.question.question = this.q.question.value;
         this.question.type = 2;
@@ -99,12 +97,10 @@ export class UpdateSurveyComponent implements OnInit {
         this.optionForm = this.formBuilder.group({
             optionValue: ['']
         });
-        console.log("Add Question");
     }
 
     option: SurveyOption;
     AddOption() {
-        console.log(this.o.optionValue.value);
         this.option = new SurveyOption();
         this.option.optionValue = this.o.optionValue.value;
         this.options.push(this.option);
