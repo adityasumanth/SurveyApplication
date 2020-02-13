@@ -4,4 +4,35 @@
     <h5>Update Survey</h5>
     <br />
   </div>
+    <div class="container margin-bottom-50 padding-bottom-50">
+      <h3 class="text-center"> Survey Title : <input type="text" name="title" [(ngModel)]="currentForm.title" [value]="currentForm.title" /> </h3>
+      <h4 class="text-left"> Survey Description : <input type="text" name="description" [(ngModel)]="currentForm.description" [value]="currentForm.description" /> </h4>
+      <div class="questions">
+        <div class="form-group question" *ngFor="let question of currentForm.questions, let qid = index">
+          <label class="font-weight-bold col-2"> Question {{' ' + (qid+1) + ' : '}} </label>
+          <input class="col-8" type="text" placeholder="Enter A Question" name="question" [(ngModel)]="question.question" [value]="question.question"  required />
+          <input class="col-2" type="number" name="id" [(ngModel)]="question.id" hidden />
+          <div class="options">
+            <div class="form-group" *ngFor="let option of currentForm.questions[qid].options, let oid = index">
+              <label class="font-weight-bold col-2 offset-2"> Option {{' ' + (oid+1) + ' : '}} </label>
+              <input class="col-5" name="optionValue" placeholder="Enter An Option" type="text" [(ngModel)]="option.optionValue" [value]="option.optionValue" />
+              <button type="button" (click)="deleteOption(qid,oid)">Delete</button>
+              <input type="number" name="id" [(ngModel)]="option.id" hidden />
+            </div>
+            <div class="row">
+              <div class="offset-4 action-buttons">
+                <button type="button" (click)="addOption(qid)">+ Add Option</button>
+                <button type="button" (click)="deleteQuestion(qid)">Delete Question</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="margin-left-43 col-3">
+          <button type="button" (click)="addQuestion()">+ Add Question</button>
+          <button type="button" (click)="UpdateForm()">Create Form</button>
+        </div>
+      </div>
+    </div>
 </div>

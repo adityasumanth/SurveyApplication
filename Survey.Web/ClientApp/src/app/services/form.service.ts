@@ -42,11 +42,10 @@ export class FormService {
   AddQuestion(): SurveyForm {
     this.currentForm.questions.push(new SurveyQuestion());
     this.currentForm.questions[this.questionsLength].options = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
       this.currentForm.questions[this.questionsLength].options.push(new SurveyOption());
-      }
-      this.currentForm.questions[this.questionsLength].type = 2;
-
+    }
+    this.currentForm.questions[this.questionsLength].type = 2;
     this.questionsLength++;
     return this.currentForm;
   }
