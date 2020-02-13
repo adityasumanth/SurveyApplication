@@ -1,34 +1,7 @@
 <div class="container opacity-box">
   <div class="m-2">
     <br/>
-    <h5>New Survey</h5>
+    <h5>Update Survey</h5>
     <br />
-    <div >
-      <form [formGroup]="surveyNameForm" (ngSubmit)="onNameSubmit()">
-        <div class="form-group">
-          <label for="title"> Survey Title </label> <br />
-          <input type="text" formControlName="title" value={{this.survey.title}} />
-        </div>
-        <div class="form-group">
-          <label for="description"> Description </label> <br />
-          <input type="text" formControlName="description" value={{this.survey.description}} />
-        </div>
-      <br />
-      <div class="questions">
-        <div class="question" *ngFor="let question of survey.questions; index as qno">
-          <div class="form-group">
-            <label for="title"> {{'Question ' + (qno+1) + ' : '}} </label>
-            <input type="text" id={{question.id}} value={{question.question}} />
-          </div>
-          <div class="form-group" *ngFor="let option of question.options; index as optno">
-            <label for="title"> {{'Option ' + (optno+1) + ' : '}} </label>
-            <input type="text" id={{option.id}} value={{option.optionValue}} />
-          </div>
-        </div>
-        <button type="submit" class="btn btn-success m-3" (click)="EditForm()">Edit Form</button>
-        <button type="button" class="btn btn-secondary m-3" [routerLink]="['/admin']">Back</button>
-      </div>
-      </form>
-    </div>
   </div>
 </div>

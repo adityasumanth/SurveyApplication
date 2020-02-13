@@ -12,8 +12,7 @@ import { SurveyService } from '../../services/survey.service';
 })
 
 export class UpdateSurveyComponent implements OnInit {
-    public surveyNameForm: FormGroup;
-    public survey: SurveyForm;
+    public currentSurvey: SurveyForm;
     public questions: SurveyQuestion[];
     public questionForm: FormGroup;
     public options: SurveyOption[];
