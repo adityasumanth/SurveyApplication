@@ -13,9 +13,6 @@ export class AdminHomeComponent {
     surveys: SurveyForm[] = new Array();
 
     constructor(private surveyService: SurveyService, private router: Router) {
-        if (this.surveyService.isLoggedIn == false) {
-            this.router.navigate(['/login']);
-        }
         this.surveyService.getSurveyFormsAsAdmin().subscribe(forms => this.loadData(forms));
     }
 

@@ -52,6 +52,14 @@ namespace Survey.Web.Controllers
         {
             return this.SurveyProvider.PostNewSurveyForm(surveyForm);
         }
+
+        [HttpPut]
+        [Route("form")]
+        public SurveyForm PutSurveyForm([FromBody]SurveyForm surveyForm)
+        {
+            return this.SurveyProvider.PutSurveyForm(surveyForm);
+        }
+
         [HttpPost]
         [Route("poll")]
         public SurveyData PostPollData([FromBody]SurveyData pollData)

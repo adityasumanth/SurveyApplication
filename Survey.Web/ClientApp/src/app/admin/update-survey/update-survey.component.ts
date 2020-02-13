@@ -2,8 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SurveyForm, SurveyOption, SurveyQuestion } from '../../models';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { SurveyService } from '../../services/survey.service';
+import { FormService } from '../../services/form.service';
 
 @Component({
     selector: 'app-update-survey',
@@ -12,100 +14,70 @@ import { SurveyService } from '../../services/survey.service';
 })
 
 export class UpdateSurveyComponent implements OnInit {
-    public surveyNameForm: FormGroup;
-    public survey: SurveyForm;
-    public questions: SurveyQuestion[];
-    public questionForm: FormGroup;
-    public options: SurveyOption[];
-    public http: HttpClient;
-    public url: string;
-    public optionForm: FormGroup;
-    public loading = true;
-    public surveyName: string = '';
-    public Description: string = "";
-    id: number;
+  public currentForm: SurveyForm;
+  public sid: number;
+  public currentFormValue: Observable<SurveyForm>;
+  public newForm: boolean = true;
+  public formError: string = '';
+  public addQuestionDisable: boolean = true;
+  public addOptionDisable: boolean[];
+  public questionsLength: number = 0;
 
-    constructor(private route: ActivatedRoute, http: HttpClient, @Inject('BASE_URL') baseUrl: string, private formBuilder: FormBuilder, private surveyService: SurveyService) {
-        this.http = http;
-        this.url = baseUrl;
-        this.survey = new SurveyForm();
+  constructor(private route: ActivatedRoute, private formService: FormService, private surveyService: SurveyService, private router: Router) {
+    this.currentForm = new SurveyForm();
+    this.route.paramMap.subscribe(params => {
+      this.sid = Number(params.get('id'));
+      this.surveyService.getSurveyFormById(this.sid).subscribe(result => {
+        this.currentForm = result;
+        this.questionsLength = this.currentForm.questions.length;
+        console.log(this.currentForm);
+      }, error => console.log(error));
+    });
+  }
+
+  ngOnInit() {    
+  }
+
+  deleteOption(qid: number, oid: number): SurveyForm {
+    if (qid < this.questionsLength && qid > 0) {
+      if (oid < this.currentForm.questions[qid].options.length && oid > 0) {
+        this.currentForm.questions[qid].options.slice(oid, 1);
+      }
     }
+    return this.currentForm;
+  }
 
-    ngOnInit() {
-      this.route.paramMap.subscribe(params => {
-        this.id = Number(params.get('id'));
-        this.surveyService.getSurveyFormById(this.id).subscribe(result => {
-          this.survey = result;
-        }, error => console.log(error));
-      });
-      this.questions = this.survey.questions;
-      this.surveyNameForm = this.formBuilder.group({
-        title: [''],
-        description: ['']
-        });
-        this.questionForm = this.formBuilder.group({
-            question: [''],
-            type: []
-        });
-        this.optionForm = this.formBuilder.group({
-            optionValue: ['']
-        });
+  addOption(qid: number): SurveyForm {
+    if (qid < this.questionsLength) {
+      this.currentForm.questions[qid].options.push(new SurveyOption());
     }
+    return this.currentForm;
+  }
 
-    get f() { return this.surveyNameForm.controls; }
-
-    get q() { return this.questionForm.controls; }
-
-    get o() { return this.optionForm.controls; }
-
-    onNameSubmit() {
-        this.surveyName = this.f.title.value;
-        this.Description = this.f.description.value;
-        this.loading = false;
-        this.questions = [];
-        this.options = [];
+  deleteQuestion(qid: number): SurveyForm {
+    if (qid < this.questionsLength) {
+      this.currentForm.questions.slice(qid, 1);
     }
+    this.questionsLength--;
+    return this.currentForm;
+  }
 
-    
-
-    CreateForm() {
-        this.loading = false;
-        this.survey = new SurveyForm();
-        this.survey.questions = this.questions;
-        this.survey.title = this.surveyName;
-        this.survey.description = this.Description;
-        this.survey.createdBy = 1;
-        this.survey.isActive = true;
-
-        this.surveyService.postNewSurvey(this.survey).subscribe(result => {
-            window.location.href = "/admin";
-        }, error => console.error(error));
+  addQuestion(): SurveyForm {
+    this.currentForm.questions.push(new SurveyQuestion());
+    this.currentForm.questions[this.questionsLength].options = [];
+    for (let i = 0; i < 2; i++) {
+      this.currentForm.questions[this.questionsLength].options.push(new SurveyOption());
     }
+    this.questionsLength++;
+    return this.currentForm;
+  }
 
-    question: SurveyQuestion;
-    AddQuestion() {
-        this.question = new SurveyQuestion();
-        this.question.question = this.q.question.value;
-        this.question.type = 2;
-        this.question.options = this.options;
-        this.questions.push(this.question);
-        this.options = [];
-        this.questionForm = this.formBuilder.group({
-            question: [''],
-            type: []
-        });
-        this.optionForm = this.formBuilder.group({
-            optionValue: ['']
-        });
-    }
-
-    option: SurveyOption;
-    AddOption() {
-        this.option = new SurveyOption();
-        this.option.optionValue = this.o.optionValue.value;
-        this.options.push(this.option);
-        this.optionForm = this.formBuilder.group({
-            optionValue: ['']
-        });
-    }
+  UpdateForm() {
+    console.log(this.currentForm);
+    this.surveyService.putNewSurvey(this.currentForm).subscribe(result => {
+      this.router.navigate(['../../']);
+    }, error => {
+      console.error(error);
+    });
+  }
 }
