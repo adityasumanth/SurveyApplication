@@ -68,7 +68,6 @@ export class AddSurveyComponent implements OnInit {
             this.pollData.answers = this.answers;
             this.surveyService.postPollData(this.pollData).subscribe(result => {
                 this.router.navigate(['/surveys']);
-                alert('succesfullly submitted');
             }, error => {
                 console.error(error); this.pollData = new SurveyData(); this.answers = new Array<SurveyAnswer>()
             });

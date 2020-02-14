@@ -88,7 +88,6 @@ export class UpdateSurveyComponent implements OnInit {
     }
 
     UpdateForm() {
-        console.log(this.currentForm);
         this.updateSurvey = new UpdateSurvey();
         this.updateSurvey.SurveyForm = <SurveyForm>this.currentForm;
         this.updateSurvey.DeletedQuestions = this.deletedQuestions;

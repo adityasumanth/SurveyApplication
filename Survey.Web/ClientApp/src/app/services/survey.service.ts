@@ -24,7 +24,7 @@ export class SurveyService {
     }
 
     getSurveyFormsAsAdmin(): Observable<SurveyForm[]> {
-        return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/admin/surveys');
+        return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/admin-surveys');
     }
 
     getSurveyFormById(id: Number): Observable<SurveyForm> {
@@ -36,15 +36,15 @@ export class SurveyService {
     }
 
     postPollData(pollData: SurveyData): Observable<SurveyData> {
-        return this.http.post<SurveyData>(this.baseUrl + 'api/Home/poll', pollData);
+        return this.http.post<SurveyData>(this.baseUrl + 'api/Home/pollSurvey', pollData);
     }
 
     postNewSurvey(survey: SurveyForm): Observable<SurveyForm> {
-        return this.http.post<SurveyForm>(this.baseUrl + 'api/Home/addForm', survey);
+        return this.http.post<SurveyForm>(this.baseUrl + 'api/Home/addSurvey', survey);
     }
 
     putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
-        return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/form', updateSurvey);
+        return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/updateSurvey', updateSurvey);
     }
 
     public currentUserValue(): User {
