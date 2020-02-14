@@ -55,9 +55,9 @@ namespace Survey.Web.Controllers
 
         [HttpPut]
         [Route("form")]
-        public SurveyForm PutSurveyForm([FromBody]SurveyForm surveyForm)
+        public SurveyForm PutSurveyForm([FromBody]UpdateSurvey updateSurvey )
         {
-            return this.SurveyProvider.PutSurveyForm(surveyForm);
+            return this.SurveyProvider.PutSurveyForm(updateSurvey.SurveyForm,updateSurvey.DeletedQuestions,updateSurvey.DeletedOptions);
         }
 
         [HttpPost]

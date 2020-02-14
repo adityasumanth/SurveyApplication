@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SurveyForm, SurveyData, User } from '../models';
+import { SurveyForm, SurveyData, User, UpdateSurvey } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 @Injectable()
@@ -43,8 +43,8 @@ export class SurveyService {
         return this.http.post<SurveyForm>(this.baseUrl + 'api/Home/addForm', survey);
     }
 
-    putNewSurvey(survey: SurveyForm): Observable<SurveyForm> {
-        return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/form', survey);
+    putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
+        return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/form', { updateSurvey });
     }
 
     public currentUserValue(): User {
