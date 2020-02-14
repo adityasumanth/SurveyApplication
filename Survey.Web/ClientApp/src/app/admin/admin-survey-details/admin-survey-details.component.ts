@@ -13,13 +13,14 @@ export class AdminSurveyDetailsComponent implements OnInit {
     public survey: SurveyForm;
     public id: number;
     /** admin-survey-details ctor */
-    constructor(private route: ActivatedRoute, private surveyService: SurveyService) {
+    constructor(private route: ActivatedRoute, private surveyService: SurveyService,private router:Router) {
       this.survey = new SurveyForm();
     }
 
   changeState(id: number) {
     this.surveyService.changeState(id).subscribe(result => {
-      this.survey = result;
+        this.survey = result;
+        this.router.navigate(['/admin']);
     },error=>console.log(error));
     }
 
