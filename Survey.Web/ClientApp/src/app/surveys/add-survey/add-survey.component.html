@@ -8,7 +8,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form class="col-sm-5" #form="ngForm" name="form" (ngSubmit)="SubmitForm(form)" novalidate="">
+      <form class="col-sm-5" #form="ngForm" name="form" (ngSubmit)="submitBtn.hidden=true;SubmitForm(form);submitBtn.hidden=false" novalidate="">
         <div class="form-group">
           <div class="d-flex">
             <label>Email *</label>
@@ -32,7 +32,7 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-success m-3">ADD</button>
+        <button type="submit" #submitBtn class="btn btn-success m-3">Submit</button>
         <button type="button" class="btn btn-secondary m-3" [routerLink]="['/surveys']">Back</button>
       </form>
     </div>

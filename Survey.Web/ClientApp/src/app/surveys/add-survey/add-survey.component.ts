@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SurveyForm } from '@app/models/SurveyForm';
 import { NgForm, FormGroup, Validators, EmailValidator, FormControl } from '@angular/forms';
 import { SurveyData } from '@app/models/SurveyData';
@@ -22,8 +22,9 @@ export class AddSurveyComponent implements OnInit {
     public emailFormControl = new FormControl;
     public error: boolean = false;
     public errorMsg: string = "";
+    public editmode: boolean = false;
     /** new-survey ctor */
-    constructor(private route: ActivatedRoute, private surveyService: SurveyService) {
+    constructor(private route: ActivatedRoute, private surveyService: SurveyService,private router:Router) {
         this.survey = new SurveyForm();
         this.pollData = new SurveyData();
         this.answers = new Array<SurveyAnswer>();
@@ -42,6 +43,7 @@ export class AddSurveyComponent implements OnInit {
     }
 
     SubmitForm(form: NgForm) {
+        this.editmode = true;
         if (this.emailFormControl.value == "") {
             this.errorMsg = "Email is required."
             this.error = true;
@@ -65,11 +67,13 @@ export class AddSurveyComponent implements OnInit {
             this.pollData.surveyFormID = this.id;
             this.pollData.answers = this.answers;
             this.surveyService.postPollData(this.pollData).subscribe(result => {
-                window.location.href = "/surveys";
+                this.router.navigate(['/surveys']);
+                alert('succesfullly submitted');
             }, error => {
                 console.error(error); this.pollData = new SurveyData(); this.answers = new Array<SurveyAnswer>()
             });
         }
+        this.editmode = false;
     }
     closeAlert() {
         this.error = false;

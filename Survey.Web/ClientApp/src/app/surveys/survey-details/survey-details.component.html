@@ -3,7 +3,7 @@
     <h1 class="text-center">
       {{surveyForm.title}}
     </h1>
-    <h5 *ngIf="noPolls">Sorry, No one submitted this survey yet.</h5>
+    <h5 *ngIf="noPolls">Sorry, No data available.</h5>
     <div class="container d-flex flex-wrap" *ngIf="dataInitialised">
       <div *ngFor="let result of pollResults | keyvalue" class="col-lg-6">
         <h1 *ngIf="!dataInitialised">Loading</h1>

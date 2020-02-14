@@ -39,7 +39,7 @@
             <label class="font-weight-bold col-2"> Question {{' ' + (qid+1) + ' : '}} </label>
             <input class="col-7" type="text" placeholder="Enter A Question" name="question.question" [(ngModel)]="question.question" required />
             <button type="button" class="btn btn-danger ml-5" (click)="deleteQuestion(qid)">Delete Question</button>
-            <div class="options">
+            <div class="options mt-3">
               <div class="form-group" *ngFor="let option of currentForm.questions[qid].options, let oid = index">
                 <label class="font-weight-bold col-2 offset-2"> Option {{' ' + (oid+1) + ' : '}} </label>
                 <input class="col-5" name="optionValue" placeholder="Enter An Option" type="text" [(ngModel)]="option.optionValue" />

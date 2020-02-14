@@ -1,36 +1,39 @@
-<div class="above-skew">
-  <div class="container opacity-box">
-    <div class="m-2">
-      <br />
-      <h5>New Survey</h5>
-      <br />
-      <div>
-        <form [formGroup]="surveyNameForm" (ngSubmit)="onNameSubmit()">
-          <div class="form-group">
-            <label for="title"> Survey Title </label> <br />
-            <input type="text" formControlName="title" value={{this.survey.title}} />
+<div class="container opacity-box">
+  <div class="m-2">
+    <br />
+    <h5>Update Survey</h5>
+    <br />
+  </div>
+  <div class="container margin-bottom-50 padding-bottom-50">
+    <h5> <label class="col-3">Survey Title : </label><input type="text" name="title" [(ngModel)]="currentForm.title" [value]="currentForm.title" /> </h5>
+    <h5> <label class="col-3">Survey Description : </label><input type="text" name="description" [(ngModel)]="currentForm.description" [value]="currentForm.description" /> </h5>
+    <div class="questions">
+      <div class="form-group question" *ngFor="let question of currentForm.questions, let qid = index">
+        <label class="font-weight-bold col-2"> Question {{' ' + (qid+1) + ' : '}} </label>
+        <input class="col-7" type="text" placeholder="Enter A Question" name="question" [(ngModel)]="question.question" [value]="question.question" required />
+        <input class="col-2" type="number" name="id" [(ngModel)]="question.id" hidden />
+        <button type="button" class="btn btn-danger ml-5" (click)="deleteQuestion(qid)">Delete Question</button>
+        <div class="options mt-3">
+          <div class="form-group" *ngFor="let option of currentForm.questions[qid].options, let oid = index">
+            <label class="font-weight-bold col-2 offset-2"> Option {{' ' + (oid+1) + ' : '}} </label>
+            <input class="col-5" name="optionValue" placeholder="Enter An Option" type="text" [(ngModel)]="option.optionValue" [value]="option.optionValue" />
+            <button type="button" class="btn btn-primary ml-5" (click)="deleteOption(qid,oid)">Delete</button>
+            <input type="number" name="id" [(ngModel)]="option.id" hidden />
           </div>
-          <div class="form-group">
-            <label for="description"> Description </label> <br />
-            <input type="text" formControlName="description" value={{this.survey.description}} />
-          </div>
-          <br />
-          <div class="questions">
-            <div class="question" *ngFor="let question of survey.questions; index as qno">
-              <div class="form-group">
-                <label for="title"> {{'Question ' + (qno+1) + ' : '}} </label>
-                <input type="text" id={{question.id}} value={{question.question}} />
-              </div>
-              <div class="form-group" *ngFor="let option of question.options; index as optno">
-                <label for="title"> {{'Option ' + (optno+1) + ' : '}} </label>
-                <input type="text" id={{option.id}} value={{option.optionValue}} />
-              </div>
+          <div class="row">
+            <div class="offset-4 action-buttons">
+              <button type="button" class="btn btn-primary" (click)="addOption(qid)">Add Option</button>
             </div>
-            <button type="submit" class="btn btn-success m-3" (click)="EditForm()">Edit Form</button>
-            <button type="button" class="btn btn-secondary m-3" [routerLink]="['/admin']">Back</button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
+      <div class="row">
+        <div class="margin-left-43 col-11 mb-5">
+          <button type="button" class="btn btn-primary" (click)="addQuestion()">Add Question</button>
+          <button type="button" class="btn btn-success ml-2 float-right" (click)="UpdateForm()">Update Form</button>
+          <button class="btn btn-warning float-right" [routerLink]="['/admin']">Back</button>
+        </div>
+      </div>
   </div>
 </div>
