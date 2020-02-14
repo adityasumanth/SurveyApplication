@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SurveyForm, UpdateSurvey } from '../../models';
+import { SurveyForm, UpdateSurvey, SurveyOption, SurveyQuestion } from '../../models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SurveyService } from '../../services/survey.service';
@@ -16,9 +16,9 @@ export class UpdateSurveyComponent implements OnInit {
   public sid: number;
   public currentFormValue: Observable<SurveyForm>;
   public newForm: boolean = true;
-  public updateSurvey: UpdateSurvey;
-  public deletedQuestionIds: number[];
-  public deletedOptionIds: number[];
+    public updateSurvey: UpdateSurvey;
+    public deletedQuestions: SurveyQuestion[];
+    public deletedOptions: SurveyOption[];
 
   constructor(private route: ActivatedRoute, private formService: FormService, private surveyService: SurveyService, private router: Router) {
     this.currentForm = new SurveyForm();
@@ -30,8 +30,8 @@ export class UpdateSurveyComponent implements OnInit {
       },
         error => console.log(error));
     });
-    this.deletedQuestionIds = [];
-    this.deletedOptionIds = [];
+      this.deletedQuestions = new Array<SurveyQuestion>();
+      this.deletedOptions = new Array<SurveyOption>();
   }
 
   ngOnInit() {    
@@ -41,7 +41,7 @@ export class UpdateSurveyComponent implements OnInit {
     if (qid < this.currentForm.questions.length) {
       if (oid < this.currentForm.questions[qid].options.length) {
         if (this.currentForm.questions[qid].options[oid].id != 0) {
-          this.deletedOptionIds.push(this.currentForm.questions[qid].options[oid].id);
+          this.deletedOptions.push(this.currentForm.questions[qid].options[oid]);
         }
         this.currentForm=this.formService.deleteOption(qid, oid);
       }
@@ -59,7 +59,7 @@ export class UpdateSurveyComponent implements OnInit {
   deleteQuestion(qid: number): SurveyForm {
     if (qid < this.currentForm.questions.length) {
       if (this.currentForm.questions[qid].id != 0) {
-        this.deletedQuestionIds.push(this.currentForm.questions[qid].id);
+        this.deletedQuestions.push(this.currentForm.questions[qid]);
       }
       this.currentForm = this.formService.deleteQuestion(qid);
     }
@@ -74,9 +74,9 @@ export class UpdateSurveyComponent implements OnInit {
   UpdateForm() {
     console.log(this.currentForm);
     this.updateSurvey = new UpdateSurvey();
-    this.updateSurvey.surveyForm = <SurveyForm>this.currentForm;
-    this.updateSurvey.deletedQuestionIds = this.deletedQuestionIds;
-    this.updateSurvey.deletedOptionIds = this.deletedOptionIds;
+    this.updateSurvey.SurveyForm = <SurveyForm>this.currentForm;
+    this.updateSurvey.DeletedQuestions = this.deletedQuestions;
+    this.updateSurvey.DeletedOptions = this.deletedOptions;
     this.surveyService.putNewSurvey(this.updateSurvey).subscribe(result => {
       this.router.navigate(['../../']);
     }, error => {

@@ -7,7 +7,7 @@ namespace Survey.Concerns
     public class UpdateSurvey
     {
         public SurveyForm SurveyForm { get; set; }
-        public int[] DeletedQuestions { get; set; }
-        public int[] DeletedOptions { get; set; }
+        public List<SurveyQuestion> DeletedQuestions { get; set; }
+        public List<SurveyOption> DeletedOptions { get; set; }
     }
 }

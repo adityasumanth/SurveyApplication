@@ -1,5 +1,6 @@
 import { SurveyQuestion } from './SurveyQuestion';
 import { Deserializable } from '../interfaces/deserializable.interface';
+import { SurveyOption } from './SurveyOption';
 
 export class SurveyForm implements Deserializable {
     title: string;
@@ -19,7 +20,7 @@ export class SurveyForm implements Deserializable {
 }
 
 export class UpdateSurvey {
-  surveyForm: SurveyForm;
-  deletedQuestionIds: number[];
-  deletedOptionIds: number[];
+    SurveyForm: SurveyForm;
+    DeletedQuestions: SurveyQuestion[];
+    DeletedOptions: SurveyOption[];
 }

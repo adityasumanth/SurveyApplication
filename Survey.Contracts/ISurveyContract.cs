@@ -14,6 +14,6 @@ namespace Survey.Contracts
         SurveyData PostPollData(SurveyData pollData);
         SurveyForm PostNewSurveyForm(SurveyForm surveyForm);
         User AuthenticateUser(UserData userData);
-        SurveyForm PutSurveyForm(SurveyForm surveyForm, int[] deletedQuestionIds, int[] deletedOptionIds);
+        SurveyForm PutSurveyForm(SurveyForm surveyForm,List<SurveyQuestion> surveyQuestions,List<SurveyOption> surveyOptions);
     }
 }

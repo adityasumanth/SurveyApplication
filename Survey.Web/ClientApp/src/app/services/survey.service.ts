@@ -44,7 +44,7 @@ export class SurveyService {
     }
 
     putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
-        return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/form', { updateSurvey });
+        return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/form', updateSurvey);
     }
 
     public currentUserValue(): User {
