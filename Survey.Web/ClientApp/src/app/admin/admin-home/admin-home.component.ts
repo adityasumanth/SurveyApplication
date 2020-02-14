@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { SurveyForm } from '../../models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
@@ -18,12 +18,6 @@ export class AdminHomeComponent {
 
     loadData(forms) {
         this.surveys = forms;
-    }
-    getBtnClass() {
-        var classList = '';
-        var rand = Math.floor(Math.random() * 5) + 1;
-        classList = 'btn-' + rand;
-        return classList;
     }
     titleOnHover(survey: SurveyForm) {
         var title = 'Description : '+ survey.description + '\n' +'Created By : '+ survey.createdBy;

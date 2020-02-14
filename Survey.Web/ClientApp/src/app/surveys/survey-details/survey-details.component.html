@@ -1,13 +1,16 @@
-<div class="container opacity-box">
-  <h1 class="text-center">
-    {{surveyForm.title}}
-  </h1>
-  <div class="container d-flex flex-wrap" *ngIf="dataInitialised">
-    <div *ngFor="let result of pollResults | keyvalue" class="col-lg-6">
-      <h1 *ngIf="!dataInitialised">Loading</h1>
-      <h3 class="text-center">{{result.key.question}}</h3>
-      <app-pie-chart [pieChartContents]="result.value"></app-pie-chart>
+<div class="above-skew">
+  <div class="container opacity-box">
+    <h1 class="text-center">
+      {{surveyForm.title}}
+    </h1>
+    <h5 *ngIf="noPolls">Sorry, No data available.</h5>
+    <div class="container d-flex flex-wrap" *ngIf="dataInitialised">
+      <div *ngFor="let result of pollResults | keyvalue" class="col-lg-6">
+        <h1 *ngIf="!dataInitialised">Loading</h1>
+        <h3 class="text-center">{{result.key.question}}</h3>
+        <app-pie-chart [pieChartContents]="result.value"></app-pie-chart>
+      </div>
     </div>
+    <br />
   </div>
-  <br/>
 </div>

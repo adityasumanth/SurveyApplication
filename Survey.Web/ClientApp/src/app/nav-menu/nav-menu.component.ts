@@ -9,17 +9,15 @@ import { User } from '../models';
     styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  currentUser: User;
+    currentUser: User;
 
-  constructor(
-    private router: Router,
-    public surveyService: SurveyService
-  ) {
-    this.surveyService.currentUser.subscribe(x => this.currentUser = x);
-    console.log(this.surveyService.isLoggedIn);
-    console.log(this.surveyService.currentUserValue());
-  }
-  
+    constructor(
+        private router: Router,
+        private surveyService: SurveyService
+    ) {
+        this.surveyService.currentUser.subscribe(x => this.currentUser = x);
+    }
+
     isExpanded = false;
 
     collapse() {
@@ -28,9 +26,9 @@ export class NavMenuComponent {
 
     toggle() {
         this.isExpanded = !this.isExpanded;
-  }
-  logout() {
-    this.surveyService.logout();
-    this.router.navigate(['/login']);
-  }
+    }
+    logout() {
+        this.surveyService.logout();
+        this.router.navigate(['/login']);
+    }
 }

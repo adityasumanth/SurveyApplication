@@ -11,59 +11,54 @@ code {
 
 .btn-primary {
   color: #fff;
-  background-color: #1b6ec2;
+  background-color: #039BE5;
   border-color: #1861ac;
 }
 
 body {
-  background-image: url("assets/wallpaper.jpg");
   font-family: 'Roboto', sans-serif;
 }
-.container {
 
+.container {
 }
 
+.headings {
+  color: white;
+}
+.background {
+  background: linear-gradient(to bottom,#039BE5,white);
+  height: 65vh;
+}
 .opacity-box {
-  background-color: rgba(51,51,51,0.6);
+  background-color: rgba(51,51,51,0.3);
   border-radius: 20px;
 }
 
-.btn-d {
-  flex: 1 1 auto;
-  margin: 10px;
-  padding: 30px;
-  text-align: center;
-  text-transform: uppercase;
-  transition: 0.5s;
-  background-size: 200% auto;
-  color: black;
-  border-radius: 10px;
+.card {
+  padding: 10px !important;
 }
 
-.card{
-  padding:10px!important;
+.card-header {
+  background: transparent;
 }
-.btn-d:hover {
+.card:hover {
   background-position: right center; /* change the direction of the change here */
   box-shadow: 0 0 20px #000;
 }
 
-.btn-1 {
-  background-image: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
+.skew-top {
+  background-color: white;
+  -webkit-transform: skewY(-4deg);
+  transform: skewY(-4deg);
+  height: 30vh;
+  top: -5vh;
+  z-index: 1;
+  width: 100%;
+  position: relative;
 }
 
-.btn-2 {
-  background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+.above-skew {
+  z-index: 2;
+  position: relative;
 }
 
-.btn-3 {
-  background-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
-}
-
-.btn-4 {
-  background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
-}
-
-.btn-5 {
-  background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 51%, #ffecd2 100%);
-}

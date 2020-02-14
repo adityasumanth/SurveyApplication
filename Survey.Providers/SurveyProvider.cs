@@ -1,4 +1,5 @@
-﻿using Survey.Concerns;
+﻿using Microsoft.EntityFrameworkCore;
+using Survey.Concerns;
 using Survey.Contracts;
 using System;
 using System.Collections.Generic;
@@ -98,23 +99,28 @@ namespace Survey.Providers
 
         public SurveyForm PutSurveyForm(SurveyForm surveyForm)
         {
-            /*int surveyId = surveyForm.SurveyFormId;
-            foreach (SurveyQuestion question in surveyForm.Questions)
+            this._dbContext.Entry(surveyForm).State = EntityState.Modified;
+            foreach(var question in surveyForm.Questions)
             {
-                if(question.Id == null)
+                if (question.Id==0)
                 {
-                    question.SurveyFormId = surveyId;
                     this._dbContext.SurveyQuestions.Add(question);
                 }
                 else
                 {
-                    foreach(SurveyOption option in question.Options)
+                    this._dbContext.Entry(question).State = EntityState.Modified;
+                    foreach (var option in question.Options)
                     {
-                        if(option.Id==null)
+                        if (option.Id==0)
+                        {
+                            this._dbContext.SurveyOptions.Add(option);
+                        }
+                        else {
+                            this._dbContext.Entry(option).State = EntityState.Modified;
+                        } 
                     }
                 }
-            }*/
-            this._dbContext.Entry(surveyForm);
+            }
             this._dbContext.SaveChanges();
 
             return surveyForm;

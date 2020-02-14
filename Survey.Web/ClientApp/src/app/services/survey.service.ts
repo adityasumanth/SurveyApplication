@@ -59,7 +59,6 @@ export class SurveyService {
           }
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));
-          console.log(user);
           this.isLoggedIn = true;
           this.currentUserSubject.next(user);
           return user;
