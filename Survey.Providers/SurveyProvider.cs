@@ -95,16 +95,26 @@ namespace Survey.Providers
                     }
                 }
             }
-            foreach(var question in deletedQuestions)
+            foreach (var question in deletedQuestions)
             {
                 this._dbContext.SurveyQuestions.Remove(question);
             }
-            foreach(var option in deletedOptions)
+            foreach (var option in deletedOptions)
             {
                 this._dbContext.SurveyOptions.Remove(option);
             }
+
             this._dbContext.SaveChanges();
             return surveyForm;
+        }
+
+        public SurveyForm ChangeState(int id)
+        {
+            SurveyForm form = _dbContext.SurveyForms.Include("Questions.Options").FirstOrDefault(_=>_.SurveyFormId==id);
+            form.isActive = form.isActive ? false : true;
+            this._dbContext.Entry(form).State = EntityState.Modified;
+            this._dbContext.SaveChanges();
+            return form;
         }
 
         public User AuthenticateUser(UserData userData)
