@@ -10,11 +10,17 @@ import { SurveyForm, SurveyData } from '../../models';
 })
 /** admin-survey-details component*/
 export class AdminSurveyDetailsComponent implements OnInit {
-    survey: SurveyForm;
-    id: number;
+    public survey: SurveyForm;
+    public id: number;
     /** admin-survey-details ctor */
     constructor(private route: ActivatedRoute, private surveyService: SurveyService) {
-        this.survey = new SurveyForm();
+      this.survey = new SurveyForm();
+    }
+
+  changeState(id: number) {
+    this.surveyService.changeState(id).subscribe(result => {
+      this.survey = result;
+    },error=>console.log(error));
     }
 
     ngOnInit() {

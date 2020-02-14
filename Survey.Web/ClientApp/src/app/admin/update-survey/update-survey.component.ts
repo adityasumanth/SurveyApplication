@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SurveyForm, UpdateSurvey } from '../../models';
+import { SurveyForm } from '../../models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SurveyService } from '../../services/survey.service';
@@ -16,10 +16,7 @@ export class UpdateSurveyComponent implements OnInit {
   public sid: number;
   public currentFormValue: Observable<SurveyForm>;
   public newForm: boolean = true;
-  public updateSurvey: UpdateSurvey;
-  public deletedQuestionIds: number[];
-  public deletedOptionIds: number[];
-
+  
   constructor(private route: ActivatedRoute, private formService: FormService, private surveyService: SurveyService, private router: Router) {
     this.currentForm = new SurveyForm();
     this.route.paramMap.subscribe(params => {
@@ -30,8 +27,6 @@ export class UpdateSurveyComponent implements OnInit {
       },
         error => console.log(error));
     });
-    this.deletedQuestionIds = [];
-    this.deletedOptionIds = [];
   }
 
   ngOnInit() {    
@@ -40,9 +35,6 @@ export class UpdateSurveyComponent implements OnInit {
   deleteOption(qid: number, oid: number): SurveyForm {
     if (qid < this.currentForm.questions.length) {
       if (oid < this.currentForm.questions[qid].options.length) {
-        if (this.currentForm.questions[qid].options[oid].id != 0) {
-          this.deletedOptionIds.push(this.currentForm.questions[qid].options[oid].id);
-        }
         this.currentForm=this.formService.deleteOption(qid, oid);
       }
     }
@@ -58,9 +50,6 @@ export class UpdateSurveyComponent implements OnInit {
 
   deleteQuestion(qid: number): SurveyForm {
     if (qid < this.currentForm.questions.length) {
-      if (this.currentForm.questions[qid].id != 0) {
-        this.deletedQuestionIds.push(this.currentForm.questions[qid].id);
-      }
       this.currentForm = this.formService.deleteQuestion(qid);
     }
     return this.currentForm;
@@ -73,11 +62,7 @@ export class UpdateSurveyComponent implements OnInit {
 
   UpdateForm() {
     console.log(this.currentForm);
-    this.updateSurvey = new UpdateSurvey();
-    this.updateSurvey.surveyForm = <SurveyForm>this.currentForm;
-    this.updateSurvey.deletedQuestionIds = this.deletedQuestionIds;
-    this.updateSurvey.deletedOptionIds = this.deletedOptionIds;
-    this.surveyService.putNewSurvey(this.updateSurvey).subscribe(result => {
+    this.surveyService.putNewSurvey(this.currentForm).subscribe(result => {
       this.router.navigate(['../../']);
     }, error => {
       console.error(error);

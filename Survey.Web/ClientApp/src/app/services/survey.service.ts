@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SurveyForm, SurveyData, User, UpdateSurvey } from '../models';
+import { SurveyForm, SurveyData, User } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 @Injectable()
@@ -28,53 +28,57 @@ export class SurveyService {
     }
 
     getSurveyFormById(id: Number): Observable<SurveyForm> {
-        return this.http.get<SurveyForm>(this.baseUrl + 'api/Home/survey/' + id);
+        return this.http.get<SurveyForm>(this.baseUrl + 'api/home/survey/' + id);
     }
 
     getPollDataByFormId(id: Number): Observable<SurveyData[]> {
-        return this.http.get<SurveyData[]>(this.baseUrl + 'api/Home/pollData/' + id);
+        return this.http.get<SurveyData[]>(this.baseUrl + 'api/home/pollData/' + id);
     }
 
     postPollData(pollData: SurveyData): Observable<SurveyData> {
-        return this.http.post<SurveyData>(this.baseUrl + 'api/Home/poll', pollData);
+        return this.http.post<SurveyData>(this.baseUrl + 'api/home/poll', pollData);
     }
 
     postNewSurvey(survey: SurveyForm): Observable<SurveyForm> {
-        return this.http.post<SurveyForm>(this.baseUrl + 'api/Home/addForm', survey);
+        return this.http.post<SurveyForm>(this.baseUrl + 'api/home/addForm', survey);
     }
 
-    putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
-        return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/form', { updateSurvey });
+    putNewSurvey(survey: SurveyForm): Observable<SurveyForm> {
+        return this.http.put<SurveyForm>(this.baseUrl + 'api/home/form', survey);
+    }
+
+  public changeState(id: number): Observable<SurveyForm> {
+      return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeState', id);
     }
 
     public currentUserValue(): User {
-      return this.currentUserSubject.value;
+        return this.currentUserSubject.value;
     }
 
     login(username: string, password: string) {
-      return this.http.post<User>(this.baseUrl + `api/Home/authenticate`, { username, password })
+        return this.http.post<User>(this.baseUrl + `api/Home/authenticate`, { username, password })
         .pipe(map(user => {
-          if (user.password == null) {
+            if (user.password == null) {
+                return user;
+            }
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.isLoggedIn = true;
+            this.currentUserSubject.next(user);
             return user;
-          }
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.isLoggedIn = true;
-          this.currentUserSubject.next(user);
-          return user;
         }));
     }
 
     logout() {
-      // remove user from local storage to log user out
-      localStorage.removeItem('currentUser');
-      this.isLoggedIn = false;
-      this.currentUserSubject.next(null);
+        // remove user from local storage to log user out
+        localStorage.removeItem('currentUser');
+        this.isLoggedIn = false;
+        this.currentUserSubject.next(null);
     }
 
     handleError(error: any) {
-      let errorMsg = error.message || `Yikes! There was a problem with our hyperdrive device and we couldn't retrieve your data!`
-      console.error(errorMsg);
-      return Observable.throw(errorMsg);
+        let errorMsg = error.message || `Yikes! There was a problem with our hyperdrive device and we couldn't retrieve your data!`
+        console.error(errorMsg);
+        return Observable.throw(errorMsg);
     }
 }

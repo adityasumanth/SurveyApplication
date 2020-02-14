@@ -97,7 +97,7 @@ namespace Survey.Providers
             return surveyForm;
         }
 
-        public SurveyForm PutSurveyForm(SurveyForm surveyForm, int[] deletedQuestionIds, int[] deletedOptionIds)
+        public SurveyForm PutSurveyForm(SurveyForm surveyForm)
         {
             this._dbContext.Entry(surveyForm).State = EntityState.Modified;
             foreach(var question in surveyForm.Questions)
@@ -121,18 +121,18 @@ namespace Survey.Providers
                     }
                 }
             }
-            foreach (int id in deletedOptionIds)
-            {
-                var so = this._dbContext.SurveyOptions.Find(id);
-                this._dbContext.SurveyOptions.Remove(so);
-            }
-            foreach (int id in deletedQuestionIds)
-            {
-                var sq = this._dbContext.SurveyQuestions.Find(id);
-                this._dbContext.SurveyQuestions.Remove(sq);
-            }
+            
             this._dbContext.SaveChanges();
             return surveyForm;
+        }
+
+        public SurveyForm ChangeState(int id)
+        {
+            SurveyForm form = _dbContext.SurveyForms.Include("Questions.Options").FirstOrDefault(_=>_.SurveyFormId==id);
+            form.isActive = form.isActive ? false : true;
+            this._dbContext.Entry(form).State = EntityState.Modified;
+            this._dbContext.SaveChanges();
+            return form;
         }
 
         public User AuthenticateUser(UserData userData)

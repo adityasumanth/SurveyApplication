@@ -17,9 +17,3 @@ export class SurveyForm implements Deserializable {
     }
 
 }
-
-export class UpdateSurvey {
-  surveyForm: SurveyForm;
-  deletedQuestionIds: number[];
-  deletedOptionIds: number[];
-}
