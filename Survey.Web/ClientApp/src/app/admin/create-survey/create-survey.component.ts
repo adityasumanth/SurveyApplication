@@ -52,9 +52,11 @@ export class CreateSurveyComponent implements OnInit {
     addQuestion() {
         this.error = false;
         this.currentForm = this.formService.AddQuestion();
+        this.error = false;
     }
 
     deleteQuestion(qid: number) {
+        this.error = false;
         if (this.currentForm.questions.length == 1) {
             this.errorMsg = 'A minimum of 1 Question is required';
             this.error = true;
@@ -73,6 +75,8 @@ export class CreateSurveyComponent implements OnInit {
             }
             this.currentForm = this.formService.AddOption(i);
         }
+        this.error = false;
+
     }
 
     createForm() {
@@ -84,6 +88,7 @@ export class CreateSurveyComponent implements OnInit {
         }
 
     deleteOption(qid: number, oid: number) {
+        this.error = false;
         if (qid < this.currentForm.questions.length) {
             if (this.currentForm.questions[qid].options.length == 2) {
                 this.errorMsg = 'A minimum of 2 Options are required';
