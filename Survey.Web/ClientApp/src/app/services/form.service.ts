@@ -52,13 +52,17 @@ export class FormService {
     for (let i = 0; i < 2; i++) {
       this.currentForm.questions[this.currentForm.questions.length-1].options.push(new SurveyOption());
     }
-    this.currentForm.questions[this.currentForm.questions.length].type = 2;
-    this.currentForm.questions[this.currentForm.questions.length].id = 0;
+    this.currentForm.questions[this.currentForm.questions.length-1].type = 2;
+    this.currentForm.questions[this.currentForm.questions.length-1].id = 0;
     return this.currentForm;
   }
 
   deleteQuestion(qid: number): SurveyForm {
-    this.currentForm.questions[qid].id=-1;
+    if (this.currentForm.questions.length == 1) {
+      return this.currentForm;
+    }
+    this.currentForm.questions.splice(qid, 1);
+    console.log('deleted question ' + qid);
     return this.currentForm;
   }
 
