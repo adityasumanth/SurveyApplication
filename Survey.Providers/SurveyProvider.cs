@@ -149,9 +149,15 @@ namespace Survey.Providers
             User user = _dbContext.Users.Where(user => user.UserName == userData.username).FirstOrDefault();
             if (user != null && user.UserName == userData.username)
             {
-                if(user.Password == userData.password)
+                if(!user.isAdmin)
                 {
+                    user = new User();
+                    user.FirstName = "Sorry, Admin privileges are required.";
                     return user;
+                }
+                if (user.Password == userData.password)
+                {
+                        return user;
                 }
                 user = new User();
                 user.FirstName = "Password is Wrong.";

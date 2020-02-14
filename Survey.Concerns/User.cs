@@ -19,6 +19,8 @@ namespace Survey.Concerns
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        [Required]
+        public bool isAdmin { get; set; }
     }
     public class UserData
     {
