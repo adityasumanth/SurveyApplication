@@ -1,12 +1,9 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
-import { SurveyForm, SurveyOption, SurveyQuestion } from '../../models';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { SurveyForm } from '../../models';
 import { SurveyService } from '../../services/survey.service';
 import { FormService } from '../../services/form.service';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
 
 @Component({
     selector: 'app-create-survey',
