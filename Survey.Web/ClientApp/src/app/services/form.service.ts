@@ -62,7 +62,6 @@ export class FormService {
       return this.currentForm;
     }
     this.currentForm.questions.splice(qid, 1);
-    console.log('deleted question ' + qid);
     return this.currentForm;
   }
 
