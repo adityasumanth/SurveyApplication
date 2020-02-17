@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SurveyForm } from '../../models';
 import { Router } from '@angular/router';
-import { SurveyService } from '../../services/survey.service';
+import { AuthenticationService } from '../../services/authentication.service';
 @Component({
     selector: 'app-admin-home',
     templateUrl: './admin-home-doop.component.html',
@@ -10,8 +10,8 @@ import { SurveyService } from '../../services/survey.service';
 export class AdminHomeDoopComponent {
   surveys: SurveyForm[] = new Array();
 
-  constructor(private surveyService: SurveyService, private router: Router) {
-    if (this.surveyService.isLoggedIn == false) {
+  constructor(private authenticationService: AuthenticationService, private router: Router) {
+    if (this.authenticationService.isLoggedIn == false) {
       this.router.navigate(['/login']);
     }
   }

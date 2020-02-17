@@ -9,6 +9,7 @@ import { User } from '../models';
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
+    public isLoggedIn: boolean = false;
     baseUrl: string;
 
     constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
@@ -35,6 +36,7 @@ export class AuthenticationService {
 
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(userToken));
+                this.isLoggedIn = true;
                 this.currentUserSubject.next(user);
                 return user;
             }));
@@ -43,6 +45,7 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
+        this.isLoggedIn = true;
         this.currentUserSubject.next(null);
     }
 }

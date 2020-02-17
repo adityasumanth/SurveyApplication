@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SurveyService } from '../services/survey.service';
+import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { User } from '../models';
 
@@ -10,12 +10,15 @@ import { User } from '../models';
 })
 export class NavMenuComponent {
     currentUser: User;
-
+    isLoggedIn: boolean = false;
     constructor(
-        private router: Router,
-        private surveyService: SurveyService
+      private router: Router,
+      private authenticationService: AuthenticationService
     ) {
-        this.surveyService.currentUser.subscribe(x => this.currentUser = x);
+      if (this.authenticationService.isLoggedIn) {
+        this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+        this.isLoggedIn = true;
+      }
     }
 
     isExpanded = false;
@@ -28,7 +31,8 @@ export class NavMenuComponent {
         this.isExpanded = !this.isExpanded;
     }
     logout() {
-        this.surveyService.logout();
+        this.authenticationService.logout();
+        this.isLoggedIn = false;
         this.router.navigate(['/login']);
     }
 }

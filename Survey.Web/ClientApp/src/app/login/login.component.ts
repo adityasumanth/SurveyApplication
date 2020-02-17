@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { User } from '../models';
 import { AuthenticationService } from '../services/authentication.service';
-import { SurveyService } from '../services/survey.service';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -18,11 +17,10 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService,
-    private surveyService: SurveyService
+    private authenticationService: AuthenticationService
   ) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
+    if (this.authenticationService.isLoggedIn) {
       this.router.navigate(['/']);
     }
   }
@@ -49,8 +47,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.surveyService;
-    this.surveyService.login(this.f.username.value, this.f.password.value)
+    this.authenticationService;
+    this.authenticationService.login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
         data => {
