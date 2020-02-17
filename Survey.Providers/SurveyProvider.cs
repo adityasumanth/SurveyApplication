@@ -117,17 +117,19 @@ namespace Survey.Providers
             return form;
         }
 
+        public User Register(User user)
+        {
+            user.isAdmin = false;
+            this._dbContext.Users.Add(user);
+            this._dbContext.SaveChanges();
+            return user;
+        }
+
         public User AuthenticateUser(UserData userData)
         {
             User user = _dbContext.Users.Where(user => user.UserName == userData.username).FirstOrDefault();
             if (user != null && user.UserName == userData.username)
             {
-                if(!user.isAdmin)
-                {
-                    user = new User();
-                    user.FirstName = "Sorry, Admin privileges are required.";
-                    return user;
-                }
                 if (user.Password == userData.password)
                 {
                         return user;
