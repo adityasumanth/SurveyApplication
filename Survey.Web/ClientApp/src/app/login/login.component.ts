@@ -60,8 +60,7 @@ export class LoginComponent implements OnInit {
             this.error = data.firstName;
             this.loading = false;
           }
-          else if (data.isAdmin == false)
-          {
+          else if (data.isAdmin == false) {
             this.error = "Contact Admin team for Admin privileges"
             this.loading = false;
           }
@@ -75,6 +74,6 @@ export class LoginComponent implements OnInit {
         });
   }
   authenticateUserByLinkedIn() {
-
+    window.open(this.linkedInService.login(), '_blank', "width=700,height=900,z-index=-1");
   }
 }
