@@ -4,11 +4,12 @@ import { SurveyForm, SurveyData, User, UpdateSurvey } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 @Injectable()
+
 export class SurveyService {
     baseUrl: string;
     private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
-  public isLoggedIn: boolean = false;
+    public currentUser: Observable<User>;
+    public isLoggedIn: boolean = false;
 
     constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
       this.baseUrl = baseUrl;
@@ -43,21 +44,29 @@ export class SurveyService {
         return this.http.post<SurveyForm>(this.baseUrl + 'api/Home/addSurvey', survey);
     }
 
-  putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
-    return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/updateSurvey', updateSurvey);
-  }
-  public changeState(id: number): Observable<SurveyForm> {
-      return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeState', id);
+    putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
+        return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/updateSurvey', updateSurvey);
+    }
+
+    public changeState(id: number): Observable<SurveyForm> {
+        return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeState', id);
     }
 
     public currentUserValue(): User {
         return this.currentUserSubject.value;
     }
 
+    register(user: User) {
+        return this.http.post<User>(this.baseUrl + 'api/home/register', user);
+    }
+
     login(username: string, password: string) {
         return this.http.post<User>(this.baseUrl + `api/Home/authenticate`, { username, password })
         .pipe(map(user => {
             if (user.password == null) {
+                return user;
+            }
+            else if (!user.isAdmin) {
                 return user;
             }
             // store user details and jwt token in local storage to keep user logged in between page refreshes

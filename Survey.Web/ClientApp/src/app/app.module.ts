@@ -6,7 +6,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './admin/login/login.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { UpdateSurveyComponent } from './admin/update-survey/update-survey.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -30,6 +31,7 @@ import { FormService } from './services/form.service';
         AddSurveyComponent,
         SurveyDetailsComponent,
         LoginComponent,
+        RegisterComponent,
         AdminHomeComponent,
         AdminHomeDoopComponent,
         UpdateSurveyComponent,
@@ -54,7 +56,8 @@ import { FormService } from './services/form.service';
               { path: 'details/:id', component: AdminSurveyDetailsComponent },
               { path: 'update/:id', component: UpdateSurveyComponent } ]
             },
-            { path: 'login', component: LoginComponent }
+            { path: 'login', component: LoginComponent },
+            { path: 'register', component: RegisterComponent }
         ])
   ],
   providers: [SurveyService, FormService],
