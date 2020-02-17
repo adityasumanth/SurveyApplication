@@ -3,6 +3,7 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title text-center">Login</h4>
+        <buttton class="btn btn-primary" (click)="authenticateUserByLinkedIn()">Login with LinkedIn</buttton>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div class="form-group">

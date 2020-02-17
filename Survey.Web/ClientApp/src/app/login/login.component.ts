@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { User } from '../models';
 import { AuthenticationService } from '../services/authentication.service';
 import { SurveyService } from '../services/survey.service';
+import { LinkedInService } from '../services/linked-in.service';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private surveyService: SurveyService
+    private surveyService: SurveyService,
+    private linkedInService: LinkedInService
   ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
@@ -71,5 +73,8 @@ export class LoginComponent implements OnInit {
           this.error = error;
           this.loading = false;
         });
+  }
+  authenticateUserByLinkedIn() {
+
   }
 }
