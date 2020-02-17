@@ -1,10 +1,10 @@
-
-<div class="container d-flex flex-wrap justify-content-center opacity-box">
+<h3 class="headings text-center">Dashboard</h3>
+<div class="container d-flex flex-wrap justify-content-center opacity-box above-skew">
   <p *ngIf="!surveyForms">Loading</p>
-  <div *ngFor="let survey of surveyForms" class="card btn-d col-3 m-3" [routerLink]="['/results',survey.surveyFormId]"  [ngClass]=getAnimationClass()>
+  <div *ngFor="let survey of surveyForms" class="card btn-d col-3 m-3" [routerLink]="['/results',survey.surveyFormId]">
+    <div class="card-header text-center">{{survey.title}}</div>
     <div class="card-body text-center">
-      <h5>{{survey.title}}</h5>
-      <h6 class="text-muted">{{survey.description}}</h6>
+      {{survey.description}}
     </div>
   </div>
 </div>

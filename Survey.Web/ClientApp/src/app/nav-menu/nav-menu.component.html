@@ -26,7 +26,7 @@
             <a class="nav-link text-secoundry" [routerLink]="['/login']">Login</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="surveyService.isLoggedIn">
-            <a class="nav-link text-secoundry" [routerLink]="['/admin']">Admin</a>
+            <a class="nav-link text-secoundry text-capitalize" [routerLink]="['/admin']">{{currentUser.firstName}}</a>
           </li>
           <li class="nav-item cursor-pointer" [routerLinkActive]="['link-active']" *ngIf="surveyService.isLoggedIn">
             <a class="nav-link text-secoundry" (click)="logout()">Logout</a>

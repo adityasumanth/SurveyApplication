@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SurveyForm, SurveyOption, SurveyQuestion } from '../../models';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { SurveyForm } from '../../models';
 import { SurveyService } from '../../services/survey.service';
+import { FormService } from '../../services/form.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-create-survey',
@@ -12,96 +12,94 @@ import { SurveyService } from '../../services/survey.service';
 })
 
 export class CreateSurveyComponent implements OnInit {
-    public surveyNameForm: FormGroup;
-    public survey: SurveyForm;
-    public questions: SurveyQuestion[];
-    public questionForm: FormGroup;
-    public options: SurveyOption[];
-    public http: HttpClient;
-    public url: string;
-    public optionForm: FormGroup;
-    public newForm = true;
-    public loading = true;
-    public surveyName: string = '';
-    public Description: string = "";
-
-    constructor(private route: ActivatedRoute, http: HttpClient, @Inject('BASE_URL') baseUrl: string, private formBuilder: FormBuilder, private surveyService: SurveyService) {
-        this.http = http;
-        this.url = baseUrl;
-        this.survey = new SurveyForm();
-        this.newForm = true;
+    public currentForm: SurveyForm;
+    public currentFormValue: Observable<SurveyForm>;
+    public newForm: boolean = true;
+    public title: string = '';
+    public description: string = '';
+    public formError: string = '';
+    public addQuestionDisable: boolean = true;
+    public addOptionDisable: boolean[];
+    public error: boolean = false;
+    public errorMsg: string = '';
+    
+    constructor(private formService: FormService, private surveyService: SurveyService, private router: Router) {
     }
 
     ngOnInit() {
-        this.surveyNameForm = this.formBuilder.group({
-            title: [''],
-            description:['']
-        });
-        this.questionForm = this.formBuilder.group({
-            question: [''],
-            type: []
-        });
-        this.optionForm = this.formBuilder.group({
-            optionValue: ['']
-        });
+
     }
 
-    get f() { return this.surveyNameForm.controls; }
-
-    get q() { return this.questionForm.controls; }
-
-    get o() { return this.optionForm.controls; }
-
-    onNameSubmit() {
-        this.newForm = false;
-        this.surveyName = this.f.title.value;
-        this.Description = this.f.description.value;
-        this.loading = false;
-        this.questions = [];
-        this.options = [];
+    generateNewForm(): any {
+        if (this.title == '' ) {
+            this.formError = 'Enter valid form name';
+            this.error = true;
+        }
+        else if (this.description == '') {
+            this.formError = 'Description is mandatory';
+            this.error = true;
+        }
+        else {
+            this.error = false;
+            this.currentForm = this.formService.GenerateForm(this.title, this.description);
+            this.newForm = false;
+            this.addOptionDisable = [];
+            this.addOptionDisable.push(false);
+            return this.currentForm;
+        }
     }
 
-    CreateForm() {
-        this.loading = false;
-        this.survey = new SurveyForm();
-        this.survey.questions = this.questions;
-        this.survey.title = this.surveyName;
-        this.survey.description = this.Description;
-        this.survey.createdBy = 1;
-        this.survey.isActive = true;
-
-        this.surveyService.postNewSurvey(this.survey).subscribe(result => {
-            window.location.href = "/admin";
-        }, error => console.error(error));
+    addQuestion() {
+        this.error = false;
+        this.currentForm = this.formService.AddQuestion();
+        this.error = false;
     }
 
-    question: SurveyQuestion;
-    AddQuestion() {
-        console.log(this.q.question.value + '  ' + this.q.type.value);
-        this.question = new SurveyQuestion();
-        this.question.question = this.q.question.value;
-        this.question.type = 2;
-        this.question.options = this.options;
-        this.questions.push(this.question);
-        this.options = [];
-        this.questionForm = this.formBuilder.group({
-            question: [''],
-            type: []
+    deleteQuestion(qid: number) {
+        this.error = false;
+        if (this.currentForm.questions.length == 1) {
+            this.errorMsg = 'A minimum of 1 Question is required';
+            this.error = true;
+        }
+        else if (qid < this.currentForm.questions.length) {
+            this.formService.deleteQuestion(qid);
+        }
+    }
+
+    addOption(i: number) {
+        this.error = false;
+        if (i < this.currentForm.questions.length) {
+            var length = this.currentForm.questions[i].options.length;
+            if (this.currentForm.questions[i].options[length - 1].optionValue == '') {
+
+            }
+            this.currentForm = this.formService.AddOption(i);
+        }
+        this.error = false;
+
+    }
+
+    createForm() {
+        this.surveyService.postNewSurvey(this.currentForm).subscribe(result => {
+            this.router.navigate(['/']);
+        }, error => {
+            console.error(error); 
         });
-        this.optionForm = this.formBuilder.group({
-            optionValue: ['']
-        });
-        console.log("Add Question");
-    }
+        }
 
-    option: SurveyOption;
-    AddOption() {
-        console.log(this.o.optionValue.value);
-        this.option = new SurveyOption();
-        this.option.optionValue = this.o.optionValue.value;
-        this.options.push(this.option);
-        this.optionForm = this.formBuilder.group({
-            optionValue: ['']
-        })
+    deleteOption(qid: number, oid: number) {
+        this.error = false;
+        if (qid < this.currentForm.questions.length) {
+            if (this.currentForm.questions[qid].options.length == 2) {
+                this.errorMsg = 'A minimum of 2 Options are required';
+                this.error = true;
+            }
+            else if (oid < this.currentForm.questions[qid].options.length) {
+                this.formService.deleteOption(qid, oid);
+            }
+        }
+    }
+    closeAlert() {
+        this.error = false;
     }
 }

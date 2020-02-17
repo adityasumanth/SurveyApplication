@@ -1,55 +1,66 @@
-<div class="container opacity-box">
-  <div class="m-2">
-    <br/>
-    <h5>New Survey</h5>
-    <br />
-    <div *ngIf="newForm">
-      <form [formGroup]="surveyNameForm" (ngSubmit)="onNameSubmit()">
-        <div class="form-group">
-          <label for="title"> Survey Title </label> <br />
-          <input type="text" formControlName="title" />
-        </div>
-        <div class="form-group">
-          <label for="description"> Description </label> <br />
-          <input type="text" formControlName="description" />
-        </div>
-        <button type="submit" class="btn btn-secondary">Generate Empty Survey</button>
-      </form>
+<div class="above-skew">
+  <div class="container opacity-box">
+    <div class="m-2">
       <br />
-    </div>
-  </div>
+      <h5>New Survey</h5>
+      <br />
+      <div *ngIf="newForm">
+        <form class="form-group" (ngSubmit)="generateNewForm()">
+          <div>
+            <label> Survey Title </label> <br />
+            <input type="text" name="title" [(ngModel)]="title" required />
+          </div>
+          <div>
+            <label for="description"> Description </label> <br />
+            <input type="text" name="description" [(ngModel)]="description" required />
+          </div>
 
-  <div *ngIf="!newForm">
-    <div class="container">
-      <h5>Form Name : {{ surveyName }}</h5>
-
+          <div *ngIf="error" class="alert alert-danger border border-danger is-invalid ml-0 m-3 col-3">{{formError}}</div>
+          <br />
+          <button type="submit" class="btn btn-primary">Generate Empty Survey</button>
+        </form>
+        <br />
+      </div>
     </div>
-    <div class="questions">
-      <div class="question" *ngFor="let question of questions; index as qno">
-        <label>Question {{qno + 1}}{{' : ' + question.question}} </label>
-        <div class="options">
-          <label class="option" *ngFor="let option of question.options; index as optno">Option {{optno + 1}}{{' : ' + option.optionValue}}</label>
+
+    <div *ngIf="!newForm">
+      <div class="container">
+        <h3 class="text-center">Form Name : {{currentForm.title}}</h3>
+        <h5 class="text-center">Form Description : {{currentForm.description}}</h5>
+      </div>
+      <div *ngIf="error" class="alert alert-danger alert-dismissible fade show border border-danger is-invalid ml-0 m-3 col-6">
+        {{errorMsg}}<button type="button" class="close" (click)="closeAlert()" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container margin-bottom-50 padding-bottom-50">
+        <div class="questions overflow-hidden">
+          <div class="form-group question " *ngFor="let question of currentForm.questions, let qid = index">
+            <label class="font-weight-bold col-2"> Question {{' ' + (qid+1) + ' : '}} </label>
+            <input class="col-7" type="text" placeholder="Enter A Question" name="question.question" [(ngModel)]="question.question" required />
+            <button type="button" class="btn btn-danger ml-5" (click)="deleteQuestion(qid)">Delete Question</button>
+            <div class="options mt-3">
+              <div class="form-group" *ngFor="let option of currentForm.questions[qid].options, let oid = index">
+                <label class="font-weight-bold col-2 offset-2"> Option {{' ' + (oid+1) + ' : '}} </label>
+                <input class="col-5" name="optionValue" placeholder="Enter An Option" type="text" [(ngModel)]="option.optionValue" />
+                <button type="button" class="btn btn-primary ml-5" (click)="deleteOption(qid,oid)">Delete</button>
+              </div>
+              <div class="row">
+                <div class="offset-4 action-buttons">
+                  <button type="button" class="btn btn-primary" (click)="addOption(qid)">Add Option</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="margin-left-43 col-11">
+            <button type="button" class="btn btn-primary" (click)="addQuestion()">Add Question</button>
+            <button type="button" class="btn btn-success ml-2 float-right" (click)="createForm()">Create Form</button>
+            <button class="btn btn-warning float-right" [routerLink]="['../']">Back</button>
+          </div>
         </div>
       </div>
-      <form [formGroup]="questionForm">
-        <div class="form-group">
-          <label class="col-1" for="question"> Question </label>
-          <input class="col-4 offset-1" type="text" formControlName="question" />
-          <button class="offset-4" [disabled]="loading" (click)="AddQuestion()">Add Question</button>
-        </div>
-        <div>
-          <label class="option" *ngFor="let option of options; index as optsno">Option {{ optsno + 1}}{{' : ' + option.optionValue}}</label>
-        </div>
-        <form [formGroup]="optionForm">
-          <div class="form-group">
-            <label class="col-2" for="option"> Option </label>
-            <input class="col-4" type="text" formControlName="optionValue" />
-            <button class="offset-4" (click)="AddOption()">Add Option</button>
-          </div>
-        </form>
-        <button type="submit" class="btn btn-success m-3" (click)="CreateForm()">Create Form</button>
-        <button type="button" class="btn btn-secondary m-3" [routerLink]="['/admin']">Back</button>
-      </form>
     </div>
   </div>
 </div>

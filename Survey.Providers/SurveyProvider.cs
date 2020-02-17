@@ -1,4 +1,5 @@
-﻿using Survey.Concerns;
+﻿using Microsoft.EntityFrameworkCore;
+using Survey.Concerns;
 using Survey.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,50 +17,23 @@ namespace Survey.Providers
         }
         public List<SurveyForm> GetSurveyForms()
         {
-            List<SurveyForm> forms = this._dbContext.SurveyForms.Where(form=>form.isActive==true).ToList();
-            forms.ForEach(form =>
-            {
-                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
-                form.Questions.ForEach(ques =>
-                {
-                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
-                }
-                );
-            });
-
-            return forms;
+            return this._dbContext.SurveyForms.Include("Questions.Options").Where(_ => _.isActive == true).ToList();
         }
 
         public List<SurveyForm> GetSurveyFormsAsAdmin()
         {
-            List<SurveyForm> forms = this._dbContext.SurveyForms.ToList();
-            forms.ForEach(form =>
-            {
-                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
-                form.Questions.ForEach(ques =>
-                {
-                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
-                }
-                );
-            });
+            return this._dbContext.SurveyForms.Include("Questions.Options").ToList();
 
-            return forms;
         }
         public SurveyForm GetSurveyFormById(int id)
         {
-            SurveyForm form = _dbContext.SurveyForms.Find(id);
+            SurveyForm form = this._dbContext.SurveyForms.Include("Questions.Options").FirstOrDefault(_=>_.SurveyFormId==id);
             if (form == null)
             {
                 return null;
             }
             else
             {
-                form.Questions = this._dbContext.SurveyQuestions.Where(ques => ques.SurveyFormId == form.SurveyFormId).ToList();
-                form.Questions.ForEach(ques =>
-                {
-                    ques.Options = this._dbContext.SurveyOptions.Where(optn => optn.SurveyQuestionId == ques.Id).ToList();
-                }
-                );
                 return form;
             }
         }
@@ -94,6 +68,53 @@ namespace Survey.Providers
             this._dbContext.SaveChanges();
 
             return surveyForm;
+        }
+
+        public SurveyForm PutSurveyForm(SurveyForm surveyForm,List<SurveyQuestion> deletedQuestions,List<SurveyOption> deletedOptions)
+        {
+            this._dbContext.Entry(surveyForm).State = EntityState.Modified;
+            foreach(var question in surveyForm.Questions)
+            {
+                if (question.Id==0)
+                {
+                    this._dbContext.SurveyQuestions.Add(question);
+                }
+                else
+                {
+                    this._dbContext.Entry(question).State = EntityState.Modified;
+                    foreach (var option in question.Options)
+                    {
+                        if (option.Id==0)
+                        {
+                            this._dbContext.SurveyOptions.Add(option);
+                        }
+                        else
+                        {
+                            this._dbContext.Entry(option).State = EntityState.Modified;
+                        } 
+                    }
+                }
+            }
+            foreach (var question in deletedQuestions)
+            {
+                this._dbContext.SurveyQuestions.Remove(question);
+            }
+            foreach (var option in deletedOptions)
+            {
+                this._dbContext.SurveyOptions.Remove(option);
+            }
+
+            this._dbContext.SaveChanges();
+            return surveyForm;
+        }
+
+        public SurveyForm ChangeState(int id)
+        {
+            SurveyForm form = _dbContext.SurveyForms.Include("Questions.Options").FirstOrDefault(_=>_.SurveyFormId==id);
+            form.isActive = form.isActive ? false : true;
+            this._dbContext.Entry(form).State = EntityState.Modified;
+            this._dbContext.SaveChanges();
+            return form;
         }
 
         public User AuthenticateUser(UserData userData)

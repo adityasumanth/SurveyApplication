@@ -1,15 +1,43 @@
-.questions {
-  min-height: 250px;
-  max-height: 1000px;
-  min-width: 800px;
+.question {
+  min-height: 300px;
+  max-height: 400px;
   margin: 20px 10px;
 }
 
-.question {
+.questions input {
+    padding-left:7px;
+    width: 95%;
+}
+
+.margin-left-5 {
+    margin-left: 5px;
+}
+
+.margin-left-43 {
+  margin-left: 43px;
+}
+
+.margin-bottom-50 {
+    margin-bottom: 50px;
+}
+
+.padding-bottom-50 {
+    padding-bottom: 50px;
+}
+
+.action-buttons > button {
+  margin-left: 5px;
+  margin-right: 20px;
+}
+
+.questions {
   margin: 20px 10px;
   padding: 10px;
-  min-height: 120px;
-  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.p-b-20 {
+    padding-bottom: 20px;
 }
 
 .option {

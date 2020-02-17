@@ -1,15 +1,22 @@
-<div class="container opacity-box">
-  <h1 class="text-center">
-    {{survey.title}}
-  </h1>
-  <p class="m-3">Description: {{survey.description}}</p>
-  <form class="col-sm-10" #form="ngForm" name="form" (ngSubmit)="SubmitForm(form)" novalidate="">
-    <div *ngFor="let question of survey.questions,let i = index" class="form-group">
-      <label>{{question.question}}</label>
-      <div class="d-flex">
-        <p *ngFor="let option of question.options,let i=index" class="mr-5">option {{i+1}} : {{option.optionValue}}</p>
+<div class="above-skew">
+  <div class="container opacity-box">
+    <h1 class="text-center">
+      {{survey.title}}
+    </h1>
+    <p class="m-3">Description: {{survey.description}}</p>
+    <form class="col-sm-10" #form="ngForm" name="form" (ngSubmit)="SubmitForm(form)" novalidate="">
+      <div *ngFor="let question of survey.questions,let i = index" class="form-group">
+        <label>{{question.question}}</label>
+        <div class="d-flex">
+          <p *ngFor="let option of question.options,let i=index" class="mr-5">option {{i+1}} : {{option.optionValue}}</p>
+        </div>
       </div>
-    </div>
-  </form>
-  <br />
+    </form>
+    <button class="ml-5 btn btn-primary" [routerLink]="['/admin/update', id]">Edit</button>
+    <button class="ml-3 btn btn-warning" [routerLink]="['/admin']">Back</button>
+    <button class="ml-3 btn" (click)="changeState(id)" *ngIf="survey.isActive" >Make Inactive</button>
+    <button class="ml-3 btn" (click)="changeState(id)" *ngIf="!survey.isActive" >Make Active</button>
+    <br />
+    <br />
+  </div>
 </div>

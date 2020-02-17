@@ -19,6 +19,7 @@ export class SurveyDetailsComponent implements OnInit {
     pollData: SurveyData[];
     pollResults: Map<SurveyQuestion, PieChartContents>;
     dataInitialised: boolean = false;
+    noPolls: boolean= false;
     constructor(private route: ActivatedRoute, private surveyService: SurveyService) {
         this.surveyForm = new SurveyForm();
         this.pollData = [];
@@ -36,7 +37,11 @@ export class SurveyDetailsComponent implements OnInit {
     loadData() {
         this.surveyService.getPollDataByFormId(this.id).subscribe(result => {
             this.pollData = result;
-            this.setPollResults();
+            if (this.pollData == null)
+                this.noPolls = true;
+            else {
+                this.setPollResults();
+            }
         }, error => console.log(error));
     }
     setPollResults() {

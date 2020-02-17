@@ -11,7 +11,7 @@ code {
 
 .btn-primary {
   color: #fff;
-  background-color: #1b6ec2;
+  background-color: #039BE5;
   border-color: #1861ac;
 }
 
@@ -19,19 +19,46 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.container {
+}
+
+.headings {
+  color: white;
+}
+.background {
+  background: linear-gradient(to bottom,#039BE5,white);
+  height: 65vh;
+}
+.opacity-box {
+  background-color: rgba(51,51,51,0.3);
+  border-radius: 20px;
+}
+
 .card {
   padding: 10px !important;
-  height: 200px;
-  width: 250px;
-  -webkit-box-shadow: 2px 2px 23px 1px rgba(0,0,0,0.34);
-  -moz-box-shadow: 2px 2px 23px 1px rgba(0,0,0,0.34);
-  box-shadow: 2px 2px 23px 1px rgba(0,0,0,0.34);
 }
-.card-body {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+
+.card-header {
+  background: transparent;
+}
+.card:hover {
+  background-position: right center; /* change the direction of the change here */
+  box-shadow: 0 0 20px #000;
+}
+
+.skew-top {
+  background-color: white;
+  -webkit-transform: skewY(-4deg);
+  transform: skewY(-4deg);
+  height: 30vh;
+  top: -5vh;
+  z-index: 1;
+  width: 100%;
+  position: relative;
+}
+
+.above-skew {
+  z-index: 2;
+  position: relative;
 }
 

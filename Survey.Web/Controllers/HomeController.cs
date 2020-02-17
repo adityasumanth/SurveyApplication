@@ -24,7 +24,7 @@ namespace Survey.Web.Controllers
             
         }
         [HttpGet]
-        [Route("admin/surveys")]
+        [Route("admin-surveys")]
         public List<SurveyForm> GetSurveyFormsAsAdmin()
         {
             return this.SurveyProvider.GetSurveyFormsAsAdmin();
@@ -40,20 +40,39 @@ namespace Survey.Web.Controllers
         }
 
         [HttpGet]
-        [Route("polldata/{id}")]
+        [Route("pollData/{id}")]
         public List<SurveyData> GetSurveyData(int id)
         {
             return this.SurveyProvider.GetSurveyData(id);
             
         }
         [HttpPost]
-        [Route("addForm")]
+        [Route("addSurvey")]
         public SurveyForm PostNewSurveyForm([FromBody]SurveyForm surveyForm)
         {
             return this.SurveyProvider.PostNewSurveyForm(surveyForm);
         }
+
+        [HttpPut]
+        [Route("updateSurvey")]
+        public SurveyForm PutSurveyForm([FromBody]UpdateSurvey updateSurvey )
+        {
+            if (updateSurvey == null)
+            {
+                return null;
+            }
+           return this.SurveyProvider.PutSurveyForm(updateSurvey.SurveyForm,updateSurvey.DeletedQuestions,updateSurvey.DeletedOptions);
+        }
+
+        [HttpPut]
+        [Route("changeState")]
+        public SurveyForm ChangeState([FromBody]int id)
+        {
+            return this.SurveyProvider.ChangeState(id);
+        }
+
         [HttpPost]
-        [Route("poll")]
+        [Route("pollSurvey")]
         public SurveyData PostPollData([FromBody]SurveyData pollData)
         {
             return this.SurveyProvider.PostPollData(pollData);

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SurveyForm } from '@app/models/SurveyForm';
 import { NgForm, FormGroup, Validators, EmailValidator, FormControl } from '@angular/forms';
 import { SurveyData } from '@app/models/SurveyData';
@@ -20,8 +20,11 @@ export class AddSurveyComponent implements OnInit {
     public email: string;
     public surveyFormGrp: FormGroup;
     public emailFormControl = new FormControl;
+    public error: boolean = false;
+    public errorMsg: string = "";
+    public editmode: boolean = false;
     /** new-survey ctor */
-    constructor(private route: ActivatedRoute, private surveyService: SurveyService) {
+    constructor(private route: ActivatedRoute, private surveyService: SurveyService,private router:Router) {
         this.survey = new SurveyForm();
         this.pollData = new SurveyData();
         this.answers = new Array<SurveyAnswer>();
@@ -40,25 +43,39 @@ export class AddSurveyComponent implements OnInit {
     }
 
     SubmitForm(form: NgForm) {
-        for (let q of this.survey.questions) {
-            let answer: SurveyAnswer = new SurveyAnswer();
-            answer.surveyQuestionId = q.id;
-            if (form.value["option-" + q.id] == "")
-                answer.surveyOptionId = 0;
-            else
-                answer.surveyOptionId = parseInt(form.value["option-" + q.id]);
-            this.answers.push(answer);
+        this.editmode = true;
+        if (this.emailFormControl.value == "") {
+            this.errorMsg = "Email is required."
+            this.error = true;
         }
-        this.pollData = new SurveyData();
-        this.pollData.email = this.emailFormControl.value;
-        this.pollData.surveyFormID = this.id;
-        this.pollData.answers = this.answers;
-        this.surveyService.postPollData(this.pollData).subscribe(result => {
-            window.location.href = "/surveys";
-        }, error => {
-            console.error(error); this.pollData = new SurveyData(); this.answers = new Array<SurveyAnswer>()
-        });
+        else {
+            for (let q of this.survey.questions) {
+                let answer: SurveyAnswer = new SurveyAnswer();
+                answer.surveyQuestionId = q.id;
+                if (form.value["option-" + q.id] == "") {
+                    answer.surveyOptionId = 0;
+                    this.errorMsg = "Please answer all the questions.";
+                    this.error = true;
+                    return;
+                }
+                else
+                    answer.surveyOptionId = parseInt(form.value["option-" + q.id]);
+                this.answers.push(answer);
+            }
+            this.pollData = new SurveyData();
+            this.pollData.email = this.emailFormControl.value;
+            this.pollData.surveyFormID = this.id;
+            this.pollData.answers = this.answers;
+            this.surveyService.postPollData(this.pollData).subscribe(result => {
+                this.router.navigate(['/surveys']);
+            }, error => {
+                console.error(error); this.pollData = new SurveyData(); this.answers = new Array<SurveyAnswer>()
+            });
+        }
+        this.editmode = false;
     }
-
+    closeAlert() {
+        this.error = false;
+    }
 }
 
