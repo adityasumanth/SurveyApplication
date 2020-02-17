@@ -43,11 +43,11 @@ export class SurveyService {
         return this.http.post<SurveyForm>(this.baseUrl + 'api/Home/addSurvey', survey);
     }
 
-    putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
-        return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/updateSurvey', updateSurvey);
-    }
-    public changeState(id: number): Observable<SurveyForm> {
-        return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeState', id);
+  putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
+    return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/updateSurvey', updateSurvey);
+  }
+  public changeState(id: number): Observable<SurveyForm> {
+      return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeState', id);
     }
 
     public currentUserValue(): User {
