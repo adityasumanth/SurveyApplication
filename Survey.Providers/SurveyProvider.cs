@@ -27,7 +27,7 @@ namespace Survey.Providers
         }
         public SurveyForm GetSurveyFormById(int id)
         {
-            SurveyForm form = this._dbContext.SurveyForms.Include("Questions.Options").FirstOrDefault(_=>_.SurveyFormId==id);
+            SurveyForm form = this._dbContext.SurveyForms.Include("Questions.Options").FirstOrDefault(_=>_.Id==id);
             if (form == null)
             {
                 return null;
@@ -110,7 +110,7 @@ namespace Survey.Providers
 
         public SurveyForm ChangeState(int id)
         {
-            SurveyForm form = _dbContext.SurveyForms.Include("Questions.Options").FirstOrDefault(_=>_.SurveyFormId==id);
+            SurveyForm form = _dbContext.SurveyForms.Include("Questions.Options").FirstOrDefault(_=>_.Id==id);
             form.isActive = form.isActive ? false : true;
             this._dbContext.Entry(form).State = EntityState.Modified;
             this._dbContext.SaveChanges();

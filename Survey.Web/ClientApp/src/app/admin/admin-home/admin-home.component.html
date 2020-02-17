@@ -1,7 +1,7 @@
 <div class="above-skew">
   <div class="text-center"><button class="btn btn-primary m-2" [routerLink]="['addsurvey']">Add New Survey</button></div>
   <div class="container d-flex flex-wrap justify-content-center opacity-box mt-2">
-    <div *ngFor="let survey of surveys" [title]=titleOnHover(survey) class="card col-3 m-3 h-50  btn-d " [routerLink]="['details', survey.surveyFormId]">
+    <div *ngFor="let survey of surveys" [title]=titleOnHover(survey) class="card col-3 m-3 h-50  btn-d " [routerLink]="['details', survey.id]">
       <div class="card-body text-center">
         {{survey.title}}
       </div>
