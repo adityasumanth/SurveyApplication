@@ -11,6 +11,7 @@ namespace Survey.Web.Controllers
     public class HomeController : ControllerBase
     {
         public ISurveyContract SurveyProvider { get; set; }
+
         public HomeController(ISurveyContract surveyCRUD)
         {
             this.SurveyProvider = surveyCRUD;
@@ -86,11 +87,6 @@ namespace Survey.Web.Controllers
             return this.SurveyProvider.Register(user);
         }
 
-        [HttpPost]
-        [Route("authenticate")]
-        public User AuthenticateUser([FromBody] UserData userData)
-        {
-            return this.SurveyProvider.AuthenticateUser(userData);
-        }
+        
     }
 }

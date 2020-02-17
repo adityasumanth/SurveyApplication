@@ -120,7 +120,7 @@ namespace Survey.Providers
 
         public User Register(User user)
         {
-            user.isAdmin = false;
+            user.IsAdmin = false;
             Byte[] inputBytes = Encoding.UTF8.GetBytes(user.Password);
             SHA512 shaM = new SHA512Managed();
             Byte[] hashedBytes = shaM.ComputeHash(inputBytes);

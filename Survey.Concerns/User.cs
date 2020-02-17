@@ -20,11 +20,14 @@ namespace Survey.Concerns
         [Required]
         public string LastName { get; set; }
         [Required]
-        public bool isAdmin { get; set; }
+        public bool IsAdmin { get; set; }
+        public string Token { get; set; }
     }
     public class UserData
     {
+        [Required]
         public string username { get; set; }
+        [Required]
         public string password { get; set; }
     }
 }

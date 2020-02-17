@@ -61,7 +61,7 @@ export class SurveyService {
     }
 
     login(username: string, password: string) {
-        return this.http.post<User>(this.baseUrl + `api/Home/authenticate`, { username, password })
+        return this.http.post<User>(this.baseUrl + `api/User/authenticate`, { username, password })
         .pipe(map(user => {
             if (user.password == null) {
                 return user;
@@ -69,8 +69,10 @@ export class SurveyService {
             else if (!user.isAdmin) {
                 return user;
             }
+            let userToken: any = { username: username, token: user.token };
+
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('currentUser', JSON.stringify(userToken));
             this.isLoggedIn = true;
             this.currentUserSubject.next(user);
             return user;
