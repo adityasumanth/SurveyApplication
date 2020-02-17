@@ -4,6 +4,7 @@ import { SurveyForm, SurveyData, User, UpdateSurvey } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 @Injectable()
+
 export class SurveyService {
     baseUrl: string;
     private currentUserSubject: BehaviorSubject<User>;
@@ -46,6 +47,7 @@ export class SurveyService {
     putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
         return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/updateSurvey', updateSurvey);
     }
+
     public changeState(id: number): Observable<SurveyForm> {
         return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeState', id);
     }
@@ -54,18 +56,25 @@ export class SurveyService {
         return this.currentUserSubject.value;
     }
 
+    register(user: User) {
+        return this.http.post<User>(this.baseUrl + 'api/home/register', user);
+    }
+
     login(username: string, password: string) {
         return this.http.post<User>(this.baseUrl + `api/Home/authenticate`, { username, password })
-            .pipe(map(user => {
-                if (user.password == null) {
-                    return user;
-                }
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.isLoggedIn = true;
-                this.currentUserSubject.next(user);
+        .pipe(map(user => {
+            if (user.password == null) {
                 return user;
-            }));
+            }
+            else if (!user.isAdmin) {
+                return user;
+            }
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.isLoggedIn = true;
+            this.currentUserSubject.next(user);
+            return user;
+        }));
     }
 
     logout() {

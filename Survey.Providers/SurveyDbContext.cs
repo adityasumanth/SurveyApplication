@@ -12,5 +12,9 @@ namespace Survey.Providers
         public DbSet<SurveyQuestion> SurveyQuestions { get; set; }
         public DbSet<SurveyOption> SurveyOptions { get; set; }
         public SurveyDbContext(DbContextOptions<SurveyDbContext> options) : base(options){   }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasIndex(u => u.UserName).IsUnique(true);
+        }
     }
 }

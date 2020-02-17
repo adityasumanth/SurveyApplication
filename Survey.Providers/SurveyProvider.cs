@@ -4,6 +4,7 @@ using Survey.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Survey.Providers
@@ -117,14 +118,32 @@ namespace Survey.Providers
             return form;
         }
 
+        public User Register(User user)
+        {
+            user.isAdmin = false;
+            Byte[] inputBytes = Encoding.UTF8.GetBytes(user.Password);
+            SHA512 shaM = new SHA512Managed();
+            Byte[] hashedBytes = shaM.ComputeHash(inputBytes);
+            user.Password = Convert.ToBase64String(hashedBytes);
+            this._dbContext.Users.Add(user);
+            this._dbContext.SaveChanges();
+            return user;
+        }
+
         public User AuthenticateUser(UserData userData)
         {
+            Byte[] pwdinputBytes = Encoding.UTF8.GetBytes(userData.password);
+            SHA512 shaM = new SHA512Managed();
+            Byte[] pwdhashedBytes = shaM.ComputeHash(pwdinputBytes);
+            string pwd = Convert.ToBase64String(pwdhashedBytes);
+
             User user = _dbContext.Users.Where(user => user.UserName == userData.username).FirstOrDefault();
             if (user != null && user.UserName == userData.username)
             {
-                if(user.Password == userData.password)
+                if (user.Password == pwd)
                 {
-                    return user;
+                    user.Password = "valid";
+                        return user;
                 }
                 user = new User();
                 user.FirstName = "Password is Wrong.";

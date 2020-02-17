@@ -6,7 +6,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './admin/login/login.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { UpdateSurveyComponent } from './admin/update-survey/update-survey.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -20,6 +21,7 @@ import { SurveyService } from './services/survey.service';
 import { SurveyDetailsComponent } from './surveys/survey-details/survey-details.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { FormService } from './services/form.service';
+import { AuthGuard, JwtInterceptor, ErrorInterceptor } from './helpers';
 
 @NgModule({
     declarations: [
@@ -30,6 +32,7 @@ import { FormService } from './services/form.service';
         AddSurveyComponent,
         SurveyDetailsComponent,
         LoginComponent,
+        RegisterComponent,
         AdminHomeComponent,
         AdminHomeDoopComponent,
         UpdateSurveyComponent,
@@ -48,16 +51,20 @@ import { FormService } from './services/form.service';
             { path: 'surveys', component: SurveysListComponent },
             { path: 'survey/:id', component: AddSurveyComponent },
             { path: 'results/:id', component: SurveyDetailsComponent },
-            { path: 'admin', component: AdminHomeDoopComponent, children: [
+            {
+                path: 'admin', component: AdminHomeDoopComponent, canActivate: [AuthGuard], children: [
               { path: '', component: AdminHomeComponent },
               { path: 'addsurvey', component: CreateSurveyComponent },
               { path: 'details/:id', component: AdminSurveyDetailsComponent },
               { path: 'update/:id', component: UpdateSurveyComponent } ]
             },
-            { path: 'login', component: LoginComponent }
+            { path: 'login', component: LoginComponent },
+            { path: 'register', component: RegisterComponent }
         ])
   ],
-  providers: [SurveyService, FormService],
+    providers: [SurveyService, FormService,
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

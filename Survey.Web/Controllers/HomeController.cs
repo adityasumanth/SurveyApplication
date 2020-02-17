@@ -78,6 +78,14 @@ namespace Survey.Web.Controllers
             return this.SurveyProvider.PostPollData(pollData);
             
         }
+
+        [HttpPost]
+        [Route("register")]
+        public User Register([FromBody]User user)
+        {
+            return this.SurveyProvider.Register(user);
+        }
+
         [HttpPost]
         [Route("authenticate")]
         public User AuthenticateUser([FromBody] UserData userData)
