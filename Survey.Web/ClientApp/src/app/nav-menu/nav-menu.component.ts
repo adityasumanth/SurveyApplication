@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SurveyService } from '../services/survey.service';
 import { Router } from '@angular/router';
 import { User } from '../models';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
     selector: 'app-nav-menu',
@@ -10,12 +11,13 @@ import { User } from '../models';
 })
 export class NavMenuComponent {
     currentUser: User;
-
+    public authenticationService: AuthenticationService;
     constructor(
         private router: Router,
-        private surveyService: SurveyService
+        private authService: AuthenticationService
     ) {
-        this.surveyService.currentUser.subscribe(x => this.currentUser = x);
+        this.authenticationService = authService;
+        this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     }
 
     isExpanded = false;
@@ -28,7 +30,7 @@ export class NavMenuComponent {
         this.isExpanded = !this.isExpanded;
     }
     logout() {
-        this.surveyService.logout();
+        this.authenticationService.logout();
         this.router.navigate(['/login']);
     }
 }

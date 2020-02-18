@@ -13,7 +13,6 @@ namespace Survey.Contracts
         List<SurveyData> GetSurveyData(int id);
         SurveyData PostPollData(SurveyData pollData);
         SurveyForm PostNewSurveyForm(SurveyForm surveyForm);
-        User Register(User user);
         SurveyForm PutSurveyForm(SurveyForm surveyForm,List<SurveyQuestion> surveyQuestions,List<SurveyOption> surveyOptions);
         SurveyForm ChangeState(int id);
     }

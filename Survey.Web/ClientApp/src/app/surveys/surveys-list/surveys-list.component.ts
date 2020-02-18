@@ -22,5 +22,5 @@ export class SurveysListComponent {
         this.surveyService.getSurveyForms().subscribe(result => { this.surveys = result; }, error => console.log(error));
     }
 
-    
+
 }

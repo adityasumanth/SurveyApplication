@@ -80,13 +80,5 @@ namespace Survey.Web.Controllers
             
         }
 
-        [HttpPost]
-        [Route("register")]
-        public User Register([FromBody]User user)
-        {
-            return this.SurveyProvider.Register(user);
-        }
-
-        
     }
 }

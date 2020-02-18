@@ -4,17 +4,28 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User } from '../models';
+import { error } from '@angular/compiler/src/util';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
     baseUrl: string;
+    public isLoggedIn: boolean = false;
+    public byGoogle: boolean = false;
+    public auth2: any;
+    public user: User;
+    public token: string = "";
+
 
     constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         this.baseUrl = baseUrl;
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
+        this.user = new User();
+        if (this.currentUserSubject.value != null) {
+            this.isLoggedIn = true;
+        }
     }
 
     public get currentUserValue(): User {
@@ -22,8 +33,9 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
+
     login(username: string, password: string) {
-        return this.http.post<any>(this.baseUrl + `api/User/authenticate`, { username, password })
+        return this.http.post<User>(this.baseUrl + `api/User/authenticate`, { username, password })
             .pipe(map(user => {
                 if (user.password == null) {
                     return user;
@@ -31,18 +43,50 @@ export class AuthenticationService {
                 else if (!user.isAdmin) {
                     return user;
                 }
-                let userToken:any = {username:username,token:user.token};
+                let userToken: any = { username: username, firstName: user.firstName, token: user.token };
 
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(userToken));
                 this.currentUserSubject.next(user);
+                this.isLoggedIn = true;
                 return user;
             }));
     }
 
     logout() {
+        if (this.byGoogle) {
+            this.logoutFromGoogle(this.auth2);
+        }
+        this.isLoggedIn = false;
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+    }
+
+    loginWithGoogle(email: string, givenName: string, familyName: string, token: string, auth2: any): Observable<User> {
+        this.byGoogle = true;
+        this.auth2 = auth2;
+        let userToken: any = { username: email, firstName: givenName, token: token };
+        localStorage.setItem('currentUser', JSON.stringify(userToken));
+        this.isLoggedIn = true;
+        this.user.username = email;
+        this.user.firstName = givenName;
+        this.user.lastName = familyName;
+        this.user.isAdmin = false;
+        this.user.password = "Google";
+        this.token = token;
+        return this.http.post<User>(this.baseUrl + 'api/User/getUserAdminStatus', this.user);
+    }
+    setUser(result:User) {
+        this.user.isAdmin = result.isAdmin;
+        this.user.token = this.token;
+        this.currentUserSubject.next(this.user);
+    }
+
+    logoutFromGoogle(auth2: any) {
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+        this.byGoogle = false;
     }
 }

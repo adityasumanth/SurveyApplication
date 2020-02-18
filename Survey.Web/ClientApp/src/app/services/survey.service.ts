@@ -1,23 +1,15 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SurveyForm, SurveyData, User, UpdateSurvey } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { SurveyForm, SurveyData, UpdateSurvey, User } from '../models';
 @Injectable()
 
 export class SurveyService {
     baseUrl: string;
-    private currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
-    public isLoggedIn: boolean = false;
 
     constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         this.baseUrl = baseUrl;
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
-        if (this.currentUserSubject.value != null) {
-            this.isLoggedIn = true;
-        }
     }
 
     getSurveyForms(): Observable<SurveyForm[]> {
@@ -52,38 +44,8 @@ export class SurveyService {
         return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeState', id);
     }
 
-    public currentUserValue(): User {
-        return this.currentUserSubject.value;
-    }
-
     register(user: User) {
-        return this.http.post<User>(this.baseUrl + 'api/home/register', user);
-    }
-
-    login(username: string, password: string) {
-        return this.http.post<User>(this.baseUrl + `api/User/authenticate`, { username, password })
-        .pipe(map(user => {
-            if (user.password == null) {
-                return user;
-            }
-            else if (!user.isAdmin) {
-                return user;
-            }
-            let userToken: any = { username: username, token: user.token };
-
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(userToken));
-            this.isLoggedIn = true;
-            this.currentUserSubject.next(user);
-            return user;
-        }));
-    }
-
-    logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-        this.isLoggedIn = false;
-        this.currentUserSubject.next(null);
+        return this.http.post<User>(this.baseUrl + 'api/user/register', user);
     }
 
     handleError(error: any) {
