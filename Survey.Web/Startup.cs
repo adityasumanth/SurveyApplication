@@ -45,8 +45,7 @@ namespace Survey.Web
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
+            }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
@@ -57,14 +56,18 @@ namespace Survey.Web
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
-            });
+            }).AddGoogle(options =>
+            {
+                options.ClientId = "100259007739-30avno7p9u5h7dmmi2vt56o384ffvc6o.apps.googleusercontent.com";
+                options.ClientSecret = "f8LAYtJTp6WBONkQoUsdxDmz";
+            }); 
 
 
             services.AddDbContext<SurveyDbContext>(options =>
             options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Survey.Web"))
-            ) ;
+            );
             services.AddTransient<ISurveyContract, SurveyProvider>();
-            services.AddTransient<IUserContract , UserProvider>();
+            services.AddTransient<IUserContract, UserProvider>();
 
         }
 

@@ -10,11 +10,13 @@ import { User } from '../models';
 })
 export class NavMenuComponent {
     currentUser: User;
+    public authenticationService: AuthenticationService;
     isLoggedIn: boolean = false;
     constructor(
-      private router: Router,
-      private authenticationService: AuthenticationService
+        private router: Router,
+        private authService: AuthenticationService
     ) {
+        this.authenticationService = authService;
       if (this.authenticationService.isLoggedIn) {
         this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
         this.isLoggedIn = true;
