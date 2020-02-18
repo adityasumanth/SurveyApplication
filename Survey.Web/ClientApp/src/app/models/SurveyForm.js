@@ -15,4 +15,10 @@ var SurveyForm = /** @class */ (function () {
     return SurveyForm;
 }());
 exports.SurveyForm = SurveyForm;
+var UpdateSurvey = /** @class */ (function () {
+    function UpdateSurvey() {
+    }
+    return UpdateSurvey;
+}());
+exports.UpdateSurvey = UpdateSurvey;
 //# sourceMappingURL=SurveyForm.js.map

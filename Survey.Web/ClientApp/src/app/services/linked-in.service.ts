@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { User } from '../models';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -20,8 +22,21 @@ export class LinkedInService {
   getAccessToken(code: string, state: string) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     var options = {
-      'headers' : headers
+      'headers': headers
     }
     return this.http.post(this.requestBaseUrl + "accessToken?grant_type=authorization_code&code=" + code + "&redirect_uri=" + this.redirectUrl + "&client_id=" + this.clientId + "&client_secret=" + this.clientSecret, null, options);
+  }
+  setAccessToken(response) {
+    localStorage.setItem('linkedInAccessToken', JSON.stringify(response));
+  }
+  getUserData(): Observable<any> {
+    var accessToken = JSON.parse(localStorage.getItem('linkedInAccessToken'))['access_token'];
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + accessToken
+    });
+    var options = {
+      'headers': headers
+    };
+    return this.http.get("https://api.linkedin.com/v2/me", options);
   }
 }

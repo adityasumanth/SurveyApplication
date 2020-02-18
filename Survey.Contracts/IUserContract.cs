@@ -10,5 +10,7 @@ namespace Survey.Contracts
         User AuthenticateUser(UserData userData);
         User UserAdminStatus(User user);
         User Register(User user);
+        User getOrRegisterUser(User user);
+        User GetUserByUpdatingToken(User user);
     }
 }

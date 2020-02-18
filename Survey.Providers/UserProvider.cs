@@ -70,7 +70,7 @@ namespace Survey.Providers
         {
             var User = _dbContext.Users.SingleOrDefault(x => x.UserName == user.UserName);
             if (User == null)
-                User=Register(user);
+                User = Register(user);
             return User;
         }
 
@@ -87,6 +87,42 @@ namespace Survey.Providers
             this._dbContext.Users.Add(user);
             this._dbContext.SaveChanges();
             return user;
+        }
+
+        public User getOrRegisterUser(User user)
+        {
+            User dbUser = this._dbContext.Users.SingleOrDefault(x => x.UserId == user.UserId);
+            if (dbUser!=null && dbUser.Token == user.Token)
+            {
+                return dbUser;
+            }
+            return null;
+        }
+
+        public User GetUserByUpdatingToken(User user)
+        {
+            User dbUser = this._dbContext.Users.SingleOrDefault(x => x.UserId == user.UserId);
+            if (dbUser == null)
+            {
+                dbUser = Register(user);
+            }
+            else
+            {
+                using (var transaction = _dbContext.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        _dbContext.Users.Update(user);
+                        _dbContext.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+            return dbUser;
         }
     }
 }
