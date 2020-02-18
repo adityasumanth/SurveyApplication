@@ -69,14 +69,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 console.log('FamilyName: ' + profile.getFamilyName());
                 console.log('Image URL: ' + profile.getImageUrl());
                 console.log('Email: ' + profile.getEmail());
-                //YOUR CODE HERE
-                this.authenticationService.loginWithGoogle(profile.getName(), profile.getGivenName(), profile.getFamilyName(), googleUser.getAuthResponse().id_token, this.auth2);
                 // The ID token you need to pass to your backend:
                 var id_token = googleUser.getAuthResponse().id_token;
                 console.log("ID Token: " + id_token);
-                this.loading = false;
 
-                window.location.href = this.returnUrl;
+                //YOUR CODE HERE
+                this.authenticationService.loginWithGoogle(profile.getEmail(), profile.getGivenName(), profile.getFamilyName(), googleUser.getAuthResponse().id_token, this.auth2).subscribe(result => {
+                    this.authenticationService.setUser(result);
+                    this.loading = false;
+                    window.location.href = this.returnUrl;
+                }, error => console.log(error));
+                
+                
 
             }, (error) => {
                 alert(JSON.stringify(error, undefined, 2));
