@@ -74,6 +74,9 @@ export class LoginComponent implements OnInit {
         });
   }
   authenticateUserByLinkedIn() {
-    window.open(this.linkedInService.login(), '_blank', "width=700,height=900,z-index=-1");
+    if (localStorage.getItem('userAccessToken') == null) {
+      window.open(this.linkedInService.login(), '_blank', "width=700,height=900,z-index=-1");
+    }
+    console.log(localStorage.getItem('userAccessToken'));
   }
 }
