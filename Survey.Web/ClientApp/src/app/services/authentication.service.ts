@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User } from '../models';
+import { error } from '@angular/compiler/src/util';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -14,11 +15,15 @@ export class AuthenticationService {
     public isLoggedIn: boolean = false;
     public byGoogle: boolean = false;
     public auth2: any;
+    public user: User;
+    public token: string = "";
+
 
     constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         this.baseUrl = baseUrl;
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
+        this.user = new User();
         if (this.currentUserSubject.value != null) {
             this.isLoggedIn = true;
         }
@@ -61,21 +66,26 @@ export class AuthenticationService {
         this.currentUserSubject.next(null);
     }
 
-    loginWithGoogle(username: string, givenName: string, familyName: string, token: string, auth2: any) {
+    loginWithGoogle(email: string, givenName: string, familyName: string, token: string, auth2: any): Observable<User> {
         this.byGoogle = true;
         this.auth2 = auth2;
-        let userToken: any = { username: username,firstName:givenName, token: token };
+        let userToken: any = { username: email, firstName: givenName, token: token };
         localStorage.setItem('currentUser', JSON.stringify(userToken));
         this.isLoggedIn = true;
-        let user: User = new User();
-        user.firstName = givenName;
-        user.lastName = familyName;
-        user.isAdmin = true;
-        user.password = null;
-        user.token = token;
-        this.currentUserSubject.next(user);
-        return user;
+        this.user.username = email;
+        this.user.firstName = givenName;
+        this.user.lastName = familyName;
+        this.user.isAdmin = false;
+        this.user.password = "Google";
+        this.token = token;
+        return this.http.post<User>(this.baseUrl + 'api/User/getUserAdminStatus', this.user);
     }
+    setUser(result:User) {
+        this.user.isAdmin = result.isAdmin;
+        this.user.token = this.token;
+        this.currentUserSubject.next(this.user);
+    }
+
     logoutFromGoogle(auth2: any) {
         auth2.signOut().then(function () {
             console.log('User signed out.');

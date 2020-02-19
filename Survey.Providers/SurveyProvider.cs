@@ -118,18 +118,6 @@ namespace Survey.Providers
             return form;
         }
 
-        public User Register(User user)
-        {
-            user.IsAdmin = false;
-            Byte[] inputBytes = Encoding.UTF8.GetBytes(user.Password);
-            SHA512 shaM = new SHA512Managed();
-            Byte[] hashedBytes = shaM.ComputeHash(inputBytes);
-            user.Password = Convert.ToBase64String(hashedBytes);
-            this._dbContext.Users.Add(user);
-            this._dbContext.SaveChanges();
-            return user;
-        }
-
         public User AuthenticateUser(UserData userData)
         {
             Byte[] pwdinputBytes = Encoding.UTF8.GetBytes(userData.password);

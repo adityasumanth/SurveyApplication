@@ -29,5 +29,19 @@ namespace Survey.Web.Controllers
         {
             return this.UserProvider.AuthenticateUser(userData);
         }
+
+        [HttpPost]
+        [Route("getUserAdminStatus")]
+        public User getUserAdminStatus([FromBody]User user)
+        {
+            return this.UserProvider.UserAdminStatus(user);
+        }
+
+        [HttpPost]
+        [Route("register")]
+        public User Register([FromBody]User user)
+        {
+            return this.UserProvider.Register(user);
+        }
     }
 }

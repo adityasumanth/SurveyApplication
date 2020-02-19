@@ -45,7 +45,7 @@ export class SurveyService {
     }
 
     register(user: User) {
-        return this.http.post<User>(this.baseUrl + 'api/home/register', user);
+        return this.http.post<User>(this.baseUrl + 'api/user/register', user);
     }
 
     handleError(error: any) {
