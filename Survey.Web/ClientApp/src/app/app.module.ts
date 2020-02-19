@@ -22,6 +22,7 @@ import { SurveyDetailsComponent } from './surveys/survey-details/survey-details.
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { FormService } from './services/form.service';
 import { AuthGuard, JwtInterceptor, ErrorInterceptor } from './helpers';
+import { AuthenticateComponent } from './login/authenticate/authenticate.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { AuthGuard, JwtInterceptor, ErrorInterceptor } from './helpers';
         UpdateSurveyComponent,
         AdminSurveyDetailsComponent,
         CreateSurveyComponent,
-        PieChartComponent
+    PieChartComponent,
+    AuthenticateComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -58,7 +60,8 @@ import { AuthGuard, JwtInterceptor, ErrorInterceptor } from './helpers';
               { path: 'details/:id', component: AdminSurveyDetailsComponent },
               { path: 'update/:id', component: UpdateSurveyComponent } ]
             },
-            { path: 'login', component: LoginComponent },
+          { path: 'login', component: LoginComponent },
+          { path: 'authenticate', component: AuthenticateComponent },
             { path: 'register', component: RegisterComponent }
         ])
   ],

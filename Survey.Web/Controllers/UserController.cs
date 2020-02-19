@@ -32,11 +32,22 @@ namespace Survey.Web.Controllers
 
         [HttpPost]
         [Route("getUserAdminStatus")]
-        public User getUserAdminStatus([FromBody]User user)
+        public User GetUserAdminStatus([FromBody]User user)
         {
             return this.UserProvider.UserAdminStatus(user);
         }
-
+        [HttpPost]
+        [Route("getUser")]
+        public User GetUserByToken([FromBody]User user)
+        {
+            return this.UserProvider.getOrRegisterUser(user);
+        }
+        [HttpPost]
+        [Route("getUserByUpdatingToken")]
+        public User GetUserByUpdatingToken([FromBody]User user)
+        {
+            return this.UserProvider.GetUserByUpdatingToken(user);
+        }
         [HttpPost]
         [Route("register")]
         public User Register([FromBody]User user)

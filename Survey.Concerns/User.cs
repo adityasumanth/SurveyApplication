@@ -10,7 +10,7 @@ namespace Survey.Concerns
     {
         [Key]
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [Required]
         public string UserName { get; set; }
         [Required]

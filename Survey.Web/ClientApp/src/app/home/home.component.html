@@ -1,7 +1,7 @@
 <h3 class="headings text-center">Dashboard</h3>
 <div class="container d-flex flex-wrap justify-content-center opacity-box above-skew">
   <p *ngIf="!surveyForms">Loading</p>
-  <div *ngFor="let survey of surveyForms" class="card btn-d col-3 m-3" [routerLink]="['/results',survey.surveyFormId]">
+  <div *ngFor="let survey of surveyForms" class="card btn-d col-3 m-3" [routerLink]="['/results',survey.id]">
     <div class="card-header text-center">{{survey.title}}</div>
     <div class="card-body text-center">
       {{survey.description}}

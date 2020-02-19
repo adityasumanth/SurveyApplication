@@ -6,7 +6,7 @@ import { Deserializable } from '../interfaces/deserializable.interface';
 export class SurveyData implements Deserializable {
     id: number;
     email: string;
-    surveyFormID: number;
+    surveyFormId: number;
     answers: SurveyAnswer[];
 
     deserialize(input: any) {
