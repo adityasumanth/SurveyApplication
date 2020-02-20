@@ -28,7 +28,9 @@
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
               Login
             </button>
-            <p> New User! click<a class="nav-link text-secoundry" [routerLink]="['/register']">here</a>.</p>
+            <button [disabled]="loading" type="button" [routerLink]="['/register']" class="btn btn-success">
+              Register
+            </button>
           </div>
         </form>
       </div>

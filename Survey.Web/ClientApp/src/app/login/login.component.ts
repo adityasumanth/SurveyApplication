@@ -11,7 +11,9 @@ import { LinkedInService } from '../services/linked-in.service';
 declare const gapi: any;
 
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({
+  templateUrl: 'login.component.html',
+  styles: [`.text-center > button { margin-right: 25px; }`]})
 export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
   loading = false;
@@ -33,7 +35,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ) {
     this.baseUrl = baseUrl;
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
+    if (this.authenticationService.currentUserValue()) {
       this.router.navigate(['/']);
     }
   }

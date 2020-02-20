@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Survey.Concerns;
 using Survey.Concerns.Helpers;
@@ -27,7 +28,6 @@ namespace Survey.Providers
         }
 
         public User AuthenticateUser(UserData userData)
-
         {
             Byte[] pwdinputBytes = Encoding.UTF8.GetBytes(userData.password);
             SHA512 shaM = new SHA512Managed();
@@ -54,6 +54,8 @@ namespace Survey.Providers
                     };
                     var token = tokenHandler.CreateToken(tokenDescriptor);
                     user.Token = tokenHandler.WriteToken(token);
+                    this._dbContext.Entry(user).State = EntityState.Modified;
+                    this._dbContext.SaveChanges();
                     user.Password = "valid";
                     return user;
                 }
@@ -63,6 +65,21 @@ namespace Survey.Providers
             }
             user = new User();
             user.FirstName = "UserName doesn't Exist";
+            return user;
+        }
+
+        public User GetUserByUserName(UserData username)
+        {
+            var user = _dbContext.Users.SingleOrDefault(x => x.UserName == username.username);
+            if(user != null)
+            {
+                if (user.Token == username.password)
+                {
+                    user.Password = "valid";
+                    return user;
+                }
+            }
+            user = new User();
             return user;
         }
 
@@ -77,6 +94,14 @@ namespace Survey.Providers
         public User Register(User user)
         {
             user.IsAdmin = false;
+            if (this._dbContext.Users.Count() != 0)
+            {
+                user.UserId = (Int32.Parse(this._dbContext.Users.Last().UserId) + 1).ToString();
+            }
+            else
+            {
+                user.UserId = 1.ToString();
+            }
             if (user.Password != "Google")
             {
                 Byte[] inputBytes = Encoding.UTF8.GetBytes(user.Password);

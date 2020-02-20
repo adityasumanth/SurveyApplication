@@ -6,51 +6,51 @@ import { SurveyForm, SurveyData, UpdateSurvey, User } from '../models';
 @Injectable()
 
 export class SurveyService {
-    baseUrl: string;
+  baseUrl: string;
 
-    constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-        this.baseUrl = baseUrl;
-    }
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this.baseUrl = baseUrl;
+  }
 
-    getSurveyForms(): Observable<SurveyForm[]> {
-        return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/surveys');
-    }
+  getSurveyForms(): Observable<SurveyForm[]> {
+    return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/surveys');
+  }
 
-    getSurveyFormsAsAdmin(): Observable<SurveyForm[]> {
-        return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/admin-surveys');
-    }
+  getSurveyFormsAsAdmin(): Observable<SurveyForm[]> {
+    return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/admin-surveys');
+  }
 
-    getSurveyFormById(id: Number): Observable<SurveyForm> {
-        return this.http.get<SurveyForm>(this.baseUrl + 'api/home/survey/' + id);
-    }
+  getSurveyFormById(id: Number): Observable<SurveyForm> {
+    return this.http.get<SurveyForm>(this.baseUrl + 'api/home/survey/' + id);
+  }
 
-    getPollDataByFormId(id: Number): Observable<SurveyData[]> {
-        return this.http.get<SurveyData[]>(this.baseUrl + 'api/home/pollData/' + id);
-    }
+  getPollDataByFormId(id: Number): Observable<SurveyData[]> {
+    return this.http.get<SurveyData[]>(this.baseUrl + 'api/home/pollData/' + id);
+  }
 
-    postPollData(pollData: SurveyData): Observable<SurveyData> {
-        return this.http.post<SurveyData>(this.baseUrl + 'api/Home/pollSurvey', pollData);
-    }
+  postPollData(pollData: SurveyData): Observable<SurveyData> {
+    return this.http.post<SurveyData>(this.baseUrl + 'api/Home/pollSurvey', pollData);
+  }
 
-    postNewSurvey(survey: SurveyForm): Observable<SurveyForm> {
-        return this.http.post<SurveyForm>(this.baseUrl + 'api/Home/addSurvey', survey);
-    }
+  postNewSurvey(survey: SurveyForm): Observable<SurveyForm> {
+    return this.http.post<SurveyForm>(this.baseUrl + 'api/Home/addSurvey', survey);
+  }
 
-    putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
-        return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/updateSurvey', updateSurvey);
-    }
+  putNewSurvey(updateSurvey: UpdateSurvey): Observable<SurveyForm> {
+    return this.http.put<SurveyForm>(this.baseUrl + 'api/Home/updateSurvey', updateSurvey);
+  }
 
-    public changeState(id: number): Observable<SurveyForm> {
-        return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeState', id);
-    }
+  public changeState(id: number): Observable<SurveyForm> {
+    return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeState', id);
+  }
 
-    register(user: User) {
-        return this.http.post<User>(this.baseUrl + 'api/user/register', user);
-    }
+  register(user: User): Observable<User> {
+    return this.http.post<User>(this.baseUrl + 'api/user/register', user);
+  }
 
-    handleError(error: any) {
-        let errorMsg = error.message || `Yikes! There was a problem with our hyperdrive device and we couldn't retrieve your data!`
-        console.error(errorMsg);
-        return Observable.throw(errorMsg);
-    }
+  handleError(error: any) {
+    let errorMsg = error.message || `Yikes! There was a problem with our hyperdrive device and we couldn't retrieve your data!`
+    console.error(errorMsg);
+    return Observable.throw(errorMsg);
+  }
 }

@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, first } from 'rxjs/operators';
 
 import { User } from '../models';
 import { error } from '@angular/compiler/src/util';
@@ -26,6 +26,36 @@ export class AuthenticationService {
     this.user = new User();
     if (this.currentUserSubject.value != null) {
       this.isLoggedIn = true;
+      this.token = this.currentUserSubject.value.token;
+      let username = this.currentUserSubject.value.username;
+      this.getCurrentUserByToken(username, this.token)
+        .subscribe(
+          data => {
+            if (data.username == username) {
+              this.user = data;
+              console.log(this.user);
+            }
+            else {
+              this.user.firstName = 'Guest';
+            }
+          },
+          error => { console.log(error); });
+      }
+      if (localStorage.getItem('linkedInAccessToken') != null) {
+          this.byLinkedIn = true;
+      }
+  }
+
+  getCurrentUserByToken(username: string, Token: string) {
+    return this.http.post<User>(this.baseUrl + `api/user/getUserByUserName`, { username, Token })
+      .pipe(map(user => {
+        if (user.token == Token) {
+          return user;
+        }
+        user.firstName = 'guest';
+        return user;
+      }));
+  }
     }
     if (localStorage.getItem('linkedInAccessToken') != null) {
       this.byLinkedIn = true;
@@ -37,14 +67,20 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+                // store user details and jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem('currentUser', JSON.stringify(userToken));
+                this.isLoggedIn = true;
+                this.currentUserSubject.next(user);
+                this.isLoggedIn = true;
+                return user;
+            }));
+    }
+>>>>>>>>> Temporary merge branch 2
 
   login(username: string, password: string) {
     return this.http.post<User>(this.baseUrl + `api/User/authenticate`, { username, password })
       .pipe(map(user => {
         if (user.password == null) {
-          return user;
-        }
-        else if (!user.isAdmin) {
           return user;
         }
         let userToken: any = { username: username, firstName: user.firstName, token: user.token };
@@ -110,7 +146,7 @@ export class AuthenticationService {
   loginWithLinkedIn(data, token): Observable<User> {
     var user = this.getUserFromData(data, token);
     this.byLinkedIn = true;
-    return this.http.post<User>(this.baseUrl + 'api/User/getUser', user);    
+    return this.http.post<User>(this.baseUrl + 'api/User/getUser', user);
   }
   getUserFromData(data,token) : User {
     var user = new User();
