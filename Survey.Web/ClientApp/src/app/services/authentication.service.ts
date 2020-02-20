@@ -27,6 +27,9 @@ export class AuthenticationService {
     if (this.currentUserSubject.value != null) {
       this.isLoggedIn = true;
     }
+    if (localStorage.getItem('linkedInAccessToken') != null) {
+      this.byLinkedIn = true;
+    }
   }
 
   public get currentUserValue(): User {

@@ -43,5 +43,10 @@
 .option {
   margin-right: 25px;
 }
-
+.container{
+    color:white;
+}
+.options{
+    margin-left:100px;
+}
 

@@ -32,11 +32,11 @@ export class CreateSurveyComponent implements OnInit {
 
     generateNewForm(): any {
         if (this.title == '' ) {
-            this.formError = 'Enter valid form name';
+            this.formError = 'Enter a valid title';
             this.error = true;
         }
         else if (this.description == '') {
-            this.formError = 'Description is mandatory';
+            this.formError = 'Please Enter Description';
             this.error = true;
         }
         else {
@@ -79,7 +79,8 @@ export class CreateSurveyComponent implements OnInit {
 
     }
 
-    createForm() {
+  createForm() {
+    console.log(this.currentForm);
         this.surveyService.postNewSurvey(this.currentForm).subscribe(result => {
             this.router.navigate(['/']);
         }, error => {
