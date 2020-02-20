@@ -9,6 +9,7 @@ namespace Survey.Contracts
     {
         User AuthenticateUser(UserData userData);
         User UserAdminStatus(User user);
+        User GetUserByUserName(UserData username);
         User Register(User user);
         User getOrRegisterUser(User user);
         User GetUserByUpdatingToken(User user);

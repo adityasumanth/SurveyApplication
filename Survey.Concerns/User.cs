@@ -9,7 +9,6 @@ namespace Survey.Concerns
     public class User
     {
         [Key]
-        [Required]
         public string UserId { get; set; }
         [Required]
         public string UserName { get; set; }

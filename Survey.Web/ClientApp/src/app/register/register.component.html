@@ -38,6 +38,9 @@
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
               Register
             </button>
+            <button [disabled]="loading" type="button" [routerLink]="['/login']" class="btn btn-success">
+              Login
+            </button>
           </div>
 
         </form>

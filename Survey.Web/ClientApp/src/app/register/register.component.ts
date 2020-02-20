@@ -6,7 +6,9 @@ import { User } from '../models';
 import { AuthenticationService } from '../services/authentication.service';
 import { SurveyService } from '../services/survey.service';
 
-@Component({ templateUrl: './register.component.html' })
+@Component({
+  templateUrl: './register.component.html',
+  styles: [`.text-center > button { margin-right: 25px; }`]})
 
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
@@ -24,13 +26,12 @@ export class RegisterComponent implements OnInit {
     private surveyService: SurveyService
   ) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue && this.authenticationService.currentUserValue.isAdmin) {
+    if (this.authenticationService.currentUserValue() && this.authenticationService.currentUserValue().isAdmin) {
       this.router.navigate(['/admin']);
     }
-    else if (this.authenticationService.currentUserValue && !this.authenticationService.currentUserValue.isAdmin) {
+    else if (this.authenticationService.currentUserValue() && !this.authenticationService.currentUserValue().isAdmin) {
       this.router.navigate(['/']);
     }
-
   }
 
   ngOnInit() {
@@ -63,6 +64,8 @@ export class RegisterComponent implements OnInit {
     this.user.username = this.f.username.value;
     this.user.password = this.f.password.value;
     this.user.isAdmin = false;
+    this.user.token = '';
+    this.user.userId = '';
     this.surveyService.register(this.user)
       .pipe(first())
       .subscribe(
@@ -74,5 +77,6 @@ export class RegisterComponent implements OnInit {
             this.router.navigate(['/'])
           }
         });
+    this.loading = false;
   }
 }

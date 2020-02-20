@@ -10,7 +10,7 @@ using Survey.Contracts;
 
 namespace Survey.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -36,6 +36,13 @@ namespace Survey.Web.Controllers
         {
             return this.UserProvider.UserAdminStatus(user);
         }
+        [HttpPost]
+        [Route("getUserByUserName")]
+        public User GetUserByUserName([FromBody] UserData user)
+        {
+            return this.UserProvider.GetUserByUserName(user);
+        }
+
         [HttpPost]
         [Route("getUser")]
         public User GetUserByToken([FromBody]User user)
