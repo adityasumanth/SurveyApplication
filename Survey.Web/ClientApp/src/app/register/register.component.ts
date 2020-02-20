@@ -26,10 +26,10 @@ export class RegisterComponent implements OnInit {
     private surveyService: SurveyService
   ) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue() && this.authenticationService.currentUserValue().isAdmin) {
+    if (this.authenticationService.currentUserValue && this.authenticationService.currentUserValue.isAdmin) {
       this.router.navigate(['/admin']);
     }
-    else if (this.authenticationService.currentUserValue() && !this.authenticationService.currentUserValue().isAdmin) {
+    else if (this.authenticationService.currentUserValue && !this.authenticationService.currentUserValue.isAdmin) {
       this.router.navigate(['/']);
     }
   }

@@ -55,28 +55,11 @@ export class AuthenticationService {
         user.firstName = 'guest';
         return user;
       }));
-  }
-    }
-    if (localStorage.getItem('linkedInAccessToken') != null) {
-      this.byLinkedIn = true;
-    }
-  }
-
+  }   
   public get currentUserValue(): User {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     return this.currentUserSubject.value;
   }
-
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(userToken));
-                this.isLoggedIn = true;
-                this.currentUserSubject.next(user);
-                this.isLoggedIn = true;
-                return user;
-            }));
-    }
->>>>>>>>> Temporary merge branch 2
-
   login(username: string, password: string) {
     return this.http.post<User>(this.baseUrl + `api/User/authenticate`, { username, password })
       .pipe(map(user => {
