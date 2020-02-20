@@ -68,12 +68,12 @@ namespace Survey.Providers
             return user;
         }
 
-        public User GetUserByEmail(UserData username)
+        public User GetUserByEmail(string email)
         {
-            var user = _dbContext.Users.SingleOrDefault(x => x.Email == username.email);
+            var user = _dbContext.Users.SingleOrDefault(x => x.Email == email);
             if(user != null)
             {
-                if (user.Token == username.password)
+                if (user.Token != null || user.Token != "")
                 {
                     user.Password = "valid";
                     return user;

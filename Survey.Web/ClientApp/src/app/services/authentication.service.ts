@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { SurveyService } from './survey.service';
 import { User } from '../models';
 import { error } from '@angular/compiler/src/util';
 
@@ -19,16 +19,16 @@ export class AuthenticationService {
   public token: string = "";
 
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string, private surveyService: SurveyService) {
     this.baseUrl = baseUrl;
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
     this.user = new User();
     if (this.currentUserSubject.value != null) {
       this.isLoggedIn = true;
-      /* this.token = this.currentUserSubject.value.token;
+      this.token = this.currentUserSubject.value.token;
       let email = this.currentUserSubject.value.email;
-      this.getUserByEmail(email, this.token)
+      this.surveyService.getUserByEmail(email, this.token)
         .subscribe(
           data => {
             if (data.email == email) {
@@ -38,19 +38,8 @@ export class AuthenticationService {
               this.user.firstName = 'Guest';
             }
           },
-          error => { console.log(error); }); */
+          error => { console.log(error); }); 
     }
-  }
-
-  getUserByEmail(email: string, password: string) {
-    return this.http.post<User>(this.baseUrl + `api/user/getUserByEmail`, { email, password })
-      .pipe(map(user => {
-        if (user.token == password) {
-          return user;
-        }
-        user.firstName = 'Guest';
-        return user;
-      }));
   }
 
   public get currentUserValue(): User {

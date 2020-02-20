@@ -21,8 +21,6 @@ namespace Survey.Web.Controllers
             this.UserProvider = userContract;
         }
 
-
-
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public User AuthenticateUser([FromBody] UserData userData)
@@ -36,11 +34,12 @@ namespace Survey.Web.Controllers
         {
             return this.UserProvider.UserAdminStatus(user);
         }
-        [HttpPost]
-        [Route("getUserByEmail")]
-        public User GetUserByUserName([FromBody] UserData user)
+        
+        [AllowAnonymous]
+        [HttpGet("data/{email}")]
+        public User GetUserByEmail(string email)
         {
-            return this.UserProvider.GetUserByEmail(user);
+            return this.UserProvider.GetUserByEmail(email);
         }
 
         [HttpPost]

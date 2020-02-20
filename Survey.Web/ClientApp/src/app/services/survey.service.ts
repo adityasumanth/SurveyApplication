@@ -48,6 +48,17 @@ export class SurveyService {
     return this.http.post<User>(this.baseUrl + 'api/user/register', user);
   }
 
+  getUserByEmail(email: string, password: string) {
+    return this.http.get<User>(this.baseUrl + 'api/User/data/' + email)
+      .pipe(map(user => {
+        if (user.token == password) {
+          return user;
+        }
+        user.firstName = 'Guest';
+        return user;
+      }));
+  }
+
   handleError(error: any) {
     let errorMsg = error.message || `Yikes! There was a problem with our hyperdrive device and we couldn't retrieve your data!`
     console.error(errorMsg);
