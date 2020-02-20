@@ -10,9 +10,9 @@ import { AuthenticationService } from '../../services/authentication.service';
 export class AdminHomeDoopComponent {
     surveys: SurveyForm[] = new Array();
 
-    constructor(private authenticationService: AuthenticationService, private router: Router) {
-        if (this.authenticationService.isLoggedIn == false) {
-            this.router.navigate(['/login']);
-        }
+  constructor(private authenticationService: AuthenticationService, private router: Router) {
+    if (this.authenticationService.isLoggedIn == false) {
+      this.router.navigate(['/login']);
     }
+  }
 }

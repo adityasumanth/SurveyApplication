@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SurveyForm, User, SurveyQuestion, SurveyOption } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SurveyService } from './survey.service';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class FormService {
@@ -13,13 +13,11 @@ export class FormService {
   public currentForm: SurveyForm;
   public newQuestion: SurveyQuestion;
 
-  constructor(private http: HttpClient, private surveyService: SurveyService) {
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUserObservable = this.currentUserSubject.asObservable();
     this.currentUser = this.currentUserSubject.value;
-    if (this.currentUser != null) {
-      this.isLoggedIn = true;
-    }
+    this.isLoggedIn = this.authenticationService.isLoggedIn;
   }
 
   GenerateForm(title: string, desc: string): SurveyForm {
