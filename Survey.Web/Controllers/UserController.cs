@@ -37,10 +37,10 @@ namespace Survey.Web.Controllers
             return this.UserProvider.UserAdminStatus(user);
         }
         [HttpPost]
-        [Route("getUserByUserName")]
+        [Route("getUserByEmail")]
         public User GetUserByUserName([FromBody] UserData user)
         {
-            return this.UserProvider.GetUserByUserName(user);
+            return this.UserProvider.GetUserByEmail(user);
         }
 
         [HttpPost]

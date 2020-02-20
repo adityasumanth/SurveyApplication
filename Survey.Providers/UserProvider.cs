@@ -34,9 +34,9 @@ namespace Survey.Providers
             Byte[] pwdhashedBytes = shaM.ComputeHash(pwdinputBytes);
             string pwd = Convert.ToBase64String(pwdhashedBytes);
 
-            var user = _dbContext.Users.SingleOrDefault(x => x.UserName == userData.username && x.Password == pwd);
+            var user = _dbContext.Users.SingleOrDefault(x => x.Email == userData.email && x.Password == pwd);
 
-            if (user != null && user.UserName == userData.username)
+            if (user != null && user.Email == userData.email)
             {
                 if (user.Password == pwd)
                 {
@@ -68,9 +68,9 @@ namespace Survey.Providers
             return user;
         }
 
-        public User GetUserByUserName(UserData username)
+        public User GetUserByEmail(UserData username)
         {
-            var user = _dbContext.Users.SingleOrDefault(x => x.UserName == username.username);
+            var user = _dbContext.Users.SingleOrDefault(x => x.Email == username.email);
             if(user != null)
             {
                 if (user.Token == username.password)
@@ -85,7 +85,7 @@ namespace Survey.Providers
 
         public User UserAdminStatus(User user)
         {
-            var User = _dbContext.Users.SingleOrDefault(x => x.UserName == user.UserName);
+            var User = _dbContext.Users.SingleOrDefault(x => x.Email == user.Email);
             if (User == null)
                 User = Register(user);
             return User;

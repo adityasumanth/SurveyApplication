@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
 
@@ -61,11 +61,11 @@ export class RegisterComponent implements OnInit {
     this.user = new User();
     this.user.firstName = this.f.firstName.value;
     this.user.lastName = this.f.lastName.value;
-    this.user.username = this.f.username.value;
+    this.user.email = this.f.email.value;
     this.user.password = this.f.password.value;
     this.user.isAdmin = false;
     this.user.token = '';
-    this.user.userId = '';
+    this.user.userId = this.f.email.value;
     this.surveyService.register(this.user)
       .pipe(first())
       .subscribe(

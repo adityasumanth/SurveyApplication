@@ -18,6 +18,10 @@ namespace Survey.Providers
         }
         public List<SurveyForm> GetSurveyForms()
         {
+            return this._dbContext.SurveyForms.Include("Questions.Options").Where(_ => _.isActive == true && _.isPublic == true).ToList();
+        }
+        public List<SurveyForm> GetSurveyFormsAsUser()
+        {
             return this._dbContext.SurveyForms.Include("Questions.Options").Where(_ => _.isActive == true).ToList();
         }
 
@@ -125,8 +129,8 @@ namespace Survey.Providers
             Byte[] pwdhashedBytes = shaM.ComputeHash(pwdinputBytes);
             string pwd = Convert.ToBase64String(pwdhashedBytes);
 
-            User user = _dbContext.Users.Where(user => user.UserName == userData.username).FirstOrDefault();
-            if (user != null && user.UserName == userData.username)
+            User user = _dbContext.Users.Where(user => user.Email == userData.email).FirstOrDefault();
+            if (user != null && user.Email == userData.email)
             {
                 if (user.Password == pwd)
                 {

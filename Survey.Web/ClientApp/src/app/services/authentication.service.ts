@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, first } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { User } from '../models';
 import { error } from '@angular/compiler/src/util';
@@ -26,33 +26,33 @@ export class AuthenticationService {
     this.user = new User();
     if (this.currentUserSubject.value != null) {
       this.isLoggedIn = true;
-      this.token = this.currentUserSubject.value.token;
-      let username = this.currentUserSubject.value.username;
-      this.getCurrentUserByToken(username, this.token)
+      /* this.token = this.currentUserSubject.value.token;
+      let email = this.currentUserSubject.value.email;
+      this.getUserByEmail(email, this.token)
         .subscribe(
           data => {
-            if (data.username == username) {
+            if (data.email == email) {
               this.user = data;
-              console.log(this.user);
             }
             else {
               this.user.firstName = 'Guest';
             }
           },
           error => { console.log(error); });
-      }
+          
+      }*/
       if (localStorage.getItem('linkedInAccessToken') != null) {
           this.byLinkedIn = true;
       }
   }
 
-  getCurrentUserByToken(username: string, Token: string) {
-    return this.http.post<User>(this.baseUrl + `api/user/getUserByUserName`, { username, Token })
+  getUserByEmail(email: string, password: string) {
+    return this.http.post<User>(this.baseUrl + `api/user/getUserByEmail`, { email, password })
       .pipe(map(user => {
-        if (user.token == Token) {
+        if (user.token == password) {
           return user;
         }
-        user.firstName = 'guest';
+        user.firstName = 'Guest';
         return user;
       }));
   }   
@@ -60,14 +60,14 @@ export class AuthenticationService {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     return this.currentUserSubject.value;
   }
-  login(username: string, password: string) {
-    return this.http.post<User>(this.baseUrl + `api/User/authenticate`, { username, password })
+
+  login(email: string, password: string) {
+    return this.http.post<User>(this.baseUrl + `api/User/authenticate`, { email, password })
       .pipe(map(user => {
         if (user.password == null) {
           return user;
         }
-        let userToken: any = { username: username, firstName: user.firstName, token: user.token };
-
+        let userToken: any = { email: email, firstName: user.firstName, token: user.token };
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(userToken));
         this.currentUserSubject.next(user);
@@ -92,10 +92,10 @@ export class AuthenticationService {
   loginWithGoogle(email: string, givenName: string, familyName: string, token: string, auth2: any): Observable<User> {
     this.byGoogle = true;
     this.auth2 = auth2;
-    let userToken: any = { username: email, firstName: givenName, token: token };
+    let userToken: any = { email: email, firstName: givenName, token: token };
     localStorage.setItem('currentUser', JSON.stringify(userToken));
     this.isLoggedIn = true;
-    this.user.username = email;
+    this.user.email = email;
     this.user.firstName = givenName;
     this.user.lastName = familyName;
     this.user.isAdmin = false;
@@ -116,13 +116,13 @@ export class AuthenticationService {
     this.byGoogle = false;
   }
   CreateOrUpdateUserWithLinkedIn(data, token): Observable<User> {
-    var user=this.getUserFromData(data, token);
+    var user = this.getUserFromData(data, token);
     this.byLinkedIn = true;
     return this.http.post<User>(this.baseUrl + 'api/User/getUserByUpdatingToken', user);
   }
   setLinkedInUser(response: User) {
     this.currentUserSubject.next(response);
-    let userToken: any = { username: response.username, firstName: response.firstName, token: response.token };
+    let userToken: any = { email: response.email, firstName: response.firstName, token: response.token };
     localStorage.setItem('currentUser', JSON.stringify(userToken));
     this.isLoggedIn = true;
   }
@@ -131,7 +131,7 @@ export class AuthenticationService {
     this.byLinkedIn = true;
     return this.http.post<User>(this.baseUrl + 'api/User/getUser', user);
   }
-  getUserFromData(data,token) : User {
+  getUserFromData(data, token): User {
     var user = new User();
     user.firstName = data['localizedFirstName'];
     user.lastName = data['localizedLastName'];
@@ -139,7 +139,7 @@ export class AuthenticationService {
     user.token = token;
     user.password = "LinkedIn";
     user.userId = data['id'];
-    user.username = user.firstName + " " + user.lastName;
+    user.email = user.firstName + " " + user.lastName;
     return user;
   }
   logoutWithLinkedIn() {
