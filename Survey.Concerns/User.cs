@@ -9,9 +9,11 @@ namespace Survey.Concerns
     public class User
     {
         [Key]
+        public int Id { get; set; }
+        [Required]
         public string UserId { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public string Email { get; set; }
         [Required]
         public string Password { get; set; }
         [Required]
@@ -25,7 +27,7 @@ namespace Survey.Concerns
     public class UserData
     {
         [Required]
-        public string username { get; set; }
+        public string email { get; set; }
         [Required]
         public string password { get; set; }
     }

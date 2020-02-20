@@ -17,7 +17,9 @@ namespace Survey.Concerns
         [Required]
         public bool isActive { get; set; }
         [Required]
+        public bool isPublic { get; set; }
         [ForeignKey("User")]
+        [Required]
         public int CreatedBy { get; set; }
         public List<SurveyQuestion> Questions { get; set; }
     }

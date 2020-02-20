@@ -26,10 +26,10 @@ export class RegisterComponent implements OnInit {
     private surveyService: SurveyService
   ) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue() && this.authenticationService.currentUserValue().isAdmin) {
+    if (this.authenticationService.currentUserValue && this.authenticationService.currentUserValue.isAdmin) {
       this.router.navigate(['/admin']);
     }
-    else if (this.authenticationService.currentUserValue() && !this.authenticationService.currentUserValue().isAdmin) {
+    else if (this.authenticationService.currentUserValue && !this.authenticationService.currentUserValue.isAdmin) {
       this.router.navigate(['/']);
     }
   }
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
 
@@ -61,11 +61,11 @@ export class RegisterComponent implements OnInit {
     this.user = new User();
     this.user.firstName = this.f.firstName.value;
     this.user.lastName = this.f.lastName.value;
-    this.user.username = this.f.username.value;
+    this.user.email = this.f.email.value;
     this.user.password = this.f.password.value;
     this.user.isAdmin = false;
     this.user.token = '';
-    this.user.userId = '';
+    this.user.userId = this.f.email.value;
     this.surveyService.register(this.user)
       .pipe(first())
       .subscribe(

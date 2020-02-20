@@ -35,14 +35,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ) {
     this.baseUrl = baseUrl;
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue()) {
+    if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
   }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
     this.element = document.getElementById('googleBtn');
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     this.loading = true;
     this.authenticationService;
-    this.authenticationService.login(this.f.username.value, this.f.password.value)
+    this.authenticationService.login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe(
         data => {
@@ -115,7 +115,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           }
           else if (data.isAdmin == false) {
             this.error = "Contact Admin team for Admin privileges"
-            this.loading = false;
+            window.location.href = this.returnUrl;
           }
           else {
             window.location.href = this.returnUrl;
