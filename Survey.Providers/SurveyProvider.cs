@@ -122,6 +122,15 @@ namespace Survey.Providers
             return form;
         }
 
+        public SurveyForm ChangeAccess(int id)
+        {
+            SurveyForm form = _dbContext.SurveyForms.Include("Questions.Options").FirstOrDefault(_ => _.Id == id);
+            form.isPublic = form.isPublic ? false : true;
+            this._dbContext.Entry(form).State = EntityState.Modified;
+            this._dbContext.SaveChanges();
+            return form;
+        }
+
         public User AuthenticateUser(UserData userData)
         {
             Byte[] pwdinputBytes = Encoding.UTF8.GetBytes(userData.password);

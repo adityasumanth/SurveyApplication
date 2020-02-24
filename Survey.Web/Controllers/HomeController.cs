@@ -24,6 +24,15 @@ namespace Survey.Web.Controllers
             return this.SurveyProvider.GetSurveyForms();
             
         }
+
+        [HttpGet]
+        [Route("user-surveys")]
+        public List<SurveyForm> GetSurveyFormsAsUser()
+        {
+            return this.SurveyProvider.GetSurveyFormsAsUser();
+
+        }
+
         [HttpGet]
         [Route("admin-surveys")]
         public List<SurveyForm> GetSurveyFormsAsAdmin()
@@ -70,6 +79,13 @@ namespace Survey.Web.Controllers
         public SurveyForm ChangeState([FromBody]int id)
         {
             return this.SurveyProvider.ChangeState(id);
+        }
+
+        [HttpPut]
+        [Route("changeAccess")]
+        public SurveyForm ChangeAccess([FromBody]int id)
+        {
+            return this.SurveyProvider.ChangeAccess(id);
         }
 
         [HttpPost]

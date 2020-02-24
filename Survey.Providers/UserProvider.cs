@@ -64,7 +64,7 @@ namespace Survey.Providers
                 return user;
             }
             user = new User();
-            user.FirstName = "UserName doesn't Exist";
+            user.FirstName = "Email doesn't Exist";
             return user;
         }
 
@@ -91,12 +91,20 @@ namespace Survey.Providers
             return User;
         }
 
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
         public User Register(User user)
         {
             user.IsAdmin = false;
             if (this._dbContext.Users.Count() != 0)
             {
-                user.UserId = (Int32.Parse(this._dbContext.Users.Last().UserId) + 1).ToString();
+                user.UserId = RandomString(4);
             }
             else
             {

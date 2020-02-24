@@ -26,20 +26,24 @@ export class AuthenticationService {
     this.user = new User();
     if (this.currentUserSubject.value != null) {
       this.isLoggedIn = true;
-      this.token = this.currentUserSubject.value.token;
-      let email = this.currentUserSubject.value.email;
-      this.surveyService.getUserByEmail(email, this.token)
-        .subscribe(
-          data => {
-            if (data.email == email) {
-              this.user = data;
-            }
-            else {
-              this.user.firstName = 'Guest';
-            }
-          },
-          error => { console.log(error); }); 
+      this.loadUser();
     }
+  }
+
+  public loadUser() {
+    this.token = this.currentUserSubject.value.token;
+    let email = this.currentUserSubject.value.email;
+    this.surveyService.getUserByEmail(email, this.token)
+      .subscribe(
+        data => {
+          if (data.email == email) {
+            this.user = data;
+          }
+          else {
+            this.user.firstName = 'Guest';
+          }
+        },
+        error => { console.log(error); });
   }
 
   public get currentUserValue(): User {
@@ -48,7 +52,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<User>(this.baseUrl + `api/User/authenticate`, { email, password })
+    return this.http.post<User>(this.baseUrl + `api/user/authenticate`, { email, password })
       .pipe(map(user => {
         if (user.password == null) {
           return user;

@@ -21,7 +21,7 @@ import { SurveyService } from './services/survey.service';
 import { SurveyDetailsComponent } from './surveys/survey-details/survey-details.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { FormService } from './services/form.service';
-import { AuthGuard, JwtInterceptor, ErrorInterceptor } from './helpers';
+import { AuthGuard, ErrorInterceptor } from './helpers';
 import { AuthenticateComponent } from './login/authenticate/authenticate.component';
 
 @NgModule({
@@ -66,7 +66,6 @@ import { AuthenticateComponent } from './login/authenticate/authenticate.compone
         ])
   ],
     providers: [SurveyService, FormService,
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
     bootstrap: [AppComponent]
 })

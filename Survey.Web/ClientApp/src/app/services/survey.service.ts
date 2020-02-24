@@ -16,6 +16,10 @@ export class SurveyService {
     return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/surveys');
   }
 
+  getSurveyFormsAsUser(): Observable<SurveyForm[]> {
+    return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/user-surveys');
+  }
+
   getSurveyFormsAsAdmin(): Observable<SurveyForm[]> {
     return this.http.get<SurveyForm[]>(this.baseUrl + 'api/home/admin-surveys');
   }
@@ -44,11 +48,15 @@ export class SurveyService {
     return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeState', id);
   }
 
+  public changeAccess(id: number): Observable<SurveyForm> {
+    return this.http.put<SurveyForm>(this.baseUrl + 'api/home/changeAccess', id);
+  }
+
   register(user: User): Observable<User> {
     return this.http.post<User>(this.baseUrl + 'api/user/register', user);
   }
 
-  getUserByEmail(email: string, password: string) {
+  getUserByEmail(email: string, password: string): Observable<User> {
     return this.http.get<User>(this.baseUrl + 'api/User/data/' + email)
       .pipe(map(user => {
         if (user.token == password) {

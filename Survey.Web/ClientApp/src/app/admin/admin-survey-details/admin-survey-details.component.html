@@ -14,8 +14,10 @@
     </form>
     <button class="ml-5 btn btn-primary" [routerLink]="['/admin/update', id]">Edit</button>
     <button class="ml-3 btn btn-warning" [routerLink]="['/admin']">Back</button>
-    <button class="ml-3 btn" (click)="changeState(id)" *ngIf="survey.isActive" >Make Inactive</button>
-    <button class="ml-3 btn" (click)="changeState(id)" *ngIf="!survey.isActive" >Make Active</button>
+    <button class="ml-3 btn" (click)="changeState(id)" *ngIf="survey.isActive">Make Inactive</button>
+    <button class="ml-3 btn" (click)="changeState(id)" *ngIf="!survey.isActive">Make Active</button>
+    <button class="ml-3 btn" (click)="changeAccess(id)" *ngIf="survey.isPublic">Make Private</button>
+    <button class="ml-3 btn" (click)="changeAccess(id)" *ngIf="!survey.isPublic">Make Public</button>
     <br />
     <br />
   </div>

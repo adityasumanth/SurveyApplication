@@ -9,11 +9,13 @@ namespace Survey.Contracts
     {
         List<SurveyForm> GetSurveyForms();
         List<SurveyForm> GetSurveyFormsAsAdmin();
+        List<SurveyForm> GetSurveyFormsAsUser();
         SurveyForm GetSurveyFormById(int id);
         List<SurveyData> GetSurveyData(int id);
         SurveyData PostPollData(SurveyData pollData);
         SurveyForm PostNewSurveyForm(SurveyForm surveyForm);
         SurveyForm PutSurveyForm(SurveyForm surveyForm,List<SurveyQuestion> surveyQuestions,List<SurveyOption> surveyOptions);
         SurveyForm ChangeState(int id);
+        SurveyForm ChangeAccess(int id);
     }
 }
