@@ -5,6 +5,7 @@ import { NgForm, FormGroup, Validators, EmailValidator, FormControl } from '@ang
 import { SurveyData } from '@app/models/SurveyData';
 import { SurveyAnswer } from '@app/models/SurveyAnswer';
 import { SurveyService } from '@app/services/survey.service';
+import { AuthenticationService } from '@app/services/authentication.service';
 
 @Component({
   selector: 'app-add-survey',
@@ -24,8 +25,9 @@ export class AddSurveyComponent implements OnInit {
   public error: boolean = false;
   public errorMsg: string = "";
   public editmode: boolean = false;
+  public isLoggedIn: boolean = false;
   /** new-survey ctor */
-  constructor(private route: ActivatedRoute, private surveyService: SurveyService, private router: Router) {
+  constructor(private route: ActivatedRoute, private surveyService: SurveyService, private router: Router, private authenticationService: AuthenticationService) {
     this.survey = new SurveyForm();
     this.pollData = new SurveyData();
     this.answers = new Array<SurveyAnswer>();
@@ -38,14 +40,21 @@ export class AddSurveyComponent implements OnInit {
       this.surveyService.getSurveyFormById(this.id).subscribe(result => { this.survey = result; }, error => console.log(error));
       this.surveyService.getPollDataByFormId(this.id).subscribe(result => { this.recordedData = result; }, error => console.log(error));
     });
-    this.emailFormControl = new FormControl('', [
-      Validators.required,
-      Validators.email
-    ]);
+    this.isLoggedIn = this.authenticationService.isLoggedIn;
+    if (!this.isLoggedIn) {
+      this.emailFormControl = new FormControl('', [
+        Validators.required,
+        Validators.email
+      ]);
+    }
   }
 
   SubmitForm(form: NgForm) {
     this.editmode = true;
+    if (this.isLoggedIn) {
+      this.emailFormControl = new FormControl(this.authenticationService.user.email);
+      console.log(this.emailFormControl.value);
+    }
     if (this.emailFormControl.value == "") {
       this.errorMsg = "Email is required.";
       this.error = true;

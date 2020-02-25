@@ -13,7 +13,7 @@ declare const gapi: any;
 
 @Component({
   templateUrl: 'login.component.html',
-  styles: [`.text-center > button { margin-right: 25px; }`]})
+  styles: [`.card-body button { margin-right: 25px; }`]})
 export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
   loading = false;

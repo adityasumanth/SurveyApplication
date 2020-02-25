@@ -6,7 +6,6 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title text-center">Login</h4>
-        <button class="btn btn-primary" (click)="authenticateUserByLinkedIn()">Login with LinkedIn</button>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
@@ -39,6 +38,7 @@
       <div class="card-body">
         <h5 class="card-title">Login with</h5>
         <!--<div class="g-signin2"  id="googleBtn" ></div>-->
+        <button class="btn btn-primary" (click)="authenticateUserByLinkedIn()">LinkedIn</button>
         <button class="btn btn-primary" id="googleBtn">Google</button>
       </div>
     </div>
